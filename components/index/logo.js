@@ -13,9 +13,20 @@ export default function Logo () {
                     width={1700}
                     height={100}
                     priority
+                    className="hidden md:block"
+                />
+                    <Image
+                    src="https://storage.googleapis.com/khs-zlin/main_launch_v2.png"
+                    alt="Landing Image"
+                    width={1700}
+                    height={100}
+                    priority
+                    className="block md:hidden"
                 />
             </div>
         </div>
 
     )
 }
+
+

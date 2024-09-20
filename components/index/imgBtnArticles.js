@@ -21,14 +21,13 @@ export default function ImgBtnArticles({data}) {
             '&:hover, &.Mui-focusVisible': {
               zIndex: 1,
               '& .MuiImageBackdrop-root': {
-                opacity: 0.15,
+                opacity: 0.25,
               },
               '& .MuiImageMarked-root': {
                 opacity: 0,
+                transition: 'opacity 0.3s',
               },
-              '& .MuiTypography-root': {
-                border: '3px solid currentColor',
-              },
+
             },
             '@media (max-width: 600px)': {
               width: '100% !important',
@@ -87,6 +86,7 @@ export default function ImgBtnArticles({data}) {
                 pt: 2,
                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
                 fontSize: '20px',
+                fontWeight: 'bold',
                
               }}
             >

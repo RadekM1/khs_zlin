@@ -16,18 +16,18 @@ export default function ImgBtnNav({data}) {
           key={data.id}
           sx={{
             position: 'relative',
-            height: 200,
+            height: 100,
             width: '100%',
             '&:hover, &.Mui-focusVisible': {
               zIndex: 1,
               '& .MuiImageBackdrop-root': {
-                opacity: 0.15,
+                opacity: 0.5,
               },
               '& .MuiImageMarked-root': {
                 opacity: 0,
               },
               '& .MuiTypography-root': {
-                border: '4px solid currentColor',
+                border: '2x solid currentColor',
               },
             },
             '@media (max-width: 600px)': {
@@ -58,8 +58,8 @@ export default function ImgBtnNav({data}) {
               right: 0,
               top: 0,
               bottom: 0,
-              backgroundColor: 'common.black',
-              opacity: 0.4,
+              backgroundColor: '#4F4F4F',
+              opacity: 0.7,
               transition: 'opacity 0.3s',
             }}
           />
@@ -86,7 +86,8 @@ export default function ImgBtnNav({data}) {
                 p: 1,
                 pt: 2,
                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
-                fontSize: '20px',
+                fontSize: '24px',
+                fontWeight: 'bold',
                
               }}
             >

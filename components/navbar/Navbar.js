@@ -35,13 +35,12 @@ import ThemeToggle from '../ThemeToggle'
 import { VscChecklist } from "react-icons/vsc";
 
 
+
 const articles = [
-  { id:1, name: 'Skalní lezení', description: 'Od písků v Ádru až po  rulu ve Chamonix', href: '#', icon: GiMountainClimbing },
-  { id:2, name: 'Horské lezení', description: 'Vícedélky v tatrách, alpách a občas i exotika', href: '#', icon: LiaMountainSolid },
-  { id:3, name: 'Bouldering', description: 'Boulderování v okolí a vyhodnocení závodů', href: '#', icon: boulderIcon },
-  { id:4, name: 'Trekking, VHT', description: 'Zápisky z výprav po celém světě', href: '#', icon: GiHiking  },
-  { id:5, name: 'Příroda', description: 'O toulkách v přírodě', href: '#', icon: TbTrees },
-  { id:6, name: 'Zimní akce', description: 'Skialpinismus, lezení ledů, zimní výpravy', href: '#', icon: FaSkiing }
+  { id:1, name: 'Horolezectví', description: 'Vícedélky v tatrách, alpách a občas i exotika', href: '#', icon: LiaMountainSolid  },
+  { id:2, name: 'Skály', description: 'Od písků v Ádru až po rulu v Chamonix', href: '#', icon: GiMountainClimbing },
+  { id:3, name: 'Oddíl', description: 'Oddílové akce, soutěže, školení', href: '#', icon: boulderIcon },
+  { id:4, name: 'Ostatní', description: 'Zápisky z výprav po celém světě', href: '#', icon: GiHiking  },
 ]
 
 const userPanel = [
@@ -265,7 +264,7 @@ export default function Navbar() {
                       key={item.name}
                       href={item.href}
                       className="block rounded-lg  pl-6 pr-3 text-sm leading-7 dark:text-white text-gray-700 ">
-                      <div className='flex p-2  hover:bg-gray-50 dark:hover:bg-slate-800 dark:border-gray-500  border-l border-gray-200 hover:border-orange-600 dark:hover:border-orange-200 hover:text-orange-600'>
+                      <div className='flex p-2  hover:bg-gray-50 dark:hover:bg-slate-800 dark:border-gray-500  border-l border-gray-200 hover:border-orange-600 dark:hover:border-orange-200 dark:hover:text-orange-300 hover:text-orange-600'>
                         <div className='w-1/6 mr-2'>
                         </div>
                         <div className='w-5/6 ml-2  mr-40' >
@@ -294,7 +293,7 @@ export default function Navbar() {
                         key={item.name}
                         href={item.href}
                         className="block rounded-lg dark:hover:bg-slate-800  pl-6 pr-3 text-sm leading-7 dark:text-white text-gray-700 ">
-                       <div className='flex p-2  hover:bg-gray-50 dark:hover:bg-slate-800 dark:hover:border-orange-200  border-l dark:border-gray-500 border-gray-200 hover:border-orange-600 hover:text-orange-600'>
+                       <div className='flex p-2  hover:bg-gray-50 dark:hover:bg-slate-800 dark:hover:border-orange-200  border-l dark:border-gray-500 border-gray-200 hover:border-orange-600 dark:hover:text-orange-300 hover:text-orange-600'>
                         <div className='w-1/6 mr-2'>
                         </div>
                         <div className='w-5/6 ml-2  flex-grow mr-40' > 
