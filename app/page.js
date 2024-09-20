@@ -22,8 +22,26 @@ export default function LandingPart() {
             </div>
           </div>
         </div>
-        <PictureBtns />
-      </div>
+        <div>
+
+          
+        </div>
+          <div className="w-full dark:bg-[#121212] mb-5 mt-10 text-2xl flex font-bold dark:text-white text-gray-500 justify-center text-center">
+                Články dle témat
+            </div>
+
+          <PictureBtns/>
+          <div>
+
+
+          </div>
+          <div className='mb-20'></div>
+
+        </div>
+        
+        
+
+      
     </>
   );
 }

@@ -1,42 +1,46 @@
-
+import PictureBtn from "./pictureBtn";
+import Link from "next/link";
 
 
 const images = [
     {
-      url: '/static/images/buttons/breakfast.jpg',
-      title: 'Breakfast',
+        id: 1,
+        img: 'https://storage.googleapis.com/khs-zlin/picture_btn/horolezectvi.png',
+        title: 'HOROLEZECTVÍ',
+        url: '/'
+    },
+    {   
+        id: 2,
+        img: 'https://storage.googleapis.com/khs-zlin/picture_btn/skalni_lezeni.jpg',
+        title: 'SKÁLY',
+        url: '/'
     },
     {
-      url: '/static/images/buttons/burgers.jpg',
-      title: 'Burgers',
-      width: '30%',
+        id: 3,
+        img: 'https://storage.googleapis.com/khs-zlin/picture_btn/oddil.jpeg',
+        title: 'ODDÍL',
+        url: '/'
     },
-    {
-      url: '/static/images/buttons/camera.jpg',
-      title: 'Camera',
-      width: '30%',
-    },
+    {   
+        id: 4,
+        img: 'https://storage.googleapis.com/khs-zlin/blog/blog4.jpg',
+        title: 'OSTATNÍ',
+        url: '/'
+      }
   ];
 export default function PictureBtns () {
 
-
-
     return (
-        <>
-            <div className="grid grid-cols-2 mt-10 md:mt-5 lg:grid-cols-4 w-full gap-4" >
-                <div className="bg-gray-400">
-                    test
-                </div>
-                <div className="bg-gray-300">
-                    test
-                </div>
-                <div className="bg-gray-500">
-                    test
-                </div>
-                <div className="bg-gray-600">
-                    test
-                </div>
+
+            <div className="grid grid-cols-2 mt-10 md:mt-5 m-10 justify-between lg:grid-cols-4 w-full gap-4" >
+                    {images.map((image)=>{
+                        return(
+                            <Link key={image.id} href={image.url} passHref>
+                                <PictureBtn data={image} />
+                            </Link>   
+                        )
+                    })}
             </div>
-        </>
+
     )
 }
