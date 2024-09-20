@@ -182,7 +182,7 @@ export default function Navbar() {
               </div>
               <div>
                 <PopoverGroup>
-                  <Popover>
+                  <Popover className='relative flex '>
                     {({ open }) => (
                       <>
                         <PopoverButton className="ml-5 flex focus:outline-none items-center gap-x-2 text-sm leading-6 dark:text-gray-300 text-gray-700">
@@ -195,7 +195,7 @@ export default function Navbar() {
                             priority 
                           />
                         </PopoverButton>
-                        <PopoverPanel className="border-gray-200  shadow-gray-400/50 dark:shadow-gray-700/50 border- absolute  drop-shadow-xl z-10 w-60 rounded-3xl dark:bg-gray-800 bg-slate-100 shadow-lg">
+                        <PopoverPanel className="border-gray-200 top-14 right-0   shadow-gray-400/50 dark:shadow-gray-700/50 border- absolute drop-shadow-xl z-10 w-60 rounded-3xl dark:bg-gray-800 bg-slate-100 shadow-lg">
                           <div className="p-4">
                             {userPanel.map((item) => (
                               <a 
