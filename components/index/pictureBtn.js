@@ -83,10 +83,10 @@ export default function ButtonBaseDemo({data}) {
               color="inherit"
               sx={{
                 position: 'relative',
-                p: 4,
+                p: 1,
                 pt: 2,
                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
-                fontSize: '24px',
+                fontSize: '20px',
                
               }}
             >
