@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
 
 
-export default function ButtonBaseDemo({data}) {
+export default function ImgBtnNav({data}) {
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: '100%', width: '100%' }}>
       

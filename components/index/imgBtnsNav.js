@@ -1,4 +1,4 @@
-import PictureBtn from "./pictureBtn";
+import ImgBtnNav from "./imgBtnNav";
 import Link from "next/link";
 
 
@@ -28,7 +28,7 @@ const images = [
         url: '/'
       }
   ];
-export default function PictureBtns () {
+export default function ImgBtnsNav () {
 
     return (
 
@@ -36,7 +36,7 @@ export default function PictureBtns () {
                     {images.map((image)=>{
                         return(
                             <Link key={image.id} href={image.url} passHref>
-                                <PictureBtn data={image} />
+                                <ImgBtnNav data={image} />
                             </Link>   
                         )
                     })}

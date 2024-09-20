@@ -1,7 +1,7 @@
 import NewsFeed from '@/components/index/newsFeed';
 import Logo from '../components/index/logo';
 import ArticleFeed from '@/components/index/articleFeed';
-import PictureBtns from '@/components/index/pictureBtns';
+import ImgBtnsArticles from '@/components/index/imgBtnsArticles';
 
 export default function LandingPart() {
   return (
@@ -23,14 +23,11 @@ export default function LandingPart() {
           </div>
         </div>
         <div>
-
-          
         </div>
           <div className="w-full dark:bg-[#121212] mb-5 mt-10 text-2xl flex font-bold dark:text-white text-gray-500 justify-center text-center">
                 Články dle témat
             </div>
-
-          <PictureBtns/>
+          <ImgBtnsArticles/>
           <div>
 
 
