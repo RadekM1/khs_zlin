@@ -237,7 +237,7 @@ export default function Navbar() {
             <div className="-my-6 divide-y divide-gray-500/10">
             
               <div className="space-y-2 py-5 ">
-              <a href='#' className="block -mx-3  py-1 leading-7 text-gray-700 hover:bg-white  dark:hover:bg-slate-800 hover:bg-none hover:text-orange-600 border-b dark:border-gray-500 border-gray-200 ">
+              <a href='#' className="block -mx-3  py-1 leading-7 text-gray-700 hover:bg-gray-50  dark:hover:bg-slate-800 hover:bg-none  border-b dark:border-gray-500 border-gray-200 ">
                 <div className='flex w-5/6 justify-start '>
                   <div className='w-1/6 justify-center  pl-5 align-bottom flex'>
                     <IoIosInformationCircleOutline  className='h-5 w-5 self-center flex dark:text-gray-400 '/>
@@ -306,7 +306,7 @@ export default function Navbar() {
                   </DisclosurePanel>
                 </Disclosure>
                 {menuMobil.map((item) => (
-                   <a href='#' key={item.id} className=" -m-2 block rounded-lg py-1 leading-7 text-gray-700 dark:hover:bg-slate-800 hover:bg-white dark:group-hover:text-orange-200r:bg-slate-800  hover:text-orange-300">
+                   <a href='#' key={item.id} className=" -m-2 block rounded-lg py-1 leading-7 text-gray-700 dark:hover:bg-slate-800 hover:bg-gray-50 dark:group-hover:text-orange-200r:bg-slate-800  dark:hover:text-orange-300">
                 <div className='flex justify-start border-b border-gray-200 dark:border-gray-500'>
                   <div className='w-1/6 justify-center align-bottom flex'>
                     <item.icon  className='h-5 w-5 self-center flex dark:text-gray-400'/>
