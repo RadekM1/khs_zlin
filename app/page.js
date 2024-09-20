@@ -22,7 +22,7 @@ export default function LandingPart() {
             </div>
           </div>
         </div>
-        
+        <PictureBtns />
       </div>
     </>
   );

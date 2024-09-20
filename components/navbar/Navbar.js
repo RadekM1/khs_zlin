@@ -181,45 +181,47 @@ export default function Navbar() {
               <ThemeToggle className='flex self-center'/>
               </div>
               <div>
-                <Popover>
-                  {({ open }) => (
-                    <>
-                      <PopoverButton className="ml-5 flex focus:outline-none items-center gap-x-2 text-sm leading-6 dark:text-gray-300 text-gray-700">
-                        <Image 
-                          src="https://storage.googleapis.com/khs-zlin/avatar4.jpg" 
-                          alt="User Avatar" 
-                          className="rounded-full" 
-                          width={50} 
-                          height={50} 
-                          priority 
-                        />
-                      </PopoverButton>
-                      <PopoverPanel className="border-gray-200  shadow-gray-400/50 dark:shadow-gray-700/50 border- absolute right-5 top-30 drop-shadow-xl z-10 w-60 rounded-3xl dark:bg-gray-800 bg-slate-100 shadow-lg">
-                        <div className="p-4">
-                          {userPanel.map((item) => (
-                            <a 
-                              href="#" 
-                              key={item.id} 
-                              className="text-sm leading-6 dark:text-gray-300 text-gray-700"
-                            >
-                              <div className="group relative flex items-center gap-x-6 rounded-lg text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
-                                <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
-                                  <item.icon 
-                                    aria-hidden="true" 
-                                    className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" 
-                                  />
+                <PopoverGroup>
+                  <Popover>
+                    {({ open }) => (
+                      <>
+                        <PopoverButton className="ml-5 flex focus:outline-none items-center gap-x-2 text-sm leading-6 dark:text-gray-300 text-gray-700">
+                          <Image 
+                            src="https://storage.googleapis.com/khs-zlin/avatar4.jpg" 
+                            alt="User Avatar" 
+                            className="rounded-full" 
+                            width={50} 
+                            height={50} 
+                            priority 
+                          />
+                        </PopoverButton>
+                        <PopoverPanel className="border-gray-200  shadow-gray-400/50 dark:shadow-gray-700/50 border- absolute  drop-shadow-xl z-10 w-60 rounded-3xl dark:bg-gray-800 bg-slate-100 shadow-lg">
+                          <div className="p-4">
+                            {userPanel.map((item) => (
+                              <a 
+                                href="#" 
+                                key={item.id} 
+                                className="text-sm leading-6 dark:text-gray-300 text-gray-700"
+                              >
+                                <div className="group relative flex items-center gap-x-6 rounded-lg text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
+                                  <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
+                                    <item.icon 
+                                      aria-hidden="true" 
+                                      className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" 
+                                    />
+                                  </div>
+                                  <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
+                                    {item.name}
+                                  </div>
                                 </div>
-                                <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
-                                  {item.name}
-                                </div>
-                              </div>
-                            </a>
-                          ))}
-                        </div>
-                      </PopoverPanel>
-                    </>
-                  )}
-                </Popover>
+                              </a>
+                            ))}
+                          </div>
+                        </PopoverPanel>
+                      </>
+                    )}
+                  </Popover>
+                </PopoverGroup>
               </div>
         </div>
       </nav>
