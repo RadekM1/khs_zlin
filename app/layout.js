@@ -3,7 +3,7 @@ import "./globals.css";
 import { Roboto } from 'next/font/google';
 import Providers from "./providers";
 import Image from "next/image";
-
+import Footer from '@/components/footer';
 
 
 
@@ -23,11 +23,12 @@ export default function RootLayout({ children }) {
     <html lang="cs">
       <body className={`${roboto.className}  antialiased  `}>
         <Providers attribute="class">
-          <div className="flex mx-auto bg-gray-50 dark:bg-[#121212] justify-center">
+          <div className="flex mx-auto flex-col bg-gray-100 dark:bg-[#121212] justify-center">
             <Navbar className='-m-8 -mx-16' style={{zIndex:20}} />
-            <div className="flex   justify-center bg-gray-50  dark:bg-[#121212]" style={{zIndex:1}}>
+            <div className="flex w-full justify-center bg-gray-100  dark:bg-[#121212]" style={{zIndex:1}}>
                 {children}
             </div>
+            <Footer />
           </div>
         </Providers>
       </body>

@@ -58,7 +58,7 @@ export default function ImgBtnNav({data}) {
               right: 0,
               top: 0,
               bottom: 0,
-              backgroundColor: '#4F4F4F',
+              backgroundColor: '#3B3B3B',
               opacity: 0.7,
               transition: 'opacity 0.3s',
             }}

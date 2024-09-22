@@ -9,7 +9,7 @@ const blogPostsOnIndex = [
 export default function ArticleFeed () {
     return (
         <div className="flex flex-col justify-center text-center ">
-            <div className="w-full dark:bg-[#121212] mt-5 mb-2 text-2xl flex font-bold dark:text-white text-gray-500 justify-center text-center">
+            <div className="w-full dark:bg-[#121212] mt-5 mb-2 text-2xl flex font-bold dark:text-white text-gray-700 justify-center text-center">
                 Nejnovější články
             </div>
             <div className="w-full flex justify-center flex-col text-center">

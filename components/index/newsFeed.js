@@ -18,11 +18,13 @@ export default function NewsFeed() {
     <>
       <div className=" lg:max-h-[600px] dark:bg-[#1E1E1E] dark:border-gray-600 border-[1px]  py-4 my-6  lg:overflow-auto scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-gray-400 scrollbar-track-gray-100 dark:scrollbar-track-gray-800 bg-white flex flex-col text-center rounded shadow-[0_10px_25px_rgba(0,0,0,0.1),0_10px_50px_rgba(0,0,0,0.2)] border-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
         <div className="flex mb-3 pb-2 text-2xl font-bold dark:text-gray-100  border-gray-100  text-gray-800">
-          <div className="flex ml-6 justify-center w-1/6">
-            <MdRssFeed className="text-gray-400 w-8 h-8 " /> 
-          </div>
-          <div className="ml-2 flex justify-start text-gray-500 dark:text-gray-100 flex-grow">
-            Novinky
+          <div className='flex mt-3 flex-grow flex-row justify-center '>   
+            <div className='flex-shrink  flex'>
+              <MdRssFeed  className=" self-end text-gray-400 w-8 h-8 " /> 
+            </div>
+            <div className='flex-shrink dark:text-gray-200  flex ml-5 text-lg md:text-2xl'>
+              Aktuality
+            </div>
           </div>
         </div>
         <div className="flex">
