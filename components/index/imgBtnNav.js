@@ -21,7 +21,7 @@ export default function ImgBtnNav({data}) {
             '&:hover, &.Mui-focusVisible': {
               zIndex: 1,
               '& .MuiImageBackdrop-root': {
-                opacity: 0.5,
+                opacity: 0.4,
               },
               '& .MuiImageMarked-root': {
                 opacity: 0,

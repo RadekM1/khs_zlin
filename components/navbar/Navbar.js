@@ -18,8 +18,6 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { GiHiking, GiMountainClimbing, GiNewspaper, GiSkis  } from "react-icons/gi";
-import { TbTrees } from "react-icons/tb";
-import { FaSkiing } from "react-icons/fa";
 import { LiaMountainSolid } from "react-icons/lia";
 import boulderIcon from '../boulderIcon'
 import { CiUser, CiLogout  } from "react-icons/ci";
@@ -52,10 +50,10 @@ const userPanel = [
 ]
 
 const menuMobil = [
-  { id: 1, name: 'Půjčovna', href: '#', icon: GiSkis },
-  { id: 2, name: 'O nás', href: '#', icon: BsPeople },
-  { id: 3, name: 'Kontakt',  href: '#', icon: FiPhone },
-  { id: 4, name: 'Oddílové akce', href:'#', icon: MdOutlineEmojiEvents },
+  { id: 1, name: 'O nás', href: '#', icon: GiSkis },
+  { id: 2, name: 'Oddílové akce',  href: '#', icon: FiPhone },
+  { id: 3, name: 'Pro členy', href:'#', icon: MdOutlineEmojiEvents },
+  { id: 4, name: 'Kontakt', href: '#', icon: BsPeople },
 ]
 
 const kurzy = [
@@ -75,10 +73,10 @@ export default function Navbar() {
 
   return (
     
-    <header className=" fixed z-30 w-full top-0 backdrop-blur-sm bg-slate-100/80 dark:bg-[#1E1E1E]/80 border-b-gray-300 dark:border-b-gray-600 border-b
+    <header className=" fixed z-30 w-full top-0 backdrop-blur-sm bg-slate-100/90 dark:bg-[#1E1E1E]/80 border-b-gray-300 dark:border-b-gray-600 border-b
      
     " >
-      <nav aria-label="Global" className="mx-auto flex  max-w-7xl items-center justify-between lg:justify-start p-2 lg:px-8">
+      <nav aria-label="Global" className="mx-auto flex  max-w-7xl items-end justify-between lg:justify-start p-2 lg:px-8">
         <div className="flex lg:flex-4">
           <div className="flex lg:hidden ">
             <button
@@ -91,23 +89,23 @@ export default function Navbar() {
           </div>
           <div className='mr-8 pr-8'>
             <a href="#">
-              <Image priority  width={200} style={{width:'200px',height: '200px'}} height={200} alt="" src="https://storage.googleapis.com/khs-zlin/logo.svg" className=" absolute -top-16 -ml-4 hidden lg:block" />
+              <Image priority  width={200} style={{width:'180px',height: '80px'}} height={200} alt="" src="https://storage.googleapis.com/khs-zlin/logo.svg" className=" absolute -top-2 -ml-4 hidden lg:block" />
             </a>
             <a href="#">
-            <Image priority  width={150} style={{width:'150',height: '150'}} height={150} alt="" src="https://storage.googleapis.com/khs-zlin/logo_small.svg" className=" absolute flex ml-6 lg:hidden" />
+            <Image priority  width={150} style={{width:'150',height: '80'}} height={150} alt="" src="https://storage.googleapis.com/khs-zlin/logo_small.svg" className=" absolute flex ml-6 lg:hidden" />
           </a>
           </div>
         </div>
-        <div className='flex-grow ml-4 flex relative mr-2'>
-        </div>
+        <div className='flex-grow ml-4  flex relative mr-2'>
+        </div> {/* NAVIGAČNÍ LIŠTA DOLE */}
         <PopoverGroup className="hidden  lg:flex flex-grow ml-10 lg:gap-x-5">
-          <a href="#" className="text-sm ml-10 leading-6 hover:text-orange-600 dark:hover:text-orange-200 text-gray-700 dark:text-white  ">Novinky</a>
-          <Popover>
+          <a href="#" className="text-sm ml-10 leading-6 hover:text-orange-600 dark:hover:text-orange-200 text-gray-700 dark:text-white hover:border-b-2 z-50 -mb-2 hover:border-b-orange-600 dark:border-b-orange-200">Novinky</a>
+          <Popover className='hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200'>
             {({ open }) => (
               <>
-                <PopoverButton className="flex  hover:text-orange-600 dark:hover:text-orange-200 dark:text-white focus:outline-none items-center gap-x-1 text-sm  leading-6 text-gray-700">
+                <PopoverButton className="flex   dark:hover:text-orange-200 hover:text-orange-600 dark:text-white focus:outline-none items-center gap-x-1 text-sm  leading-6 text-gray-700">
                   Články
-                  <ChevronDownIcon aria-hidden="true" className={`h-5  w-5 flex-none text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} />
+                  <ChevronDownIcon aria-hidden="true" className={`h-5  w-5 flex-none  text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} />
                 </PopoverButton>
                 <PopoverPanel className="absolute drop-shadow-xl dark:text-gray-300 top-full z-10  w-screen max-w-lg overflow-hidden rounded-3xl  dark:bg-gray-800 bg-slate-100 shadow-lg">
                 <div className="p-4">
@@ -143,7 +141,7 @@ export default function Navbar() {
               </>
             )}
           </Popover>
-          <Popover>
+          <Popover className='hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200'>
             {({ open }) => (
               <>
                 <PopoverButton className="flex dark:hover:text-orange-200 hover:text-orange-600 dark:text-white focus:outline-none items-center gap-x-1 text-sm  leading-6 text-gray-700">
@@ -170,10 +168,12 @@ export default function Navbar() {
               </>
             )}
           </Popover>
-          <a href="#" className="text-sm leading-6 hover:text-orange-600 dark:hover:text-orange-200 dark:text-white text-gray-700">Půjčovna</a>
-          <a href="#" className="text-sm leading-6 hover:text-orange-600 dark:hover:text-orange-200 dark:text-white text-gray-700">O nás</a>
-          <a href="#" className="text-sm leading-6 hover:text-orange-600 dark:hover:text-orange-200 dark:text-white text-gray-700">Kontakt</a>
-          <a href="#" className="text-sm leading-6 hover:text-orange-600 dark:hover:text-orange-200 dark:text-white text-gray-700">Oddílové akce</a>
+          
+          <a href="#" className="text-sm leading-6 hover:text-orange-600 dark:hover:text-orange-200 dark:text-white flex hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 text-gray-700">O nás</a>
+          <a href="#" className="text-sm leading-6 hover:text-orange-600 dark:hover:text-orange-200 dark:text-white hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 text-gray-700">Oddílové akce</a>
+          <a href="#" className="text-sm leading-6 hover:text-orange-600 dark:hover:text-orange-200 dark:text-white hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 text-gray-700">Pro členy</a>
+           <a href="#" className="text-sm leading-6 hover:text-orange-600 dark:hover:text-orange-200 dark:text-white hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 flex text-gray-700">Kontakt</a>
+          <div className="text-sm leading-6 hover:text-orange-600 dark:hover:text-orange-200 dark:text-white hover:border-b-2 z-50 -mb-2  m-3 text-white/0 "> </div>
         </PopoverGroup>
         <div className='flex flex-row '>
               <div className='mr-2 items-center flex'>

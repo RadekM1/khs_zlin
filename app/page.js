@@ -8,6 +8,7 @@ import CalendarFeed from '@/components/index/calendarFeed';
 import { FcCalendar } from "react-icons/fc";
 import dayjs from 'dayjs';
 import LogoCloudPartners from '@/components/index/logoCloudPartners';
+import LogoCloudSponsors from '@/components/index/logoCloudSponsors';
 
 
 
@@ -54,7 +55,7 @@ export default function LandingPart() {
           <div className='mb-20'>
           </div>
           </div>
-        <div className='flex w-full flex-col border-t border-b border-1 dark:border-gray-600 bg-white dark:bg-[#191919]'>
+        <div className='flex w-full flex-col border-t border-1 dark:border-gray-600 bg-white dark:bg-[#191919]'>
           <div className='flex my-5 flex-col  flex-grow max-w-screen-xl px-4 sm:px-6 md:px-8 lg:px-4 justify-center items-center mx-auto'>
           <div className="w-full lg:px-10 dark:bg-[#191919] text-2xl flex font-bold dark:text-white text-gray-500 justify-center text-center">
             <div className=' text-gray-700 flex mt-10 w-full flex-col flex-wrap '>
@@ -80,15 +81,11 @@ export default function LandingPart() {
           </div>
         </div>
       </div>
-      <div className='dark:bg-black' >
+      <div className='dark:bg-black border-t  dark:border-t-gray-600 border-gray-300' >
         <LogoCloudPartners  />
       </div>
-      
-
-      <div className='bg-white w-full  flex flex-col  '>
-        <div className='flex-grow max-w-screen-xl my-5 px-4 sm:px-6 md:px-8 lg:px-4 justify-center items-center mx-auto'>
-        partneři (not yet component)
-        </div>
+      <div className='dark:bg-black border-t  border-gray-300 dark:border-gray-600 bg-white'>
+        <LogoCloudSponsors />
       </div>
     </div>
   );
