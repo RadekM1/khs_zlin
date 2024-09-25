@@ -65,7 +65,7 @@ export default function Footer () {
     
                 
                 <div className="md:w-full flex justify-start lg:justify-center">
-                    <div className="transition w-2/5 lg:w-full filter ease-in-out duration-500 dark:brightness-75 ">
+                    <div className="w-2/5 lg:w-full  ">
                         <ModalImg 
                             imgSrc={'https://storage.googleapis.com/khs-zlin/certifikace_CHS.jpg'} 
                             alt={'certifikace ČHS'} 

@@ -31,7 +31,7 @@ import { MdOutlineEmojiEvents } from "react-icons/md";
 import { BsPeople } from "react-icons/bs";
 import ThemeToggle from '../ThemeToggle'
 import { VscChecklist } from "react-icons/vsc";
-
+import Link from 'next/link'
 
 
 const articles = [
@@ -50,12 +50,12 @@ const userPanel = [
 ]
 
 const menuMobil = [
-  { id: 1, name: 'O nás', href: '#', icon: GiSkis },
-  { id: 2, name: 'Oddílové akce',  href: '#', icon: FiPhone },
-  { id: 3, name: 'Pro členy', href:'#', icon: MdOutlineEmojiEvents },
-  { id: 4, name: 'Kontakt', href: '#', icon: BsPeople },
+  { id: 1, name: 'O nás', href: '#', icon: BsPeople },
+  { id: 2, name: 'Oddílové akce',  href: '#', icon: MdOutlineEmojiEvents  },
+  { id: 3, name: 'Pro členy', href:'#', icon: GiSkis },
+  { id: 4, name: 'Kontakt', href: '#', icon: FiPhone  },
 ]
-
+ 
 const kurzy = [
   { id: 1, name: 'Horoškola', description: 'Staňte se lezci a horolezci pod vedením zkušených instruktorů', href: '#', icon: FaUniversity },
   { id: 2, name: 'Horokruh', description: 'Lezecký kroužek pro mládež od 8 do 12 let', href: '#', icon: FaSchool },
@@ -88,18 +88,18 @@ export default function Navbar() {
             </button>
           </div>
           <div className='mr-8 pr-8'>
-            <a href="#">
+            <Link href="/">
               <Image priority  width={200} style={{width:'180px',height: '80px'}} height={200} alt="" src="https://storage.googleapis.com/khs-zlin/logo.svg" className=" absolute -top-2 -ml-4 hidden lg:block" />
-            </a>
-            <a href="#">
+            </Link>
+            <Link href="/">
             <Image priority  width={150} style={{width:'150',height: '80'}} height={150} alt="" src="https://storage.googleapis.com/khs-zlin/logo_small.svg" className=" absolute flex ml-6 lg:hidden" />
-          </a>
+          </Link>
           </div>
         </div>
         <div className='flex-grow ml-4  flex relative mr-2'>
         </div> {/* NAVIGAČNÍ LIŠTA DOLE */}
         <PopoverGroup className="hidden  lg:flex flex-grow ml-10 lg:gap-x-5">
-          <a href="#" className="text-sm ml-10 leading-6 hover:text-orange-600 dark:hover:text-orange-200 text-gray-700 dark:text-white hover:border-b-2 z-50 -mb-2 hover:border-b-orange-600 dark:border-b-orange-200">Novinky</a>
+          <Link href="/novinky" className="text-sm ml-10 leading-6 hover:text-orange-600 dark:hover:text-orange-200 text-gray-700 dark:text-white hover:border-b-2 z-50 -mb-2 hover:border-b-orange-600 dark:border-b-orange-200">Novinky</Link>
           <Popover className='hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200'>
             {({ open }) => (
               <>
