@@ -78,7 +78,7 @@ export default function Footer () {
     
         <div className="w-full dark:bg-[#121212] bg-slate-100 flex mt-2 border-t-gray-300 dark:border-t-gray-600 border-t-[1px] text-gray-400 justify-end">
             <a href="https://www.radekmorong.cz" target="_blank" className="flex py-2 items-center">
-                <span className="mr-10">&copy; 2024 crafted by Radek Morong</span>
+                <span className="mr-10 text-sm">&copy; 2024 crafted by Radek Morong</span>
             </a>
         </div>
     </div>
