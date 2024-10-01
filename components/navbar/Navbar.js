@@ -20,48 +20,86 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { GiHiking, GiMountainClimbing, GiNewspaper, GiSkis  } from "react-icons/gi";
 import { LiaMountainSolid } from "react-icons/lia";
 import boulderIcon from '../boulderIcon'
-import { CiUser, CiLogout  } from "react-icons/ci";
-import { MdAdminPanelSettings } from "react-icons/md";
+import { CiLogout, CiLogin  } from "react-icons/ci";
 import { IoIosSettings, IoIosHelpCircleOutline, IoIosInformationCircleOutline  } from "react-icons/io";
-import { FaSchool } from "react-icons/fa";
-import { FaUniversity } from "react-icons/fa";
-import { IoSchoolOutline, IoHomeOutline  } from "react-icons/io5";
 import { FiPhone } from "react-icons/fi";
-import { MdOutlineEmojiEvents } from "react-icons/md";
-import { BsPeople } from "react-icons/bs";
 import ThemeToggle from '../ThemeToggle'
 import { VscChecklist } from "react-icons/vsc";
 import Link from 'next/link'
+import { HiOutlineUserPlus, HiOutlineTrophy  } from "react-icons/hi2";
+import { RiBook3Line } from "react-icons/ri";
+import { LuCalendarRange } from "react-icons/lu";
+import { IoLibraryOutline} from "react-icons/io5";
+import { TbMoodBoy } from "react-icons/tb";
+import { GoThumbsup } from "react-icons/go";
+import { MdHistory, MdAdminPanelSettings } from "react-icons/md";
+import { FaPeopleGroup, FaHillAvalanche, FaListCheck } from "react-icons/fa6";
+import { FaIcicles, FaRegSnowflake } from "react-icons/fa";
+import { usePathname } from 'next/navigation';
+import { useSearchParams } from 'next/navigation'
+
 
 
 const articles = [
-  { id:1, name: 'Horolezectví', description: 'Vícedélky v tatrách, alpách a občas i exotika', href: '#', icon: LiaMountainSolid  },
-  { id:2, name: 'Skály', description: 'Od písků v Ádru až po rulu v Chamonix', href: '#', icon: GiMountainClimbing },
-  { id:3, name: 'Oddíl', description: 'Oddílové akce, soutěže, školení', href: '#', icon: boulderIcon },
-  { id:4, name: 'Ostatní', description: 'Zápisky z výprav po celém světě', href: '#', icon: GiHiking  },
+  { id:1, name: 'Skály', description: 'Od písků v Ádru až po rulu v Chamonix', href: '/clanky?filter=skaly', filter:'skaly', icon: GiMountainClimbing },
+  { id:2, name: 'Horolezectví', description: 'Vícedélky v tatrách, alpách a občas i exotika', href: '/clanky?filter=horolezectvi', filter:'horolezectvi', icon: LiaMountainSolid  },
+  { id:3, name: 'Oddíl', description: 'Oddílové akce, soutěže, školení', href: '/clanky?filter=oddil', filter:'oddil', icon: boulderIcon },
+  { id:4, name: 'Ostatní', description: 'Zápisky z výprav po celém světě', href: '/clanky?filter=ostatni', filter:'ostatni', icon: GiHiking  },
 ]
 
 const userPanel = [
-  { id: 1, name: 'Admin panel', href: '#', icon: MdAdminPanelSettings },
-  { id: 2, name: 'Profil', href: '#', icon: CiUser },
-  { id: 3, name: 'Nastavení',  href: '#', icon: IoIosSettings },
-  { id: 4, name: 'Nápověda', icon: IoIosHelpCircleOutline },
-  { id: 5, name: 'Odhlásit', href: '#', icon: CiLogout },
+  { id: 1, name: 'Články',  href: '/dashboard/clanky', icon: RiBook3Line },
+  { id: 2, name: 'Novinky',  href: '/dashboard/novinky', icon: GiNewspaper },
+  { id: 3, name: 'Kalendář',  href: '/dashboard/kalendar', icon: LuCalendarRange },
+  { id: 4, name: 'Knihovna',  href: '/dashboard/knihovna', icon: IoLibraryOutline },
+  { id: 5, name: 'Půjčovna',  href: '/dashboard/pujcovna', icon: GiSkis },
+  { id: 6, name: 'Nastavení účtu',  href: '/dashboard/nastaveni', icon: IoIosSettings },
+  { id: 7, name: 'Uživatelé', href: '/dashboard/uzivatele', icon: MdAdminPanelSettings },
+  { id: 8, name: 'Nápověda', href: '/dashboard/napoveda', icon: IoIosHelpCircleOutline },
+  { id: 9, name: 'Odhlásit', href: '/dashboard/odhlasit', icon: CiLogout },
+  { id: 10, name: 'Přihlásit', href: '/dashboard/prihlasit', icon: CiLogin },
+  { id: 11, name: 'Registrovat', href: '/dashboard/registrovat', icon: HiOutlineUserPlus },
+  
 ]
 
-const menuMobil = [
-  { id: 1, name: 'O nás', href: '#', icon: BsPeople },
-  { id: 2, name: 'Oddílové akce',  href: '#', icon: MdOutlineEmojiEvents  },
-  { id: 3, name: 'Pro členy', href:'#', icon: GiSkis },
-  { id: 4, name: 'Kontakt', href: '#', icon: FiPhone  },
+const proCleny = [
+  { id: 1, name: 'Oddílové akce', href: '/clenstvi-v-oddile/oddilove-akce', icon: HiOutlineTrophy },
+  { id: 2, name: 'Knihovna', href: '/clenstvi-v-oddile/knihovna', icon: IoLibraryOutline },
+  { id: 3, name: 'Půjčovna vybavení', href: '/clenstvi-v-oddile/pujcovna-vybaveni', icon: GiSkis },
+  { id: 4, name: 'Výhody členství', href: '/clenstvi-v-oddile/vyhody-clenstvi', icon: GoThumbsup },
+  { id: 5, name: 'Podmínky členství', href: '/clenstvi-v-oddile/podminky-clenstvi', icon: FaListCheck },
 ]
  
 const kurzy = [
-  { id: 1, name: 'Horoškola', description: 'Staňte se lezci a horolezci pod vedením zkušených instruktorů', href: '#', icon: FaUniversity },
-  { id: 2, name: 'Horokruh', description: 'Lezecký kroužek pro mládež od 8 do 12 let', href: '#', icon: FaSchool },
+  { id: 1, name: 'Horoškola - skály', href: '/kurzy/horoskola-skaly', icon: boulderIcon },
+  { id: 2, name: 'Horoškola - vícedélky', href: '/kurzy/horoskola-vicedelky', icon: GiMountainClimbing },
+  { id: 3, name: 'Lavinová prevence', href: '/kurzy/lavinova-prevence', icon: FaHillAvalanche },
+  { id: 4, name: 'Lezení v ledu', href: '/kurzy/lezeni-v-ledu', icon: FaIcicles },
+  { id: 5, name: 'Zimní lezení', href: '/kurzy/zimni-lezeni', icon: FaRegSnowflake },
+  { id: 6, name: 'Horokruh', href: '/kurzy/horokruh', icon: TbMoodBoy },
 ]
 
+const oNas = [
+  { id: 1, name: 'Historie oddílu', href: '/o-nas/historie-oddilu', icon: MdHistory },
+  { id: 2, name: 'Vedení oddílu', href: '/o-nas/vedeni-oddilu', icon: FaPeopleGroup },
+  { id: 3, name: 'Instruktoři horoškoly', href: '/o-nas/instruktori-horoskoly', icon: LiaMountainSolid  },
+  { id: 4, name: 'Instruktoři lezení', href: '/o-nas/instruktori-lezeni', icon: boulderIcon },
+]
+
+
+
+
 export default function Navbar() {
+
+  const searchParams = useSearchParams();
+  const currentFilter = searchParams.get('filter');
+  let pathName = usePathname();
+  let active = 'text-orange-600 dark:text-orange-300 border-b-orange-600 dark:border-b-orange-200  border-b-2'
+  let inActive = 'text-gray-700 dark:text-white dark:hover:text-orange-200 hover:text-orange-600'
+  let activeMobile = 'dark:border-orange-200 border-orange-600 text-orange-600 dark:text-orange-200 border-l '
+  let inActiveMobile = 'dark:hover:border-orange-200 hover:bg-gray-50 dark:hover:bg-slate-800 dark:border-gray-500  border-l border-gray-200 hover:border-orange-600  dark:hover:text-orange-200 hover:text-orange-600'
+
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [firstPopoverOpen, setFirstPopoverOpen] = useState(false);
   const [secondPopoverOpen, setSecondPopoverOpen] = useState(false);
@@ -89,42 +127,42 @@ export default function Navbar() {
           </div>
           <div className='mr-8 pr-8'>
             <Link href="/">
-              <Image priority  width={200} style={{width:'180px',height: '80px'}} height={200} alt="" src="https://storage.googleapis.com/khs-zlin/logo.svg" className=" absolute -top-2 -ml-4 hidden lg:block" />
+              <Image priority  width={200} style={{width:'180px',height: '80px'}} height={200} alt="logo" src="https://storage.googleapis.com/khs-zlin/logo.svg" className=" absolute -top-2 -ml-4 hidden lg:block" />
             </Link>
             <Link href="/">
-            <Image priority  width={150} style={{width:'150',height: '80'}} height={150} alt="" src="https://storage.googleapis.com/khs-zlin/logo_small.svg" className=" absolute flex ml-6 lg:hidden" />
+            <Image priority  width={150} style={{width:'150px',height: '80px'}} height={150} alt="logo" src="https://storage.googleapis.com/khs-zlin/logo_small.svg" className=" absolute -top-2 flex ml-6 lg:hidden" />
           </Link>
           </div>
         </div>
-        <div className='flex-grow ml-4  flex relative mr-2'>
+        <div className='flex-grow ml-4  flex relative mr-2'>                               
         </div> {/* NAVIGAČNÍ LIŠTA DOLE */}
         <PopoverGroup className="hidden  lg:flex flex-grow ml-10 lg:gap-x-5">
-          <Link href="/novinky" className="text-sm ml-10 leading-6 hover:text-orange-600 dark:hover:text-orange-200 text-gray-700 dark:text-white hover:border-b-2 z-50 -mb-2 hover:border-b-orange-600 dark:border-b-orange-200">Novinky</Link>
-          <Popover className='hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200'>
+          <Link href="/novinky" className={`text-sm ml-10 leading-6 link ${pathName.includes('/novinky')  ? active : inActive } hover:border-b-2 z-50 -mb-2 hover:border-b-orange-600 dark:border-b-orange-200`}>Novinky</Link>
+          <Popover className={`hover:border-b-2 z-50 -mb-2 ${pathName === '/clanky' ? active : inActive } hover:border-b-orange-600 dark:border-b-orange-200`}>
             {({ open }) => (
               <>
-                <PopoverButton className="flex   dark:hover:text-orange-200 hover:text-orange-600 dark:text-white focus:outline-none items-center gap-x-1 text-sm  leading-6 text-gray-700">
+                <PopoverButton className={`flex focus:outline-none items-center gap-x-1 text-sm  leading-6`}>
                   Články
                   <ChevronDownIcon aria-hidden="true" className={`h-5  w-5 flex-none  text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} />
                 </PopoverButton>
                 <PopoverPanel className="absolute drop-shadow-xl dark:text-gray-300 top-full z-10  w-screen max-w-lg overflow-hidden rounded-3xl  dark:bg-gray-800 bg-slate-100 shadow-lg">
                 <div className="p-4">
-                <a href='#' className="block font-semibold dark:text-gray-300 text-gray-700 border-b dark:border-gray-400 ">       
+                  <Link href='/clanky'>       
                       <div className="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm leading-6 dark:hover:bg-gray-700 hover:bg-white">
                         <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg dark:bg-gray-800 bg-slate-100 dark:group-hover:bg-gray-700 group-hover:bg-white">
                           <VscChecklist aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-300  group-hover:text-orange-600 dark:group-hover:text-orange-200" />
                         </div>
-                        <div className="flex-auto group-hover:text-orange-400 dark:group-hover:text-orange-200 ">
+                        <div className="flex-auto group-hover:text-orange-400 dark:text-gray-300 text-gray-600 font-bold dark:group-hover:text-orange-200 ">
                             Zobrazit všechny články
                           <p className="mt-1 text-gray-600 dark:text-gray-300 font-thin">Seznam všech článků bez filtrování</p>
                         </div>
                       </div>
-                    </a>
+                    </Link>
 
                 </div>
                   <div className="p-4 -mt-7">
                     {articles.map((item) => (
-                    <a href={item.href} key={item.id} className=" ml-5 block font-semibold dark:text-gray-300 text-gray-700">       
+                    <Link href={item.href} key={item.id} className=" ml-5 block font-semibold dark:text-gray-300 text-gray-700">       
                       <div className="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm leading-6 dark:hover:bg-gray-700 hover:bg-white">
                         <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg dark:bg-gray-800 bg-slate-100 dark:group-hover:bg-gray-700 group-hover:bg-white">
                           <item.icon aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-300  group-hover:text-orange-600 dark:group-hover:text-orange-200" />
@@ -134,24 +172,24 @@ export default function Navbar() {
                           <p className="mt-1 text-gray-600 dark:text-gray-300 font-thin">{item.description}</p>
                         </div>
                       </div>
-                    </a>
+                    </Link>
                   ))}
                   </div>
                 </PopoverPanel>
               </>
             )}
           </Popover>
-          <Popover className='hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200'>
+          <Popover className={`hover:border-b-2 z-50 -mb-2 ${pathName.includes('/kurzy') ? 'border-b-2 border-b-orange-600' : '' }  hover:border-b-orange-600 dark:border-b-orange-200`}>
             {({ open }) => (
               <>
-                <PopoverButton className="flex dark:hover:text-orange-200 hover:text-orange-600 dark:text-white focus:outline-none items-center gap-x-1 text-sm  leading-6 text-gray-700">
-                  Kurzy a kroužky
+                <PopoverButton className={`flex dark:hover:text-orange-200  ${pathName.includes('/kurzy') ? 'text-orange-600 dark:text-orange-300' : '' } hover:text-orange-600 dark:text-white focus:outline-none items-center gap-x-1 text-sm  leading-6 text-gray-700`}>
+                  Kurzy
                   <ChevronDownIcon aria-hidden="true" className={`h-5  w-5 flex-none text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} />
                 </PopoverButton>
                 <PopoverPanel className=" absolute drop-shadow-xl dark:text-gray-300 top-full z-10  w-screen max-w-lg overflow-hidden rounded-3xl  dark:bg-gray-800 bg-slate-100 shadow-lg">
                   <div className="p-4">
                     {kurzy.map((item) => (
-                    <a href={item.href} key={item.id} className="block font-semibold dark:text-gray-300 text-gray-700">       
+                    <Link href={item.href} key={item.id}>       
                       <div className="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm leading-6 dark:hover:bg-gray-700 hover:bg-white">
                         <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg dark:bg-gray-800 bg-slate-100 dark:group-hover:bg-gray-700 group-hover:bg-white">
                           <item.icon aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-300  group-hover:text-orange-600 dark:group-hover:text-orange-200" />
@@ -161,19 +199,69 @@ export default function Navbar() {
                           <p className="mt-1 text-gray-600 dark:text-gray-300 font-thin">{item.description}</p>
                         </div>
                       </div>
-                    </a>
+                    </Link>
                   ))}
                   </div>
                 </PopoverPanel>
               </>
             )}
           </Popover>
-          
-          <a href="#" className="text-sm leading-6 hover:text-orange-600 dark:hover:text-orange-200 dark:text-white flex hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 text-gray-700">O nás</a>
-          <a href="#" className="text-sm leading-6 hover:text-orange-600 dark:hover:text-orange-200 dark:text-white hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 text-gray-700">Oddílové akce</a>
-          <a href="#" className="text-sm leading-6 hover:text-orange-600 dark:hover:text-orange-200 dark:text-white hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 text-gray-700">Pro členy</a>
-           <a href="#" className="text-sm leading-6 hover:text-orange-600 dark:hover:text-orange-200 dark:text-white hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 flex text-gray-700">Kontakt</a>
-          <div className="text-sm leading-6 hover:text-orange-600 dark:hover:text-orange-200 dark:text-white hover:border-b-2 z-50 -mb-2  m-3 text-white/0 "> </div>
+          <Popover className={`${pathName.includes('/o-nas') ? active : inActive } hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 `}>
+            {({ open }) => (
+              <>
+                <PopoverButton className="flex focus:outline-none items-center gap-x-1 text-sm  leading-6 ">
+                  O nás
+                  <ChevronDownIcon aria-hidden="true" className={`h-5  w-5 flex-none text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} />
+                </PopoverButton>
+                <PopoverPanel className=" absolute drop-shadow-xl text-gray-700 dark:text-gray-300 top-full z-10  w-screen max-w-lg overflow-hidden rounded-3xl  dark:bg-gray-800 bg-slate-100 shadow-lg">
+                  <div className="p-4">
+                    {oNas.map((item) => (
+                    <Link href={item.href} key={item.id}>       
+                      <div className="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm leading-6 dark:hover:bg-gray-700 hover:bg-white">
+                        <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg dark:bg-gray-800 bg-slate-100 dark:group-hover:bg-gray-700 group-hover:bg-white">
+                          <item.icon aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-300  group-hover:text-orange-600 dark:group-hover:text-orange-200" />
+                        </div>
+                        <div className="flex-auto dark:group-hover:text-orange-200 group-hover:text-orange-400">
+                            {item.name}
+                          <p className="mt-1 text-gray-600 dark:text-gray-300 font-thin">{item.description}</p>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                  </div>
+                </PopoverPanel>
+              </>
+            )}
+          </Popover>
+          <Popover className={` ${pathName.includes('clenstvi-v-oddile') ? active : inActive } hover:border-b-2 z-50 -mb-2  `}>
+            {({ open }) => (
+              <>
+                <PopoverButton className= 'flex  focus:outline-none items-center gap-x-1 text-sm leading-6'>
+                  Členství v oddíle
+                  <ChevronDownIcon aria-hidden="true" className={`h-5  w-5 flex-none text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} />
+                </PopoverButton>
+                <PopoverPanel className=" absolute drop-shadow-xl dark:text-gray-300 top-full z-10  w-screen max-w-lg overflow-hidden rounded-3xl  dark:bg-gray-800 bg-slate-100 shadow-lg">
+                  <div className="p-4">
+                    {proCleny.map((item) => (
+                    <Link href={item.href} key={item.id}>       
+                      <div className="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm leading-6 dark:hover:bg-gray-700 hover:bg-white">
+                        <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg dark:bg-gray-800 bg-slate-100 dark:group-hover:bg-gray-700 group-hover:bg-white">
+                          <item.icon aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-300  group-hover:text-orange-600 dark:group-hover:text-orange-200" />
+                        </div>
+                        <div className="flex-auto dark:group-hover:text-orange-200 group-hover:text-orange-400">
+                            {item.name}
+                          <p className="mt-1 text-gray-600 dark:text-gray-300 font-thin">{item.description}</p>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                  </div>
+                </PopoverPanel>
+              </>
+            )}
+          </Popover>
+           <Link href="/kontakt" className={` ${pathName.includes('/kontakt') ? active : inActive } text-sm leading-6 hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 flex`}>Kontakt</Link>
+          <div className="text-sm leading-6  dark:text-white  z-50 -mb-2  m-3 text-white/0 "> </div>
         </PopoverGroup>
         <div className='flex flex-row '>
               <div className='mr-2 items-center flex'>
@@ -181,7 +269,7 @@ export default function Navbar() {
               </div>
               <div>
                 <PopoverGroup>
-                  <Popover className='relative flex '>
+                  <Popover className='relative flex  '>
                     {({ open }) => (
                       <>
                         <PopoverButton className="ml-5 flex focus:outline-none items-center gap-x-2 text-sm leading-6 dark:text-gray-300 text-gray-700">
@@ -194,16 +282,16 @@ export default function Navbar() {
                             priority 
                           />
                         </PopoverButton>
-                        <PopoverPanel className="border-gray-200 top-14 right-0   shadow-gray-400/50 dark:shadow-gray-700/50 border- absolute drop-shadow-xl z-10 w-60 rounded-3xl dark:bg-gray-800 bg-slate-100 shadow-lg">
+                        <PopoverPanel className="border-gray-200 top-14 right-0 border-[1px] dark:border-gray-500  shadow-gray-400/50 dark:shadow-gray-700/50 border- absolute drop-shadow-xl z-10 w-60 rounded dark:bg-gray-800 bg-slate-100 shadow-lg">
                           <div className="p-4">
                             {userPanel.map((item) => (
-                              <a 
-                                href="#" 
+                              <Link 
                                 key={item.id} 
+                                href={item.href}
                                 className="text-sm leading-6 dark:text-gray-300 text-gray-700"
                               >
-                                <div className="group relative flex items-center gap-x-6 rounded-lg text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
-                                  <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
+                                <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
+                                  <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
                                     <item.icon 
                                       aria-hidden="true" 
                                       className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" 
@@ -213,7 +301,7 @@ export default function Navbar() {
                                     {item.name}
                                   </div>
                                 </div>
-                              </a>
+                              </Link>
                             ))}
                           </div>
                         </PopoverPanel>
@@ -226,96 +314,157 @@ export default function Navbar() {
       </nav>
       <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
         <div className="fixed inset-0 z-50 backdrop-blur-sm bg-slate-100/30" />
-        <DialogPanel className="fixed z-50 inset-y-0 left-0 w-9/12 sm:w-6/12 overflow-y-auto dark:bg-slate-800 dark:hover:bg-slate-800  bg-slate-100 px-3 py-3 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <DialogPanel className="fixed z-50 inset-y-0 left-0 w-4/6 sm:w-6/12 overflow-y-auto dark:bg-slate-800 dark:hover:bg-slate-800  bg-slate-100 px-3 py-3 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between ">
             <button type="button" onClick={() => setMobileMenuOpen(false)} className="rounded-lg   text-gray-700">
               <XMarkIcon aria-hidden="true" className="h-10 w-10 dark:text-white" />
             </button>
           </div>
+
+          {/* mobile menu  */}
+
+
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
-            
               <div className="space-y-2 py-5 ">
-              <a href='#' className="block -mx-3  py-1 leading-7 text-gray-700 hover:bg-gray-50  dark:hover:bg-slate-800 hover:bg-none  border-b dark:border-gray-500 border-gray-200 ">
+              <Link href='/novinky' onClick={() => setMobileMenuOpen(false)} className="block -mx-3  py-1 leading-7  text-gray-700 hover:bg-gray-50  dark:hover:bg-slate-800 hover:bg-none  border-b dark:border-gray-500 border-gray-200 ">
                 <div className='flex w-5/6 justify-start '>
                   <div className='w-1/6 justify-center  pl-5 align-bottom flex'>
-                    <IoIosInformationCircleOutline  className='h-5 w-5 self-center flex dark:text-gray-400 '/>
+                    <IoIosInformationCircleOutline  className='h-6 w-6 self-center flex dark:text-gray-400 '/>
                   </div>
-                  <div className='w-5/6 pl-2  justify-start dark:text-white align-middle flex'>
+                  <div className={` ${pathName.includes('/novinky') ? 'text-orange-600 dark:text-orange-300' : 'text-gray-700 dark:text-white '}  w-5/6 pl-2  justify-start  align-middle flex`}>
                       Novinky
                   </div>
                 </div>
-                </a>
+                </Link>
                 <Disclosure as="div" className="-mx-3 border-b dark:border-gray-500 border-gray-200">
                   <DisclosureButton className="group dark:text-gray-400 flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base leading-7 text-gray-700 dark:hover:bg-slate-800   hover:bg-gray-50">
                     <div className='flex w-5/6 justify-start align-middle'>
                       <div className='w-1/6 justify-center align-middle flex'>
                         <GiNewspaper className='h-6 w-6 justify-center align-middle flex'/>
                       </div>
-                      <div className='w-5/6 justify-start align-middle flex'>
-                        <a href="#" className="align-middle dark:text-white">Články</a>
+                      <div className={` ${pathName.includes('/clanky') ? 'text-orange-600 dark:text-orange-300' : 'text-gray-700 dark:text-white '}  w-5/6 justify-start  align-middle flex`}>
+                        <a href="#" className="align-middle ">Články</a>
                       </div>
                     </div>
                     <ChevronDownIcon aria-hidden="true" className="h-5  w-5 dark:text-gray-400 flex-none group-data-[open]:rotate-180" />
                   </DisclosureButton>
-                  <DisclosurePanel className="mt-2">
-                    {articles.map((item) => (
-                      <DisclosureButton
-                      key={item.name}
-                      href={item.href}
-                      className="block rounded-lg  pl-6 pr-3 text-sm leading-7 dark:text-white text-gray-700 ">
-                      <div className='flex p-2  hover:bg-gray-50 dark:hover:bg-slate-800 dark:border-gray-500  border-l border-gray-200 hover:border-orange-600 dark:hover:border-orange-200 dark:hover:text-orange-300 hover:text-orange-600'>
-                        <div className='w-1/6 mr-2'>
-                        </div>
-                        <div className='w-5/6 ml-2  mr-40' >
-                          {item.name}
-                        </div>
-                      </div>
-                    </DisclosureButton>
-                    ))}
-                  </DisclosurePanel>
+                    <DisclosurePanel className="mt-2">
+                      {articles.map((item) => (
+                        <DisclosureButton
+                        key={item.name}
+                        className="block rounded-lg w-full text-start pl-6 pr-3 text-sm leading-7 ">
+                          <Link href={item.href} onClick={() => setMobileMenuOpen(false)} passHref>
+                          <div className={`flex p-2 flex-grow ${ item.filter === (currentFilter)  ? activeMobile : inActiveMobile } `}>
+                            <div className='w-full ml-2 text-start' >
+                              {item.name}
+                            </div>
+                          </div>
+                        </Link>
+                      </DisclosureButton>
+                      ))}
+                    </DisclosurePanel>
                 </Disclosure>
+
+
                 <Disclosure as="div" className="-mx-3 border-b dark:border-gray-500 border-gray-200">
-                  <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base leading-7  text-gray-700 dark:text-white dark:hover:bg-slate-800  hover:bg-gray-50">
+                  <DisclosureButton className="group dark:text-gray-400 flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base leading-7 text-gray-700 dark:hover:bg-slate-800   hover:bg-gray-50">
                     <div className='flex w-5/6 justify-start align-middle'>
                       <div className='w-1/6 justify-center align-middle flex'>
-                        <IoSchoolOutline  className='h-6 w-6 justify-center dark:text-gray-400  align-middle flex'/>
+                        <GiNewspaper className='h-6 w-6 justify-center align-middle flex'/>
                       </div>
-                      <div className='w-5/6 justify-start align-middle flex'>
-                        <a href="#" className="align-middle ">Kurzy a kroužky</a>
+                      <div className={` ${pathName.includes('/kurzy') ? 'text-orange-600 dark:text-orange-300' : 'text-gray-700 dark:text-white '}  w-5/6 justify-start  align-middle flex`}>
+                        <a href="#" className="align-middle ">Kurzy</a>
                       </div>
                     </div>
-                    <ChevronDownIcon aria-hidden="true" className="h-5 w-5 dark:text-gray-400 flex-none group-data-[open]:rotate-180" />
+                    <ChevronDownIcon aria-hidden="true" className="h-5  w-5 dark:text-gray-400 flex-none group-data-[open]:rotate-180" />
                   </DisclosureButton>
-                  <DisclosurePanel className="mt-2 ">
-                    {kurzy.map((item) => (
-                      <DisclosureButton
+                    <DisclosurePanel className="mt-2">
+                      {kurzy.map((item) => (
+                        <DisclosureButton
                         key={item.name}
-                        href={item.href}
-                        className="block rounded-lg dark:hover:bg-slate-800  pl-6 pr-3 text-sm leading-7 dark:text-white text-gray-700 ">
-                       <div className='flex p-2  hover:bg-gray-50 dark:hover:bg-slate-800 dark:hover:border-orange-200  border-l dark:border-gray-500 border-gray-200 hover:border-orange-600 dark:hover:text-orange-300 hover:text-orange-600'>
-                        <div className='w-1/6 mr-2'>
-                        </div>
-                        <div className='w-5/6 ml-2  flex-grow mr-40' > 
-                          {item.name}
-                        </div>
-                       </div>
+                        className="block rounded-lg w-full text-start pl-6 pr-3 text-sm leading-7 ">
+                          <Link href={item.href} onClick={() => setMobileMenuOpen(false)} passHref>
+                          <div className={`flex p-2 flex-grow ${pathName.includes(item.href) ? activeMobile : inActiveMobile } `}>
+                            <div className='w-full ml-2 text-start' >
+                              {item.name}
+                            </div>
+                          </div>
+                        </Link>
                       </DisclosureButton>
-                    ))}
-                  </DisclosurePanel>
+                      ))}
+                    </DisclosurePanel>
                 </Disclosure>
-                {menuMobil.map((item) => (
-                   <a href='#' key={item.id} className=" -m-2 block rounded-lg py-1 leading-7 text-gray-700 dark:hover:bg-slate-800 hover:bg-gray-50 dark:group-hover:text-orange-200r:bg-slate-800  dark:hover:text-orange-300">
-                <div className='flex justify-start border-b border-gray-200 dark:border-gray-500'>
-                  <div className='w-1/6 justify-center align-bottom flex'>
-                    <item.icon  className='h-5 w-5 self-center flex dark:text-gray-400'/>
+
+                <Disclosure as="div" className="-mx-3 border-b dark:border-gray-500 border-gray-200">
+                  <DisclosureButton className="group dark:text-gray-400 flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base leading-7 text-gray-700 dark:hover:bg-slate-800   hover:bg-gray-50">
+                    <div className='flex w-5/6 justify-start align-middle'>
+                      <div className='w-1/6 justify-center align-middle flex'>
+                        <GiNewspaper className='h-6 w-6 justify-center align-middle flex'/>
+                      </div>
+                      <div className={` ${pathName.includes('/o-nas/') ? 'text-orange-600 dark:text-orange-300' : 'text-gray-700 dark:text-white '}  w-5/6 justify-start  align-middle flex`}>
+                        <a href="#" className="align-middle ">O nás</a>
+                      </div>
+                    </div>
+                    <ChevronDownIcon aria-hidden="true" className="h-5  w-5 dark:text-gray-400 flex-none group-data-[open]:rotate-180" />
+                  </DisclosureButton>
+                    <DisclosurePanel className="mt-2">
+                      {oNas.map((item) => (
+                        <DisclosureButton
+                        key={item.name}
+                        className="block rounded-lg w-full text-start pl-6 pr-3 text-sm leading-7 ">
+                          <Link href={item.href} onClick={() => setMobileMenuOpen(false)} passHref>
+                          <div className={`flex p-2 flex-grow ${pathName.includes(item.href) ? activeMobile : inActiveMobile } `}>
+                            <div className='w-full ml-2 text-start' >
+                              {item.name}
+                            </div>
+                          </div>
+                        </Link>
+                      </DisclosureButton>
+                      ))}
+                    </DisclosurePanel>
+                </Disclosure>
+
+
+                <Disclosure as="div" className="-mx-3 border-b dark:border-gray-500 border-gray-200">
+                  <DisclosureButton className="group dark:text-gray-400 flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base leading-7 text-gray-700 dark:hover:bg-slate-800   hover:bg-gray-50">
+                    <div className='flex w-5/6 justify-start align-middle'>
+                      <div className='w-1/6 justify-center align-middle flex'>
+                        <GiNewspaper className='h-6 w-6 justify-center align-middle flex'/>
+                      </div>
+                      <div className={` ${pathName.includes('/clenstvi-v-oddile') ? 'text-orange-600 dark:text-orange-300' : 'text-gray-700 dark:text-white '}  w-5/6 justify-start  align-middle flex`}>
+                        <a href="#" className="align-middle ">Pro členy</a>
+                      </div>
+                    </div>
+                    <ChevronDownIcon aria-hidden="true" className="h-5  w-5 dark:text-gray-400 flex-none group-data-[open]:rotate-180" />
+                  </DisclosureButton>
+                    <DisclosurePanel className="mt-2">
+                      {proCleny.map((item) => (
+                        <DisclosureButton
+                        key={item.name}
+                        className="block rounded-lg w-full text-start pl-6 pr-3 text-sm leading-7 ">
+                          <Link href={item.href} onClick={() => setMobileMenuOpen(false)} passHref>
+                          <div className={`flex p-2 flex-grow ${pathName.includes(item.href) ? activeMobile : inActiveMobile } `}>
+                            <div className='w-full ml-2 text-start' >
+                              {item.name}
+                            </div>
+                          </div>
+                        </Link>
+                      </DisclosureButton>
+                      ))}
+                    </DisclosurePanel>
+                </Disclosure>
+
+                <Link href='/kontakt' onClick={() => setMobileMenuOpen(false)} className={` ${pathName.includes('/kontakt') ? 'dark:text-orange-200 ' : 'dark:text-white text-gray-500' } block -mx-3  py-1 leading-7  hover:bg-gray-50  dark:hover:bg-slate-800 hover:bg-none  border-b dark:border-gray-500 border-gray-200`} >
+                <div className='flex w-5/6 justify-start '>
+                  <div className='w-1/6 justify-center  pl-5 align-bottom flex'>
+                    <FiPhone  className='h-6 w-6 self-center flex dark:text-gray-400 text-gray-700 '/>
                   </div>
-                  <div className='w-5/6 -ml-1 mb-1 justify-start   dark:text-gray-200 align-middle flex '>
-                  {item.name}
+                  <div className={` ${pathName.includes('/kontakt') ? 'text-orange-600 dark:text-orange-300'  : 'dark:text-gray-200 text-gray-700' } w-5/6 pl-2  justify-start   align-middle flex `}>
+                      Kontakt
                   </div>
                 </div>
-                </a>
-                ))}
+                </Link>
               </div>
             </div>
           </div>

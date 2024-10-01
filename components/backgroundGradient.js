@@ -1,20 +1,12 @@
-export default function backgroundGradient ()  {
-    return (
+export default function BackgroundGradient() {
+  return (
+    <>
+      <div className="relative isolate px-6 pt-14 lg:px-8">
+        <div className="abslolute w-100 h-100 right-0 top-0">
+          <svg viewBox="0 0 100 100" className="w-100 h-100" xmlns="http://www.w3.org/2000/svg"><path d="M95,64.5Q90,79,77.5,88.5Q65,98,50,98Q35,98,22.5,88.5Q10,79,5,64.5Q0,50,5,35.5Q10,21,22.5,11.5Q35,2,50,2Q65,2,77.5,11.5Q90,21,95,35.5Q100,50,95,64.5Z" stroke="none" stroke-width="0" fill="#fce110"></path></svg>
 
-    
-        <div
-          className="absolute inset-x-0 -z-10 transform-gpu  overflow-hidden blur-3xl"
-          aria-hidden="true"
-        >
-          <div
-            className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#F25C19] to-[#93ffba] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-            style={{
-              clipPath:
-                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-            }}
-          />
         </div>
-  
-
-    )
+      </div>
+    </>
+  );
 }

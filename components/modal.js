@@ -9,7 +9,7 @@ export default function ModalImg ({imgSrc,alt}) {
             small={imgSrc}
             large={imgSrc}
             alt={alt}
-            className="rounded-2xl border-gray-300 border-[1px]"
+            className="rounded-2xl border-gray-300 dark:border-gray-700 dark:brightness-50 border-[1px]"
         />
     )
 }

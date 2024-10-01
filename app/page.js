@@ -14,6 +14,7 @@ import LogoCloudSponsors from '@/components/index/logoCloudSponsors';
 
 export default function LandingPart() {
 
+  
   const Months = [
     'leden', 'únor', 'březen', 'duben', 'květen', 'červen', 
     'červenec', 'srpen', 'září', 'říjen', 'listopad', 'prosinec'
@@ -25,7 +26,7 @@ export default function LandingPart() {
   const currentMonth = dayjs().month()
 
   return (
-    <div className='flex w-full flex-col'>
+    <div className='flex w-full mb-10 flex-col'>
     
       <div className="flex flex-col flex-grow max-w-screen-xl px-4 sm:px-6 md:px-8 lg:px-4 justify-center items-center mx-auto"> 
         <div aria-hidden="true" className="flex justify-center flex-wrap flex-grow mt-16">
@@ -55,7 +56,7 @@ export default function LandingPart() {
           <div className='mb-20'>
           </div>
           </div>
-        <div className='flex w-full flex-col border-t border-1 dark:border-gray-600 bg-white dark:bg-[#191919]'>
+        <div className='flex w-full flex-col border-[1px] dark:border-gray-900 shadow-[0_15px_15px_rgba(0,0,0,0.1),0_1px_1px_rgba(0,0,0,0.1)]  dark:shadow-[0_5px_15px_rgba(255,152,0,0.2),0_1px_3px_rgba(255,1180,0,0.05)] border-gray-200 bg-white dark:bg-[#191919]'>
           <div className='flex my-5 flex-col  flex-grow max-w-screen-xl px-4 sm:px-6 md:px-8 lg:px-4 justify-center items-center mx-auto'>
           <div className="w-full lg:px-10 dark:bg-[#191919] text-2xl flex font-bold dark:text-white text-gray-500 justify-center text-center">
             <div className=' text-gray-700 flex mt-10 w-full flex-col flex-wrap '>
@@ -81,10 +82,10 @@ export default function LandingPart() {
           </div>
         </div>
       </div>
-      <div className='dark:bg-black border-t  dark:border-t-gray-600 border-gray-300' >
+      <div >
         <LogoCloudPartners  />
       </div>
-      <div className='dark:bg-black border-t  border-gray-300 dark:border-gray-600 bg-white'>
+      <div className='dark:bg-black border shadow-[0_15px_15px_rgba(0,0,0,0.1),0_1px_1px_rgba(0,0,0,0.1)] dark:shadow-[0_5px_15px_rgba(255,152,0,0.3),0_1px_3px_rgba(255,1180,0,0.1)] border-gray-200 dark:border-gray-900 mb-10 bg-white'>
         <LogoCloudSponsors />
       </div>
     </div>
