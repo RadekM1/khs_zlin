@@ -37,7 +37,8 @@ import { FaPeopleGroup, FaHillAvalanche, FaListCheck } from "react-icons/fa6";
 import { FaIcicles, FaRegSnowflake } from "react-icons/fa";
 import { usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation'
-
+import { IoIosSchool } from "react-icons/io";
+import { IoPeopleOutline } from "react-icons/io5";
 
 
 
@@ -382,7 +383,7 @@ export default function Navbar() {
                   <DisclosureButton className="group dark:text-gray-400 flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base leading-7 text-gray-700 dark:hover:bg-slate-800   hover:bg-gray-50">
                     <div className='flex w-5/6 justify-start align-middle'>
                       <div className='w-1/6 justify-center align-middle flex'>
-                        <GiNewspaper className='h-6 w-6 justify-center align-middle flex'/>
+                        <IoIosSchool  className='h-6 w-6 justify-center align-middle flex'/>
                       </div>
                       <div className={` ${pathName.includes('/kurzy') ? 'text-orange-600 dark:text-orange-300' : 'text-gray-700 dark:text-white '}  w-5/6 justify-start  align-middle flex`}>
                         <a href="#" className="align-middle ">Kurzy</a>
@@ -411,7 +412,7 @@ export default function Navbar() {
                   <DisclosureButton className="group dark:text-gray-400 flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base leading-7 text-gray-700 dark:hover:bg-slate-800   hover:bg-gray-50">
                     <div className='flex w-5/6 justify-start align-middle'>
                       <div className='w-1/6 justify-center align-middle flex'>
-                        <GiNewspaper className='h-6 w-6 justify-center align-middle flex'/>
+                        <IoPeopleOutline className='h-6 w-6 justify-center align-middle flex'/>
                       </div>
                       <div className={` ${pathName.includes('/o-nas/') ? 'text-orange-600 dark:text-orange-300' : 'text-gray-700 dark:text-white '}  w-5/6 justify-start  align-middle flex`}>
                         <a href="#" className="align-middle ">O nás</a>
@@ -441,7 +442,7 @@ export default function Navbar() {
                   <DisclosureButton className="group dark:text-gray-400 flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base leading-7 text-gray-700 dark:hover:bg-slate-800   hover:bg-gray-50">
                     <div className='flex w-5/6 justify-start align-middle'>
                       <div className='w-1/6 justify-center align-middle flex'>
-                        <GiNewspaper className='h-6 w-6 justify-center align-middle flex'/>
+                        <GiSkis className='h-6 w-6 justify-center align-middle flex'/>
                       </div>
                       <div className={` ${pathName.includes('/clenstvi-v-oddile') ? 'text-orange-600 dark:text-orange-300' : 'text-gray-700 dark:text-white '}  w-5/6 justify-start  align-middle flex`}>
                         <a href="#" className="align-middle ">Pro členy</a>
