@@ -1,4 +1,6 @@
 
+
+
 export default function page() {
 
 
@@ -9,7 +11,6 @@ export default function page() {
         <div className="flex mx-10">
 
         <p className="text-start my-5">první odstavec stránky</p>
-
 
 
         </div>

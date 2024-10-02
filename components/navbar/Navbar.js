@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import { useState} from 'react'
 import {
   Dialog,
   DialogPanel,
@@ -19,7 +19,7 @@ import {
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { GiHiking, GiMountainClimbing, GiNewspaper, GiSkis  } from "react-icons/gi";
 import { LiaMountainSolid } from "react-icons/lia";
-import boulderIcon from '../boulderIcon'
+import BoulderIcon from '../boulderIcon'
 import { CiLogout, CiLogin  } from "react-icons/ci";
 import { IoIosSettings, IoIosHelpCircleOutline, IoIosInformationCircleOutline  } from "react-icons/io";
 import { FiPhone } from "react-icons/fi";
@@ -37,6 +37,8 @@ import { FaPeopleGroup, FaHillAvalanche, FaListCheck } from "react-icons/fa6";
 import { FaIcicles, FaRegSnowflake } from "react-icons/fa";
 import { usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
+import Spinner from '../spinner'
 
 
 
@@ -99,15 +101,12 @@ export default function Navbar() {
   let activeMobile = 'dark:border-orange-200 border-orange-600 text-orange-600 dark:text-orange-200 border-l '
   let inActiveMobile = 'dark:hover:border-orange-200 hover:bg-gray-50 dark:hover:bg-slate-800 dark:border-gray-500  border-l border-gray-200 hover:border-orange-600  dark:hover:text-orange-200 hover:text-orange-600'
 
+  
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [firstPopoverOpen, setFirstPopoverOpen] = useState(false);
-  const [secondPopoverOpen, setSecondPopoverOpen] = useState(false);
-  const [thirdPopoverOpen, setThirdPopoverOpen] = useState(false);
 
-  useEffect(() => {
-    
-  }, [firstPopoverOpen, secondPopoverOpen, thirdPopoverOpen]);
+
+
 
   return (
     
@@ -127,19 +126,19 @@ export default function Navbar() {
           </div>
           <div className='mr-8 pr-8'>
             <Link href="/">
-              <Image priority  width={200} style={{width:'180px',height: '80px'}} height={200} alt="logo" src="https://storage.googleapis.com/khs-zlin/logo.svg" className=" absolute -top-2 -ml-4 hidden lg:block" />
+              <Image priority  width={200} style={{width:'auto',height: '60px'}} height={200} alt="logo" src="https://storage.googleapis.com/khs-zlin/logo.svg" className=" absolute top-1 -ml-4 hidden lg:block" />
             </Link>
             <Link href="/">
-            <Image priority  width={150} style={{width:'150px',height: '80px'}} height={150} alt="logo" src="https://storage.googleapis.com/khs-zlin/logo_small.svg" className=" absolute -top-2 flex ml-6 lg:hidden" />
-          </Link>
+              <Image priority  width={150} style={{width:'auto',height: '50px'}} height={150} alt="logo" src="https://storage.googleapis.com/khs-zlin/logo_small.svg" className=" absolute  flex ml-6 lg:hidden" />
+            </Link>
           </div>
         </div>
         <div className='flex-grow ml-4  flex relative mr-2'>                               
         </div> {/* NAVIGAČNÍ LIŠTA DOLE */}
-        <PopoverGroup className="hidden  lg:flex flex-grow ml-10 lg:gap-x-5">
+        <PopoverGroup className="hidden lg:flex flex-grow ml-10 lg:gap-x-5">
           <Link href="/novinky" className={`text-sm ml-10 leading-6 link ${pathName.includes('/novinky')  ? active : inActive } hover:border-b-2 z-50 -mb-2 hover:border-b-orange-600 dark:border-b-orange-200`}>Novinky</Link>
           <Popover className={`hover:border-b-2 z-50 -mb-2 ${pathName === '/clanky' ? active : inActive } hover:border-b-orange-600 dark:border-b-orange-200`}>
-            {({ open }) => (
+            {({ open, close }) => (
               <>
                 <PopoverButton className={`flex focus:outline-none items-center gap-x-1 text-sm  leading-6`}>
                   Články
@@ -147,32 +146,38 @@ export default function Navbar() {
                 </PopoverButton>
                 <PopoverPanel className="absolute drop-shadow-xl dark:text-gray-300 top-full z-10  w-screen max-w-lg overflow-hidden rounded-3xl  dark:bg-gray-800 bg-slate-100 shadow-lg">
                 <div className="p-4">
-                  <Link href='/clanky'>       
-                      <div className="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm leading-6 dark:hover:bg-gray-700 hover:bg-white">
-                        <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg dark:bg-gray-800 bg-slate-100 dark:group-hover:bg-gray-700 group-hover:bg-white">
-                          <VscChecklist aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-300  group-hover:text-orange-600 dark:group-hover:text-orange-200" />
+                  <Suspense  fallback={ <Spinner />}  >
+                    <Link onClick={()=>close()} href='/clanky'>       
+                        <div className="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm leading-6 dark:hover:bg-gray-700 hover:bg-white">
+                          <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg dark:bg-gray-800 bg-slate-100 dark:group-hover:bg-gray-700 group-hover:bg-white">
+                            <VscChecklist aria-hidden="true" className= {` z-50 -mb-2 ${(pathName === '/clanky' && currentFilter === null)  ? 'text-orange-600 dark:text-orange-200' : '  text-gray-600 dark:text-gray-300  group-hover:text-orange-600 dark:group-hover:text-orange-200 ' } h-6 w-6 `} />
+                          </div> 
+                          <div className={` z-50 -mb-2 ${pathName === '/clanky' && currentFilter === null ? 'text-orange-600 dark:text-orange-200' : ' ' } `}>
+                              Zobrazit všechny články
+                            <p className="mt-1 text-gray-600 dark:text-gray-300 font-thin">Seznam všech článků bez filtrování</p>
+                          </div>
                         </div>
-                        <div className="flex-auto group-hover:text-orange-400 dark:text-gray-300 text-gray-600 font-bold dark:group-hover:text-orange-200 ">
-                            Zobrazit všechny články
-                          <p className="mt-1 text-gray-600 dark:text-gray-300 font-thin">Seznam všech článků bez filtrování</p>
-                        </div>
-                      </div>
-                    </Link>
-
+                      </Link>
+                    </Suspense>
                 </div>
                   <div className="p-4 -mt-7">
                     {articles.map((item) => (
-                    <Link href={item.href} key={item.id} className=" ml-5 block font-semibold dark:text-gray-300 text-gray-700">       
-                      <div className="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm leading-6 dark:hover:bg-gray-700 hover:bg-white">
-                        <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg dark:bg-gray-800 bg-slate-100 dark:group-hover:bg-gray-700 group-hover:bg-white">
-                          <item.icon aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-300  group-hover:text-orange-600 dark:group-hover:text-orange-200" />
+                    
+                      <Link href={item.href} key={item.id} onClick={()=>close()} className=" ml-5 block font-semibold dark:text-gray-300 text-gray-700">       
+                        <Suspense  fallback={ <Spinner />}  >
+                        <div className="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm leading-6 dark:hover:bg-gray-700 hover:bg-white">
+                          <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg dark:bg-gray-800 bg-slate-100 dark:group-hover:bg-gray-700 group-hover:bg-white">
+                            <item.icon aria-hidden="true" className={` ${item.filter === currentFilter ? 'dark:text-orange-200 text-orange-600' : 'text-gray-600 dark:text-gray-300  group-hover:text-orange-600 dark:group-hover:text-orange-200' } h-6 w-6 `} />
+                            
+                          </div>
+                          <div className={` ${item.filter.includes(currentFilter)  ? 'text-orange-600 dark:text-orange-200'  : 'dark:hover:text-orange-200 hover:text-orange-600'}  flex-auto  `}>
+                              {item.name}
+                            <p className="mt-1 text-gray-600 dark:text-gray-300 font-thin">{item.description}</p>
+                          </div>
                         </div>
-                        <div className="flex-auto dark:group-hover:text-orange-200 group-hover:text-orange-400">
-                            {item.name}
-                          <p className="mt-1 text-gray-600 dark:text-gray-300 font-thin">{item.description}</p>
-                        </div>
-                      </div>
-                    </Link>
+                        </Suspense>
+                      </Link>
+                   
                   ))}
                   </div>
                 </PopoverPanel>
@@ -180,21 +185,21 @@ export default function Navbar() {
             )}
           </Popover>
           <Popover className={`hover:border-b-2 z-50 -mb-2 ${pathName.includes('/kurzy') ? 'border-b-2 border-b-orange-600' : '' }  hover:border-b-orange-600 dark:border-b-orange-200`}>
-            {({ open }) => (
+            {({ open, close }) => (
               <>
-                <PopoverButton className={`flex dark:hover:text-orange-200  ${pathName.includes('/kurzy') ? 'text-orange-600 dark:text-orange-300' : '' } hover:text-orange-600 dark:text-white focus:outline-none items-center gap-x-1 text-sm  leading-6 text-gray-700`}>
+                <PopoverButton className={`flex  ${pathName.includes('/kurzy') ? 'text-orange-600 dark:text-orange-300' : 'dark:hover:text-orange-200 dark:text-white' } hover:text-orange-600  focus:outline-none items-center gap-x-1 text-sm  leading-6 text-gray-700`}>
                   Kurzy
                   <ChevronDownIcon aria-hidden="true" className={`h-5  w-5 flex-none text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} />
                 </PopoverButton>
                 <PopoverPanel className=" absolute drop-shadow-xl dark:text-gray-300 top-full z-10  w-screen max-w-lg overflow-hidden rounded-3xl  dark:bg-gray-800 bg-slate-100 shadow-lg">
                   <div className="p-4">
                     {kurzy.map((item) => (
-                    <Link href={item.href} key={item.id}>       
+                    <Link href={item.href} onClick={()=>close()} key={item.id}>       
                       <div className="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm leading-6 dark:hover:bg-gray-700 hover:bg-white">
                         <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg dark:bg-gray-800 bg-slate-100 dark:group-hover:bg-gray-700 group-hover:bg-white">
-                          <item.icon aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-300  group-hover:text-orange-600 dark:group-hover:text-orange-200" />
+                          <item.icon aria-hidden="true" className={` ${pathName.includes(item.href) ? 'dark:text-orange-200 text-orange-600' : 'text-gray-600 dark:text-gray-300  group-hover:text-orange-600 dark:group-hover:text-orange-200' } h-6 w-6 `} />
                         </div>
-                        <div className="flex-auto dark:group-hover:text-orange-200 group-hover:text-orange-400">
+                        <div className={` ${pathName.includes(item.href) ? 'text-orange-600 dark:text-orange-200' : ' dark:group-hover:text-orange-200 group-hover:text-orange-400'} flex-auto `}>
                             {item.name}
                           <p className="mt-1 text-gray-600 dark:text-gray-300 font-thin">{item.description}</p>
                         </div>
@@ -207,7 +212,7 @@ export default function Navbar() {
             )}
           </Popover>
           <Popover className={`${pathName.includes('/o-nas') ? active : inActive } hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 `}>
-            {({ open }) => (
+            {({ open, close }) => (
               <>
                 <PopoverButton className="flex focus:outline-none items-center gap-x-1 text-sm  leading-6 ">
                   O nás
@@ -216,12 +221,12 @@ export default function Navbar() {
                 <PopoverPanel className=" absolute drop-shadow-xl text-gray-700 dark:text-gray-300 top-full z-10  w-screen max-w-lg overflow-hidden rounded-3xl  dark:bg-gray-800 bg-slate-100 shadow-lg">
                   <div className="p-4">
                     {oNas.map((item) => (
-                    <Link href={item.href} key={item.id}>       
+                    <Link href={item.href} onClick={()=>close()} key={item.id}>       
                       <div className="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm leading-6 dark:hover:bg-gray-700 hover:bg-white">
                         <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg dark:bg-gray-800 bg-slate-100 dark:group-hover:bg-gray-700 group-hover:bg-white">
-                          <item.icon aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-300  group-hover:text-orange-600 dark:group-hover:text-orange-200" />
+                          <item.icon aria-hidden="true" className={` ${pathName.includes(item.href) ? 'dark:text-orange-200 text-orange-600' : 'text-gray-600 dark:text-gray-300  group-hover:text-orange-600 dark:group-hover:text-orange-200' } h-6 w-6 `} />
                         </div>
-                        <div className="flex-auto dark:group-hover:text-orange-200 group-hover:text-orange-400">
+                        <div className={` ${pathName.includes(item.href) ? 'text-orange-600 dark:text-orange-200' : ' dark:group-hover:text-orange-200 group-hover:text-orange-400'} flex-auto `}>
                             {item.name}
                           <p className="mt-1 text-gray-600 dark:text-gray-300 font-thin">{item.description}</p>
                         </div>
@@ -233,22 +238,23 @@ export default function Navbar() {
               </>
             )}
           </Popover>
-          <Popover className={` ${pathName.includes('clenstvi-v-oddile') ? active : inActive } hover:border-b-2 z-50 -mb-2  `}>
-            {({ open }) => (
+ 
+          <Popover className={`${pathName.includes('/clenstvi-v-oddile') ? active : inActive } hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 `}>
+            {({ open, close }) => (
               <>
-                <PopoverButton className= 'flex  focus:outline-none items-center gap-x-1 text-sm leading-6'>
+                <PopoverButton className="flex focus:outline-none items-center gap-x-1 text-sm  leading-6 ">
                   Členství v oddíle
                   <ChevronDownIcon aria-hidden="true" className={`h-5  w-5 flex-none text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} />
                 </PopoverButton>
-                <PopoverPanel className=" absolute drop-shadow-xl dark:text-gray-300 top-full z-10  w-screen max-w-lg overflow-hidden rounded-3xl  dark:bg-gray-800 bg-slate-100 shadow-lg">
+                <PopoverPanel className=" absolute drop-shadow-xl text-gray-700 dark:text-gray-300 top-full z-10  w-screen max-w-lg overflow-hidden rounded-3xl  dark:bg-gray-800 bg-slate-100 shadow-lg">
                   <div className="p-4">
                     {proCleny.map((item) => (
-                    <Link href={item.href} key={item.id}>       
+                    <Link href={item.href} onClick={()=>close()} key={item.id}>       
                       <div className="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm leading-6 dark:hover:bg-gray-700 hover:bg-white">
                         <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg dark:bg-gray-800 bg-slate-100 dark:group-hover:bg-gray-700 group-hover:bg-white">
-                          <item.icon aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-300  group-hover:text-orange-600 dark:group-hover:text-orange-200" />
+                          <item.icon aria-hidden="true" className={` ${pathName.includes(item.href) ? 'dark:text-orange-200 text-orange-600' : 'text-gray-600 dark:text-gray-300  group-hover:text-orange-600 dark:group-hover:text-orange-200' } h-6 w-6 `} />
                         </div>
-                        <div className="flex-auto dark:group-hover:text-orange-200 group-hover:text-orange-400">
+                        <div className={` ${pathName.includes(item.href) ? 'text-orange-600 dark:text-orange-200' : ' dark:group-hover:text-orange-200 group-hover:text-orange-400'} flex-auto `}>
                             {item.name}
                           <p className="mt-1 text-gray-600 dark:text-gray-300 font-thin">{item.description}</p>
                         </div>
@@ -260,6 +266,7 @@ export default function Navbar() {
               </>
             )}
           </Popover>
+
            <Link href="/kontakt" className={` ${pathName.includes('/kontakt') ? active : inActive } text-sm leading-6 hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 flex`}>Kontakt</Link>
           <div className="text-sm leading-6  dark:text-white  z-50 -mb-2  m-3 text-white/0 "> </div>
         </PopoverGroup>
@@ -355,11 +362,13 @@ export default function Navbar() {
                         key={item.name}
                         className="block rounded-lg w-full text-start pl-6 pr-3 text-sm leading-7 ">
                           <Link href={item.href} onClick={() => setMobileMenuOpen(false)} passHref>
-                          <div className={`flex p-2 flex-grow ${ item.filter === (currentFilter)  ? activeMobile : inActiveMobile } `}>
-                            <div className='w-full ml-2 text-start' >
-                              {item.name}
+                          <Suspense  fallback={ <Spinner />}  >
+                            <div className={`flex p-2 flex-grow ${ item.filter === (currentFilter)  ? activeMobile : inActiveMobile } `}>
+                              <div className='w-full ml-2 text-start' >
+                                {item.name}
+                              </div>
                             </div>
-                          </div>
+                          </Suspense>
                         </Link>
                       </DisclosureButton>
                       ))}

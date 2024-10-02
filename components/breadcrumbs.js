@@ -26,7 +26,7 @@ export default function Breadcrumbs () {
 
                 {pathNames.map((item, index) => {
                 let odkaz =  `/${pathNames.slice(0, index +1).join('/')}`
-                let label = item.includes('-') ? item.replace('-',' ') : item
+                let label = item.includes('-') ? item.replaceAll('-',' ') : item
     
                 return  (
                     <span key={index}> / 

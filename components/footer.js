@@ -1,7 +1,7 @@
 'use client'
 'use strict'
 
-
+import { Suspense } from "react";
 import { FaFacebook } from "react-icons/fa";
 import ModalImg from "./modal";
 import Link from "next/link";
@@ -10,7 +10,7 @@ import { FaPhone } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-
+import Spinner from "./spinner";
 
 export default function Footer () {
 
@@ -20,7 +20,7 @@ export default function Footer () {
 
         
     
-    let clankyClass = 'border-l-gray-300 dark:text-gray-400 dark:hover:border-l-orange-200 hover:border-l-orange-600 dark:border-l-gray-500 border-l-[1px] pl-2 pt-1  dark:hover:text-orange-200 hover:text-orange-600'
+    
     let activeFooterHeadline = 'dark:text-orange-200 text-orange-600'
     let inActiveFooterHeadline = 'dark:text-gray-400  dark:hover:text-orange-200 hover:text-orange-600'
     let activeFooter = 'border-l-[1px] pl-2 pt-1 border-l-orange-200 text-orange-600 dark:text-orange-200 '
@@ -73,10 +73,18 @@ export default function Footer () {
                         <Link href='/novinky' className={` ${path.includes('/novinky') ? activeFooterHeadline : inActiveFooterHeadline  } `}><li>Novinky</li></Link>
                         <Link className={` ${path.includes('/clanky') ? activeFooterHeadline : inActiveFooterHeadline  } `} href='/clanky'><li className="mt-2 pb-1 pt-2">Články</li></Link>
                         <div>
-                            <Link href='/clanky?filter=horolezectvi'><li className= {'horolezectvi' === (currentFilter)  ? activeFooter : inActiveFooter}>Horolezectví</li></Link>
-                            <Link href='/clanky?filter=skaly'><li className={'skaly' === (currentFilter)  ? activeFooter : inActiveFooter}>Skály</li></Link>
-                            <Link href='/clanky?filter=oddil'><li className={'oddil' === (currentFilter)  ? activeFooter : inActiveFooter}>Oddíl</li></Link>
-                            <Link href='/clanky?filter=ostatni'><li className={'ostatni' === (currentFilter)  ? activeFooter : inActiveFooter}>Ostatní</li></Link>
+                            <Suspense fallback={ <Spinner />} >
+                                <Link href='/clanky?filter=horolezectvi'><li className= {'horolezectvi' === (currentFilter)  ? activeFooter : inActiveFooter}>Horolezectví</li></Link>
+                            </Suspense>
+                            <Suspense fallback={ <Spinner />} >
+                                <Link href='/clanky?filter=skaly'><li className={'skaly' === (currentFilter)  ? activeFooter : inActiveFooter}>Skály</li></Link>
+                            </Suspense>
+                            <Suspense fallback={ <Spinner />} >
+                                <Link href='/clanky?filter=oddil'><li className={'oddil' === (currentFilter)  ? activeFooter : inActiveFooter}>Oddíl</li></Link>
+                            </Suspense>
+                            <Suspense fallback={ <Spinner />} >
+                                <Link href='/clanky?filter=ostatni'><li className={'ostatni' === (currentFilter)  ? activeFooter : inActiveFooter}>Ostatní</li></Link>
+                            </Suspense>
                         </div>
                         <li className="mt-2 pb-1 pt-2">Kurzy</li>
                         <div>
