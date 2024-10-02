@@ -4,7 +4,8 @@ import { Roboto } from 'next/font/google';
 import Providers from "./providers";
 import Footer from '@/components/footer';
 import Breadcrumbs from "@/components/breadcrumbs";
-
+import { Suspense } from "react";
+import Spinner from "@/components/spinner";
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -25,14 +26,18 @@ export default function RootLayout({ children }) {
       <body className={`${roboto.className}  antialiased  `}>
         <Providers attribute="class">
           <div className="flex mx-auto flex-col bg-gray-100 dark:bg-[#121212] justify-center">
+          <Suspense fallback={ <Spinner />} >
             <Navbar className='-m-8 -mx-16' style={{zIndex:20}} />
+          </Suspense>
             <div className="flex w-full justify-center bg-gray-100  dark:bg-[#121212]" style={{zIndex:1}}>
                 <div className="flex flex-col flex-grow max-w-screen-xl  md:px-8 lg:px-4 items-center mx-auto justify-center w-full">    
                   <Breadcrumbs />
                   {children}
                 </div>
             </div>
-            <Footer />
+            <Suspense fallback={ <Spinner />} >
+              <Footer />
+            </Suspense>
           </div>
         </Providers>
       </body>

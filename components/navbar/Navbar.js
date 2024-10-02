@@ -37,8 +37,7 @@ import { FaPeopleGroup, FaHillAvalanche, FaListCheck } from "react-icons/fa6";
 import { FaIcicles, FaRegSnowflake } from "react-icons/fa";
 import { usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation'
-import { Suspense } from 'react'
-import Spinner from '../spinner'
+
 
 
 
@@ -93,9 +92,12 @@ const oNas = [
 
 export default function Navbar() {
 
+ 
+
   const searchParams = useSearchParams();
   const currentFilter = searchParams.get('filter');
   let pathName = usePathname();
+
   let active = 'text-orange-600 dark:text-orange-300 border-b-orange-600 dark:border-b-orange-200  border-b-2'
   let inActive = 'text-gray-700 dark:text-white dark:hover:text-orange-200 hover:text-orange-600'
   let activeMobile = 'dark:border-orange-200 border-orange-600 text-orange-600 dark:text-orange-200 border-l '
@@ -109,7 +111,7 @@ export default function Navbar() {
 
 
   return (
-    
+      
     <header className=" fixed z-30 w-full top-0 backdrop-blur-sm bg-slate-100/90 dark:bg-[#1E1E1E]/80 border-b-gray-300 dark:border-b-gray-600 border-b
      
     " >
@@ -146,7 +148,7 @@ export default function Navbar() {
                 </PopoverButton>
                 <PopoverPanel className="absolute drop-shadow-xl dark:text-gray-300 top-full z-10  w-screen max-w-lg overflow-hidden rounded-3xl  dark:bg-gray-800 bg-slate-100 shadow-lg">
                 <div className="p-4">
-                  <Suspense  fallback={ <Spinner />}  >
+                    
                     <Link onClick={()=>close()} href='/clanky'>       
                         <div className="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm leading-6 dark:hover:bg-gray-700 hover:bg-white">
                           <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg dark:bg-gray-800 bg-slate-100 dark:group-hover:bg-gray-700 group-hover:bg-white">
@@ -158,13 +160,13 @@ export default function Navbar() {
                           </div>
                         </div>
                       </Link>
-                    </Suspense>
+                       
                 </div>
                   <div className="p-4 -mt-7">
                     {articles.map((item) => (
                     
                       <Link href={item.href} key={item.id} onClick={()=>close()} className=" ml-5 block font-semibold dark:text-gray-300 text-gray-700">       
-                        <Suspense  fallback={ <Spinner />}  >
+                          
                         <div className="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm leading-6 dark:hover:bg-gray-700 hover:bg-white">
                           <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg dark:bg-gray-800 bg-slate-100 dark:group-hover:bg-gray-700 group-hover:bg-white">
                             <item.icon aria-hidden="true" className={` ${item.filter === currentFilter ? 'dark:text-orange-200 text-orange-600' : 'text-gray-600 dark:text-gray-300  group-hover:text-orange-600 dark:group-hover:text-orange-200' } h-6 w-6 `} />
@@ -175,7 +177,7 @@ export default function Navbar() {
                             <p className="mt-1 text-gray-600 dark:text-gray-300 font-thin">{item.description}</p>
                           </div>
                         </div>
-                        </Suspense>
+                           
                       </Link>
                    
                   ))}
@@ -362,13 +364,13 @@ export default function Navbar() {
                         key={item.name}
                         className="block rounded-lg w-full text-start pl-6 pr-3 text-sm leading-7 ">
                           <Link href={item.href} onClick={() => setMobileMenuOpen(false)} passHref>
-                          <Suspense  fallback={ <Spinner />}  >
+                            
                             <div className={`flex p-2 flex-grow ${ item.filter === (currentFilter)  ? activeMobile : inActiveMobile } `}>
                               <div className='w-full ml-2 text-start' >
                                 {item.name}
                               </div>
                             </div>
-                          </Suspense>
+                             
                         </Link>
                       </DisclosureButton>
                       ))}
@@ -480,5 +482,6 @@ export default function Navbar() {
         </DialogPanel>
       </Dialog>
     </header>
+       
   )
 }
