@@ -45,7 +45,7 @@ import Spinner from '../spinner'
 const articles = [
   { id:1, name: 'Skály', description: 'Od písků v Ádru až po rulu v Chamonix', href: '/clanky?filter=skaly', filter:'skaly', icon: GiMountainClimbing },
   { id:2, name: 'Horolezectví', description: 'Vícedélky v tatrách, alpách a občas i exotika', href: '/clanky?filter=horolezectvi', filter:'horolezectvi', icon: LiaMountainSolid  },
-  { id:3, name: 'Oddíl', description: 'Oddílové akce, soutěže, školení', href: '/clanky?filter=oddil', filter:'oddil', icon: boulderIcon },
+  { id:3, name: 'Oddíl', description: 'Oddílové akce, soutěže, školení', href: '/clanky?filter=oddil', filter:'oddil', icon: BoulderIcon },
   { id:4, name: 'Ostatní', description: 'Zápisky z výprav po celém světě', href: '/clanky?filter=ostatni', filter:'ostatni', icon: GiHiking  },
 ]
 
@@ -73,7 +73,7 @@ const proCleny = [
 ]
  
 const kurzy = [
-  { id: 1, name: 'Horoškola - skály', href: '/kurzy/horoskola-skaly', icon: boulderIcon },
+  { id: 1, name: 'Horoškola - skály', href: '/kurzy/horoskola-skaly', icon: BoulderIcon },
   { id: 2, name: 'Horoškola - vícedélky', href: '/kurzy/horoskola-vicedelky', icon: GiMountainClimbing },
   { id: 3, name: 'Lavinová prevence', href: '/kurzy/lavinova-prevence', icon: FaHillAvalanche },
   { id: 4, name: 'Lezení v ledu', href: '/kurzy/lezeni-v-ledu', icon: FaIcicles },
@@ -85,7 +85,7 @@ const oNas = [
   { id: 1, name: 'Historie oddílu', href: '/o-nas/historie-oddilu', icon: MdHistory },
   { id: 2, name: 'Vedení oddílu', href: '/o-nas/vedeni-oddilu', icon: FaPeopleGroup },
   { id: 3, name: 'Instruktoři horoškoly', href: '/o-nas/instruktori-horoskoly', icon: LiaMountainSolid  },
-  { id: 4, name: 'Instruktoři lezení', href: '/o-nas/instruktori-lezeni', icon: boulderIcon },
+  { id: 4, name: 'Instruktoři lezení', href: '/o-nas/instruktori-lezeni', icon: BoulderIcon },
 ]
 
 
