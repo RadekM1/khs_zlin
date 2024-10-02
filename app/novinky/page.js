@@ -1,4 +1,6 @@
+'use client'
 
+import Gallery from "@/components/gallery/gallery";
 
 
 export default function page() {
@@ -9,10 +11,10 @@ export default function page() {
       <div className="flex w-full flex-col justify-center">
         <span className="text-2xl">Nadpis stránky</span>
         <div className="flex mx-10">
-
-        <p className="text-start my-5">první odstavec stránky</p>
-
-
+          <p className="text-start my-5">první odstavec stránky</p>
+        </div>
+        <div className="flex w-full">
+          <Gallery/>
         </div>
       </div>
     );
