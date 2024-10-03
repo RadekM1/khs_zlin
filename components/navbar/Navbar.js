@@ -58,8 +58,8 @@ const userPanel = [
   { id: 7, name: 'Uživatelé', href: '/dashboard/uzivatele', icon: MdAdminPanelSettings },
   { id: 8, name: 'Nápověda', href: '/dashboard/napoveda', icon: IoIosHelpCircleOutline },
   { id: 9, name: 'Odhlásit', href: '/dashboard/odhlasit', icon: CiLogout },
-  { id: 10, name: 'Přihlásit', href: '/dashboard/prihlasit', icon: CiLogin },
-  { id: 11, name: 'Registrovat', href: '/dashboard/registrovat', icon: HiOutlineUserPlus },
+  { id: 10, name: 'Přihlásit', href: '/login', icon: CiLogin },
+  { id: 11, name: 'Registrovat', href: '/registration', icon: HiOutlineUserPlus },
   
 ]
 
