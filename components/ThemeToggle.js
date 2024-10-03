@@ -24,8 +24,8 @@ export default function ThemeToggle () {
         setThemeIcon(resolvedTheme)
       }}
     >
-      {themeIcon === 'light' && <MdDarkMode className='text-gray-800 w-8 h-8'/>}
-      {themeIcon === 'dark' && <IoSunnySharp className='text-white   w-8 h-8 '/>}
+      {themeIcon === 'light' && <MdDarkMode className='mx-2 text-gray-600 w-6 h-6'/>}
+      {themeIcon === 'dark' && <IoSunnySharp className='mx-2 text-gray-200   w-6 h-6 '/>}
     </button>
   )
 }

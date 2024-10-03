@@ -94,14 +94,7 @@ export default function Footer () {
                             <Link href='/kurzy/lavinova-prevence'> <li className={path.includes('/kurzy/lavinova-prevence') ? activeFooter : inActiveFooter}>Lavinová prevence</li> </Link>
                             <Link href='/kurzy/lezeni-v-ledu'> <li className={path.includes('/kurzy/lezeni-v-ledu') ? activeFooter : inActiveFooter}>Lezení v ledu</li> </Link>
                             <Link href='/kurzy/zimni-lezeni'> <li className={path.includes('/kurzy/zimni-lezeni') ? activeFooter : inActiveFooter}>Zimní lezení</li> </Link>
-                            <Link href='/kurzy/horokruh'> <li className={path.includes('/kurzy/horokruh') ? activeFooter : inActiveFooter}>Horokruh</li> </Link> 
-                        </div>
-                        <li className="mt-2 pb-1 pt-2">O nás</li>
-                        <div>
-                            <Link href='/o-nas/historie-oddilu'> <li className={path.includes('/o-nas/historie-oddilu') ? activeFooter : inActiveFooter}>Historie oddílu</li> </Link>
-                            <Link href='/o-nas/vedeni-oddilu'> <li className={path.includes('/o-nas/vedeni-oddilu') ? activeFooter : inActiveFooter}>Vedení oddílu</li> </Link>
-                            <Link href='/o-nas/instruktori-horoskoly'> <li className={path.includes('/o-nas/instruktori-horoskoly') ? activeFooter : inActiveFooter}>Instruktoři horoškoly</li> </Link>
-                            <Link href='/o-nas/instruktori-lezeni'> <li className={path.includes('/o-nas/instruktori-lezeni') ? activeFooter : inActiveFooter}>Instruktoři lezení</li> </Link>
+                            <Link href='/kurzy/horokruh'> <li className={path.includes('/kurzy/horokruh') ? activeFooter : inActiveFooter}>Horokruh - lezecký kroužek pro mládež</li> </Link> 
                         </div>
                         <li className="mt-2 pb-1 pt-2">Členství v oddíle</li>
                         <div>
@@ -110,6 +103,13 @@ export default function Footer () {
                             <Link href='/clenstvi-v-oddile/pujcovna-vybaveni'> <li className={path.includes('/clenstvi-v-oddile/pujcovna-vybaveni') ? activeFooter : inActiveFooter}>Půjčovna vybavení</li> </Link>
                             <Link href='/clenstvi-v-oddile/vyhody-clenstvi'> <li className={path.includes('/clenstvi-v-oddile/vyhody-clenstvi') ? activeFooter : inActiveFooter}>Výhody členství</li> </Link>
                             <Link href='/clenstvi-v-oddile/podminky-clenstvi'> <li className={path.includes('/clenstvi-v-oddile/podminky-clenstvi') ? activeFooter : inActiveFooter}>Podmínky členství</li> </Link>
+                        </div>
+                        <li className="mt-2 pb-1 pt-2">O nás</li>
+                        <div>
+                            <Link href='/o-nas/historie-oddilu'> <li className={path.includes('/o-nas/historie-oddilu') ? activeFooter : inActiveFooter}>Historie oddílu</li> </Link>
+                            <Link href='/o-nas/vedeni-oddilu'> <li className={path.includes('/o-nas/vedeni-oddilu') ? activeFooter : inActiveFooter}>Vedení oddílu</li> </Link>
+                            <Link href='/o-nas/instruktori-horoskoly'> <li className={path.includes('/o-nas/instruktori-horoskoly') ? activeFooter : inActiveFooter}>Instruktoři horoškoly</li> </Link>
+                            <Link href='/o-nas/treneri-lezeni'> <li className={path.includes('/o-nas/treneri-lezeni') ? activeFooter : inActiveFooter}>Trenéři lezení</li> </Link>
                         </div>
                         <Link className={` ${path.includes('/kontakt') ? activeFooterHeadline : inActiveFooterHeadline  } `} href='/kontakt'> <li className="mt-3">Kontakt</li> </Link>
                     </ul>

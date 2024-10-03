@@ -29,7 +29,7 @@ import Link from 'next/link'
 import { HiOutlineUserPlus, HiOutlineTrophy  } from "react-icons/hi2";
 import { RiBook3Line } from "react-icons/ri";
 import { LuCalendarRange } from "react-icons/lu";
-import { IoLibraryOutline} from "react-icons/io5";
+import { IoLibraryOutline, IoSchoolOutline } from "react-icons/io5";
 import { TbMoodBoy } from "react-icons/tb";
 import { GoThumbsup } from "react-icons/go";
 import { MdHistory, MdAdminPanelSettings } from "react-icons/md";
@@ -37,7 +37,6 @@ import { FaPeopleGroup, FaHillAvalanche, FaListCheck } from "react-icons/fa6";
 import { FaIcicles, FaRegSnowflake } from "react-icons/fa";
 import { usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation'
-import { IoIosSchool } from "react-icons/io";
 import { IoPeopleOutline } from "react-icons/io5";
 
 
@@ -78,14 +77,14 @@ const kurzy = [
   { id: 3, name: 'Lavinová prevence', href: '/kurzy/lavinova-prevence', icon: FaHillAvalanche },
   { id: 4, name: 'Lezení v ledu', href: '/kurzy/lezeni-v-ledu', icon: FaIcicles },
   { id: 5, name: 'Zimní lezení', href: '/kurzy/zimni-lezeni', icon: FaRegSnowflake },
-  { id: 6, name: 'Horokruh', href: '/kurzy/horokruh', icon: TbMoodBoy },
+  { id: 6, name: 'Horokruh - lezecký kroužek pro mládež', href: '/kurzy/horokruh', icon: TbMoodBoy },
 ]
 
 const oNas = [
   { id: 1, name: 'Historie oddílu', href: '/o-nas/historie-oddilu', icon: MdHistory },
   { id: 2, name: 'Vedení oddílu', href: '/o-nas/vedeni-oddilu', icon: FaPeopleGroup },
   { id: 3, name: 'Instruktoři horoškoly', href: '/o-nas/instruktori-horoskoly', icon: LiaMountainSolid  },
-  { id: 4, name: 'Instruktoři lezení', href: '/o-nas/instruktori-lezeni', icon: BoulderIcon },
+  { id: 4, name: 'Trenéři lezení', href: '/o-nas/treneri-lezeni', icon: BoulderIcon },
 ]
 
 
@@ -214,16 +213,17 @@ export default function Navbar() {
               </>
             )}
           </Popover>
-          <Popover className={`${pathName.includes('/o-nas') ? active : inActive } hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 `}>
+
+          <Popover className={`${pathName.includes('/clenstvi-v-oddile') ? active : inActive } hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 `}>
             {({ open, close }) => (
               <>
                 <PopoverButton className="flex focus:outline-none items-center gap-x-1 text-sm  leading-6 ">
-                  O nás
+                  Členství v oddíle
                   <ChevronDownIcon aria-hidden="true" className={`h-5  w-5 flex-none text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} />
                 </PopoverButton>
                 <PopoverPanel className=" absolute drop-shadow-xl text-gray-700 dark:text-gray-300 top-full z-10  w-screen max-w-lg overflow-hidden rounded-3xl  dark:bg-gray-800 bg-slate-100 shadow-lg">
                   <div className="p-4">
-                    {oNas.map((item) => (
+                    {proCleny.map((item) => (
                     <Link href={item.href} onClick={()=>close()} key={item.id}>       
                       <div className="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm leading-6 dark:hover:bg-gray-700 hover:bg-white">
                         <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg dark:bg-gray-800 bg-slate-100 dark:group-hover:bg-gray-700 group-hover:bg-white">
@@ -241,17 +241,17 @@ export default function Navbar() {
               </>
             )}
           </Popover>
- 
-          <Popover className={`${pathName.includes('/clenstvi-v-oddile') ? active : inActive } hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 `}>
+
+          <Popover className={`${pathName.includes('/o-nas') ? active : inActive } hover:border-b-2 z-50 -mb-2  hover:border-b-orange-600 dark:border-b-orange-200 `}>
             {({ open, close }) => (
               <>
                 <PopoverButton className="flex focus:outline-none items-center gap-x-1 text-sm  leading-6 ">
-                  Členství v oddíle
+                  O nás
                   <ChevronDownIcon aria-hidden="true" className={`h-5  w-5 flex-none text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} />
                 </PopoverButton>
                 <PopoverPanel className=" absolute drop-shadow-xl text-gray-700 dark:text-gray-300 top-full z-10  w-screen max-w-lg overflow-hidden rounded-3xl  dark:bg-gray-800 bg-slate-100 shadow-lg">
                   <div className="p-4">
-                    {proCleny.map((item) => (
+                    {oNas.map((item) => (
                     <Link href={item.href} onClick={()=>close()} key={item.id}>       
                       <div className="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm leading-6 dark:hover:bg-gray-700 hover:bg-white">
                         <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg dark:bg-gray-800 bg-slate-100 dark:group-hover:bg-gray-700 group-hover:bg-white">
@@ -383,7 +383,7 @@ export default function Navbar() {
                   <DisclosureButton className="group dark:text-gray-400 flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base leading-7 text-gray-700 dark:hover:bg-slate-800   hover:bg-gray-50">
                     <div className='flex w-5/6 justify-start align-middle'>
                       <div className='w-1/6 justify-center align-middle flex'>
-                        <IoIosSchool  className='h-6 w-6 justify-center align-middle flex'/>
+                        <IoSchoolOutline   className='h-6 w-6 justify-center align-middle flex'/>
                       </div>
                       <div className={` ${pathName.includes('/kurzy') ? 'text-orange-600 dark:text-orange-300' : 'text-gray-700 dark:text-white '}  w-5/6 justify-start  align-middle flex`}>
                         <a href="#" className="align-middle ">Kurzy</a>
@@ -412,16 +412,16 @@ export default function Navbar() {
                   <DisclosureButton className="group dark:text-gray-400 flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base leading-7 text-gray-700 dark:hover:bg-slate-800   hover:bg-gray-50">
                     <div className='flex w-5/6 justify-start align-middle'>
                       <div className='w-1/6 justify-center align-middle flex'>
-                        <IoPeopleOutline className='h-6 w-6 justify-center align-middle flex'/>
+                        <GiSkis className='h-6 w-6 justify-center align-middle flex'/>
                       </div>
-                      <div className={` ${pathName.includes('/o-nas/') ? 'text-orange-600 dark:text-orange-300' : 'text-gray-700 dark:text-white '}  w-5/6 justify-start  align-middle flex`}>
-                        <a href="#" className="align-middle ">O nás</a>
+                      <div className={` ${pathName.includes('/clenstvi-v-oddile') ? 'text-orange-600 dark:text-orange-300' : 'text-gray-700 dark:text-white '}  w-5/6 justify-start  align-middle flex`}>
+                        <a href="#" className="align-middle ">Pro členy</a>
                       </div>
                     </div>
                     <ChevronDownIcon aria-hidden="true" className="h-5  w-5 dark:text-gray-400 flex-none group-data-[open]:rotate-180" />
                   </DisclosureButton>
                     <DisclosurePanel className="mt-2">
-                      {oNas.map((item) => (
+                      {proCleny.map((item) => (
                         <DisclosureButton
                         key={item.name}
                         className="block rounded-lg w-full text-start pl-6 pr-3 text-sm leading-7 ">
@@ -435,23 +435,23 @@ export default function Navbar() {
                       </DisclosureButton>
                       ))}
                     </DisclosurePanel>
-                </Disclosure>
+                </Disclosure> 
 
-
+                
                 <Disclosure as="div" className="-mx-3 border-b dark:border-gray-500 border-gray-200">
                   <DisclosureButton className="group dark:text-gray-400 flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base leading-7 text-gray-700 dark:hover:bg-slate-800   hover:bg-gray-50">
                     <div className='flex w-5/6 justify-start align-middle'>
                       <div className='w-1/6 justify-center align-middle flex'>
-                        <GiSkis className='h-6 w-6 justify-center align-middle flex'/>
+                        <IoPeopleOutline className='h-6 w-6 justify-center align-middle flex'/>
                       </div>
-                      <div className={` ${pathName.includes('/clenstvi-v-oddile') ? 'text-orange-600 dark:text-orange-300' : 'text-gray-700 dark:text-white '}  w-5/6 justify-start  align-middle flex`}>
-                        <a href="#" className="align-middle ">Pro členy</a>
+                      <div className={` ${pathName.includes('/o-nas/') ? 'text-orange-600 dark:text-orange-300' : 'text-gray-700 dark:text-white '}  w-5/6 justify-start  align-middle flex`}>
+                        <a href="#" className="align-middle ">O nás</a>
                       </div>
                     </div>
                     <ChevronDownIcon aria-hidden="true" className="h-5  w-5 dark:text-gray-400 flex-none group-data-[open]:rotate-180" />
                   </DisclosureButton>
                     <DisclosurePanel className="mt-2">
-                      {proCleny.map((item) => (
+                      {oNas.map((item) => (
                         <DisclosureButton
                         key={item.name}
                         className="block rounded-lg w-full text-start pl-6 pr-3 text-sm leading-7 ">
