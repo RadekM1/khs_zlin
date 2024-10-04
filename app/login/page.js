@@ -8,7 +8,7 @@ import SpinnerSmallOrange from "@/components/spinners/spinnerSmallOrange";
 import InputField from "@/components/auth-form/inputField";
 import Link from "next/link";
 
-export default function page() {
+export default function Page() {
 
 {/* ověření přihlášení */}
 const [errorEmail, setErrorEmail] = useState(undefined)

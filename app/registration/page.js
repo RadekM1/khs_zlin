@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import SpinnerSmallOrange from "@/components/spinners/spinnerSmallOrange";
 import { FiUserPlus } from "react-icons/fi";
 
-export default function page() {
+export default function Page() {
 
 
   const [errorEmail, setErrorEmail] = useState(undefined)
@@ -33,32 +33,6 @@ export default function page() {
       default: break;
     }
   }
-
-  console.log(`user: ${user}`)
-  console.log(`password: ${password}`)
-  console.log(`password check: ${passwordCheck}`)
-
-  useEffect(()=>{
-    if(user && !validateEmail(user)){
-      setErrorEmail(true)
-      setEmailErrorMessage('nevyhovující formát')
-    }
-    else if (user && user.includes('@')){
-      setErrorEmail(false)
-      setEmailErrorMessage(undefined)
-    }
-  }, [user]);
- 
-  useEffect(()=>{
-    if(user && !validateEmail(user)){
-      setErrorEmail(true)
-      setEmailErrorMessage('nevyhovující formát')
-    }
-    else if (user && user.includes('@')){
-      setErrorEmail(false)
-      setEmailErrorMessage(undefined)
-    }
-  }, [password, passwordCheck ]);
 
 
 
