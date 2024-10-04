@@ -1,28 +1,27 @@
 'use client'
 
 import * as React from 'react';
-
+import { useState, useEffect } from 'react';
 import IconButton from '@mui/material/IconButton';
 import { useTheme as useNextTheme } from 'next-themes';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
-
 import FormControl from '@mui/material/FormControl';
-
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
 import { createTheme, ThemeProvider} from '@mui/material';
 
-export default function PassField() {
-  const { resolvedTheme} = useNextTheme();
+
+export default function PassField({ handleChange, label, id, error }) {
+  const { resolvedTheme } = useNextTheme();
+  const [mounted, setMounted] = useState(false);
 
   const lightTheme = createTheme({
     palette: {
       mode: 'light',
       primary: {
-        main: '#e8975f',
+        main: '#a3a29e',
       },
     },
   });
@@ -31,12 +30,12 @@ export default function PassField() {
     palette: {
       mode: 'dark',
       primary: {
-        main: '#f2c2a2',
+        main: '#dedbd7',
       },
     },
   });
 
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -44,33 +43,40 @@ export default function PassField() {
     event.preventDefault();
   };
 
-  const handleMouseUpPassword = (event) => {
-    event.preventDefault();
-  };
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <ThemeProvider theme={resolvedTheme === 'light' ? lightTheme : darkTheme}>
-              <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={showPassword ? 'text' : 'password'}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  onMouseUp={handleMouseUpPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
+      <FormControl sx={{ m: 1, width: '280px' }} variant="outlined">
+
+        <InputLabel htmlFor={id}>{label}</InputLabel>
+        <OutlinedInput
+          id={id}
+          error={error}
+          type={showPassword ? 'text' : 'password'}
+          autoComplete="current-password"
+          onChange={(e) => handleChange(e, id)}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          }
+          label={label}
+        />
+      </FormControl>
     </ThemeProvider>
   );
 }

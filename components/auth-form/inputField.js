@@ -1,19 +1,19 @@
-'use client'
-
+'use client';
+import { useTheme } from 'next-themes';
 import * as React from 'react';
-import { useTheme as useNextTheme } from 'next-themes';
-
-
+import { useState, useEffect } from 'react';
+import FormHelperText from '@mui/material/FormHelperText';
 import { createTheme, ThemeProvider, Box, TextField } from '@mui/material';
 
-export default function InputField() {
-  const { resolvedTheme} = useNextTheme();
+export default function InputField({ dataIn, widthInput, id, label, error, size, helperText, handleChange }) {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   const lightTheme = createTheme({
     palette: {
       mode: 'light',
       primary: {
-        main: '#e8975f',
+        main: '#a3a29e',
       },
     },
   });
@@ -22,21 +22,44 @@ export default function InputField() {
     palette: {
       mode: 'dark',
       primary: {
-        main: '#f2c2a2',
+        main: '#dedbd7',
       },
     },
   });
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <ThemeProvider theme={resolvedTheme === 'light' ? lightTheme : darkTheme}>
       <Box
-        component="form"
-        sx={{ '& > :not(style)': { m: 1, width: '25ch' } }}
+        component="div" // Změněno z form na div, aby nedošlo k vnoření form elementů
+        sx={{
+          '& > :not(style)': {
+            m: 1,
+            width: widthInput ? `${widthInput}px` : '230px',
+          },
+        }}
         noValidate
         autoComplete="off"
       >
-        <TextField id="filled-basic" error={false} color="primary" label="Outlined" />
+        <TextField
+          id={id}
+          error={error}
+          color="primary"
+          label={label}
+          value={dataIn}
+          onChange={(e) => handleChange(e, id)}
+          size={size ? size : 'normal'}
+        />
+        <FormHelperText className="text-center" id="component-helper-text">
+          {helperText ? helperText : undefined}
+        </FormHelperText>
       </Box>
     </ThemeProvider>
   );

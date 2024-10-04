@@ -1,19 +1,29 @@
-'use client'
+'use client';
 
 import * as React from 'react';
 import { useTheme as useNextTheme } from 'next-themes';
+import { MdOutlineMailLock } from "react-icons/md";
+import { createTheme, ThemeProvider, Box, TextField, InputAdornment } from '@mui/material';
+
+export default function UserField({handleChange, error}) {
+  const { resolvedTheme } = useNextTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null; 
+  }
 
 
-import { createTheme, ThemeProvider, Box, TextField } from '@mui/material';
-
-export default function UserField() {
-  const { resolvedTheme} = useNextTheme();
 
   const lightTheme = createTheme({
     palette: {
       mode: 'light',
       primary: {
-        main: '#e8975f',
+        main: '#a3a29e',
       },
     },
   });
@@ -22,21 +32,36 @@ export default function UserField() {
     palette: {
       mode: 'dark',
       primary: {
-        main: '#f2c2a2',
+        main: '#dedbd7',
       },
     },
   });
 
-
   return (
     <ThemeProvider theme={resolvedTheme === 'light' ? lightTheme : darkTheme}>
       <Box
-        component="form"
-        sx={{ '& > :not(style)': { m: 1, width: '25ch' } }}
+        
+        sx={{ '& > :not(style)': { m: 1, width: '280px' } }}
         noValidate
         autoComplete="off"
       >
-        <TextField id="filled-basic" error={false} color="primary" label="Outlined" />
+        <TextField
+          id="user"
+          error={error}
+          color="primary"
+          autoComplete='username'
+          onChange={(e)=>handleChange(e, 'user')}
+          label="Email"
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position="end">
+                  <MdOutlineMailLock className="w-6 h-6" />
+                </InputAdornment>
+              ),
+            },
+          }}
+        />
       </Box>
     </ThemeProvider>
   );

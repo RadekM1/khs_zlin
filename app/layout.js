@@ -5,7 +5,7 @@ import Providers from "./providers";
 import Footer from '@/components/footer';
 import Breadcrumbs from "@/components/breadcrumbs";
 import { Suspense } from "react";
-import Spinner from "@/components/spinner";
+import Spinner from "@/components/spinners/spinnerSmallOrange";
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -25,7 +25,8 @@ export default function RootLayout({ children }) {
     <html lang="cs">
       <body className={`${roboto.className}  antialiased  `}>
         <Providers attribute="class">
-          <div className="flex mx-auto flex-col bg-gray-100 dark:bg-[#121212] justify-center">
+          
+          <div  className="flex mx-auto flex-col bg-gray-100 dark:bg-[#121212] justify-center">
           <Suspense fallback={ <Spinner />} >
             <Navbar className='-m-8 -mx-16' style={{zIndex:20}} />
           </Suspense>
