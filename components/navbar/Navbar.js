@@ -56,10 +56,9 @@ const userPanel = [
   { id: 5, name: 'Půjčovna',  href: '/dashboard/pujcovna', icon: GiSkis },
   { id: 6, name: 'Nastavení účtu',  href: '/dashboard/nastaveni', icon: IoIosSettings },
   { id: 7, name: 'Uživatelé', href: '/dashboard/uzivatele', icon: MdAdminPanelSettings },
-  { id: 8, name: 'Nápověda', href: '/dashboard/napoveda', icon: IoIosHelpCircleOutline },
-  { id: 9, name: 'Odhlásit', href: '/dashboard/odhlasit', icon: CiLogout },
-  { id: 10, name: 'Přihlásit', href: '/login', icon: CiLogin },
-  { id: 11, name: 'Registrovat', href: '/registration', icon: HiOutlineUserPlus },
+  { id: 8, name: 'Odhlásit', href: '/dashboard/odhlasit', icon: CiLogout },
+  { id: 9, name: 'Přihlásit', href: '/login', icon: CiLogin },
+  { id: 10, name: 'Registrovat', href: '/registration', icon: HiOutlineUserPlus },
   
 ]
 

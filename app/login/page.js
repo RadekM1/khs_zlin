@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import SpinnerSmallOrange from "@/components/spinners/spinnerSmallOrange";
 import InputField from "@/components/auth-form/inputField";
 import Link from "next/link";
+import { validateEmail } from "@/functions/validateEmail";
 
 export default function Page() {
 
@@ -23,10 +24,6 @@ const [errorForgoten, setErrorForgoten] = useState(false)
 const [forgotenVisible, setForgotenVisible] = useState('hidden')
 const [disableForgotenBtn, setDisableForgotenBtn] = useState(true)
 
-
-{/* ověření odeslat login */}
-const [disabledLogin, setDisabledLogin] = useState(true)
-  
   
   {/* proměnné formuláře */}
   const [user, setUser] = useState(undefined)
@@ -60,6 +57,10 @@ const [disabledLogin, setDisabledLogin] = useState(true)
       setErrorEmail(false)
       setEmailErrorMessage(undefined)
     }
+    else if (!user){
+      setErrorEmail(false)
+      setEmailErrorMessage(undefined)
+    }
     if(email && !validateEmail(email)){
       setErrorForgoten(true)
       setForgotenErrorMessage('nevyhovující formát')
@@ -68,15 +69,13 @@ const [disabledLogin, setDisabledLogin] = useState(true)
       setErrorForgoten(false)
       setForgotenErrorMessage(undefined)
     }
+    else if (!email){
+      setErrorForgoten(false)
+      setForgotenErrorMessage(undefined)
+    }
   }, [user, email,errorEmail ])
 
  
- 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
 
   
 
@@ -88,13 +87,18 @@ const [disabledLogin, setDisabledLogin] = useState(true)
     console.log('všecko špatně')
   }
 
-  const handlePassReset = () => {
-    console.log('reset handler')
+  const handlePassReset = (e) => {
+    e.preventDefault();
+    if(validateEmail(email)){
+      console.log('email je ready odeslat')
+    } console.log('s emailem všechno špatně')
   }
 
   const handleForgotenVisibility = () => {
     setForgotenVisible('')
   }
+
+
 
     return (
       <div className="flex w-full flex-col text-center justify-center items-center">
@@ -123,7 +127,6 @@ const [disabledLogin, setDisabledLogin] = useState(true)
               <button 
               type="submit"
               className="bg-orange-500 hover:bg-orange-600 disabled:bg-orange-100 dark:disabled:bg-gray-600 disabled:border-gray-200 dark:disabled:border-gray-500 text-white dark:disabled:text-gray-400 py-2 px-4 border border-orange-600 rounded"
-
               >
                 <div className="flex h-min flex-row">
                 Přihlásit 
@@ -138,13 +141,17 @@ const [disabledLogin, setDisabledLogin] = useState(true)
               <div>
                 <a href="#" onClick={()=>handleForgotenVisibility()} className="hover:text-orange-600 dark:hover:text-orange-200">Zapomenuté heslo ?</a>
                 </div>
-              <form className={` mt-2 flex-col text-center ${forgotenVisible}`}  onSubmit={handlePassReset}>
-                <InputField handleChange={handleChange} error={errorForgoten} id='forgoten' label='zadejte email' />
+              <form 
+              className={` mt-2 flex-col text-center ${forgotenVisible}`}  
+              onSubmit={handlePassReset}>
+                <InputField 
+                  handleChange={handleChange} 
+                  error={errorForgoten} id='forgoten' 
+                  label='zadejte email' 
+                />
                 <span className="text-red-500">{forgotenErrorMessage}</span><br/>
                 <span className="text-xs text-start text-gray-500 dark:text-gray-400">
                   Zadejte váš email, pokud se nalézá <br/> v databázi, bude odeslána žádost na obnovu hesla.
-
-
                 </span>
                 <div>
                   <button type="submit" className=" mt-2 dark:bg-orange-900  dark:hover:bg-orange-950 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-100 dark:disabled:bg-gray-600 disabled:border-gray-200 dark:disabled:border-gray-500 text-white dark:disabled:text-gray-400 py-2 px-4 border border-orange-600 rounded" >
@@ -160,7 +167,7 @@ const [disabledLogin, setDisabledLogin] = useState(true)
               </div>
           </div>
           <div>
-            <div className=" mt-10">
+            <div className="hidden mt-10">
               <label htmlFor="login_confirm">Potvrdit příhlášení</label>
               <input id="login_confirm" value='unchecked' onClick={()=>{setDisabledLogin(true); setDisableForgotenBtn(true)}} type="checkbox" />
             </div>
