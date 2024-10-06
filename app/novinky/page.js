@@ -55,12 +55,16 @@ console.log('Email_user:', process.env.Email_user)
 console.log('Email_pass:', process.env.Email_pass)
 
 
+
+
+
     return (
       
       <div className="flex w-full flex-col justify-center">
         <span className="text-2xl">Novinky</span>
         <div className="flex mx-10">
           <p className="text-start my-5">Test fotogalerie</p>
+          test {process.env.MYSQL_HOST} test 2 {process.env.MYSQL_DATABASE}
         </div>
         <div className="flex w-full">
           <Gallery slugGallery={slugGallery}/>
