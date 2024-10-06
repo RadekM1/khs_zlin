@@ -29,13 +29,13 @@
     "next-auth": "^4.24.8",
     "next-themes": "^0.3.0",
     "nodemailer": "^6.9.15",
+    "pg": "^8.13.0",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.3.0",
     "react-modal-image": "^2.6.0",
     "react-photo-album": "^3.0.2",
     "react-toggle-dark-mode": "^1.1.1",
-    "serverless-mysql": "^1.5.5",
     "tailwind-merge": "^2.5.2",
     "tailwind-scrollbar": "^3.1.0",
     "tailwindcss-animate": "^1.0.7",
@@ -43,6 +43,7 @@
     "yet-another-react-lightbox": "^3.21.6"
   },
   "devDependencies": {
+    "@types/pg": "^8.11.10",
     "eslint": "^8",
     "eslint-config-next": "14.2.11",
     "postcss": "^8.4.47",
