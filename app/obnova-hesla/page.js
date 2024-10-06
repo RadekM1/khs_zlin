@@ -1,38 +1,37 @@
 'use client'
 
 import PassField from "@/components/auth-form/passField";
-import UserField from "@/components/auth-form/userField";
 import { useState, useEffect } from "react";
-import { FiUserPlus } from "react-icons/fi";
 import { FaShieldAlt } from "react-icons/fa";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import SpinnerSmallOrange from "@/components/spinners/spinnerSmallOrange";
-import { validateEmail } from "@/lib/functions/validateEmail";
 import { validatePassword } from "@/lib/functions/validatePassword";
-
-
+import { RiLockPasswordLine } from "react-icons/ri";
+import { usePathname } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export default function Page() {
 
-  const [errorUser, setErrorUser] = useState(false);
-  const [userErrorMessage, setUserErrorMessage] = useState('');
   const [errorPass, setErrorPass] = useState(false);
   const [passwordStrong, setPasswordStrong] = useState(false);
   const [passwordEqual, setPasswordEqual] = useState(undefined);
   const [disabled, setDisabled] = useState(true);
   const [checkbox, setCheckbox] = useState(false)
-  const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
   const [fetching, setFetching] = useState(false)
   const [apiResponse, setApiResponse] = useState(null)
 
 
+  const searchParams = useSearchParams();
+  const filteredToken = searchParams.get('token');
+
+
+
   const handleChange = (e, id) => {
     const tempVal = e.target.value;
 
     switch(id){
-      case 'user': setUser(tempVal); break;
       case 'password': setPassword(tempVal); break;
       case 'passwordCheck': setPasswordCheck(tempVal); break;
       default: break;
@@ -41,16 +40,6 @@ export default function Page() {
 
   useEffect(() => {
 
-    if (user && !validateEmail(user)) {
-      setUserErrorMessage('Nevyhovující formát');
-      setErrorUser(true);
-    } else if (user && validateEmail(user)) {
-      setUserErrorMessage('');
-      setErrorUser(false);
-    } else if (!user) {
-      setErrorUser(false);
-      setUserErrorMessage('');
-    }
 
     if(validatePassword(password)){
       setPasswordStrong(true)
@@ -68,19 +57,17 @@ export default function Page() {
       setErrorPass(true)
     }
 
-
-
     if(validatePassword(passwordCheck) === false || validatePassword(passwordCheck) === false){
       setPasswordEqual(false)
     }
 
-    if(validateEmail(user) === true && validatePassword(password) === true && validatePassword(passwordCheck) === true && checkbox !== true){
+    if(validatePassword(password) === true && validatePassword(passwordCheck) === true && checkbox !== true){
       setDisabled(false)
-    } else if(validateEmail(user) === false || validatePassword(password) === false || validatePassword(passwordCheck) === false || checkbox === true){
+    } else if(validatePassword(password) === false || validatePassword(passwordCheck) === false || checkbox === true){
       setDisabled(true)
     }
 
-  }, [user, password, passwordCheck, checkbox]);
+  }, [ password, passwordCheck, checkbox]);
 
 
 
@@ -95,9 +82,9 @@ export default function Page() {
     e.preventDefault();
 
     const data = {
-      user: user,
       password: password,
-      operation: 'registration',
+      forgotenPassChangeToken: filteredToken,
+      operation: 'forgotenPasswordChange',
     }
       
     try{
@@ -139,16 +126,13 @@ export default function Page() {
   return (
     <div className="flex w-full flex-col text-center justify-center items-center">
       <div className="flex justify-center flex-row items-center mb-4">
-        <FiUserPlus className=" mr-2 w-8 h-8" />
-        <div className="text-2xl">Registrace</div>
+        <RiLockPasswordLine className=" mr-2 w-8 h-8" />
+        <div className="text-2xl">Vytvořit nové heslo</div>
       </div>
       <div className="flex flex-col items-center mx-10">
         <div className="rounded-2xl p-3 flex flex-col items-center">
           <form onSubmit={handleSubmit}>
-            <div className="w-full max-w-sm">
-              <UserField error={errorUser} handleChange={handleChange} />
-              <span className="text-xs text-red-400">{userErrorMessage}</span>
-            </div>
+            
             <div className="mt-4 flex-col">
               <div className="flex-row relative">
                 <div>
@@ -183,7 +167,7 @@ export default function Page() {
                 className="bg-orange-500 w-[130px] hover:bg-orange-600 dark:hover:bg-orange-800 dark:bg-orange-700 disabled:bg-orange-100 dark:disabled:bg-gray-600 disabled:border-gray-200 dark:disabled:border-gray-500 text-white dark:disabled:text-gray-400 py-2 px-4 border border-orange-600 rounded"
               >
                 <div className="flex h-min justify-center flex-row">
-                  {fetching ? <SpinnerSmallOrange /> : 'Registrovat'}
+                  {fetching ? <SpinnerSmallOrange /> : 'Změnit heslo'}
                 </div>
               </button>
             </div>
