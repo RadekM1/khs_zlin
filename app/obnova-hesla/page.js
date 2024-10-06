@@ -7,8 +7,8 @@ import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import SpinnerSmallOrange from "@/components/spinners/spinnerSmallOrange";
 import { validatePassword } from "@/lib/functions/validatePassword";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { usePathname } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+
 
 export default function Page() {
 
