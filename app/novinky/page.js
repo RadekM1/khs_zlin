@@ -47,6 +47,13 @@ const slugGallery = [
 
 export default function page() {
 
+console.log('MYSQL_HOST:', process.env.MYSQL_HOST)
+console.log('MYSQL_DATABASE:', process.env.MYSQL_DATABASE)
+console.log('MYSQL_USER:', process.env.MYSQL_USER)
+console.log('MYSQL_PORT:', process.env.MYSQL_PORT)
+console.log('Email_user:', process.env.Email_user)
+console.log('Email_pass:', process.env.Email_pass)
+
 
     return (
       
