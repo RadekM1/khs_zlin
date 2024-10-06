@@ -7,8 +7,9 @@ import { FiUserPlus } from "react-icons/fi";
 import { FaShieldAlt } from "react-icons/fa";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import SpinnerSmallOrange from "@/components/spinners/spinnerSmallOrange";
-import { validateEmail } from "@/functions/validateEmail";
-import { validatePassword } from "@/functions/validatePassword";
+import { validateEmail } from "@/lib/functions/validateEmail";
+import { validatePassword } from "@/lib/functions/validatePassword";
+
 
 
 export default function Page() {
@@ -24,6 +25,7 @@ export default function Page() {
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
   const [fetching, setFetching] = useState(false)
+  const [apiResponse, setApiResponse] = useState(null)
 
 
   const handleChange = (e, id) => {
@@ -110,19 +112,16 @@ export default function Page() {
       });
     
       const result = await response.json();
-      console.log('odpoveď ze serveru:', result);
-
-      if(response.ok){
-        console.log('vše proběhlo v pořádku');
-      } else {
-        (console.log('chyba během požadavku'));
-      }
-
+      setApiResponse(result)
     } catch (error){
-      console.error('chyba při odeslání požadavku', error);
+      let chyba = {};
+      chyba['error'] = 'nepodařilo se zadat údaje do databáze'
+      setApiResponse(chyba)
     } finally{
       setDisabled(false)
       setFetching(false)
+      
+
     }
   };
 
@@ -191,6 +190,16 @@ export default function Page() {
               </button>
             </div>
           </form>
+          {apiResponse?.error &&
+            <span className="mt-2 text-red-400 text-xs">
+              {apiResponse.error}
+            </span>
+          }
+          {apiResponse?.message &&
+            <span className="mt-2 text-green-400 text-xs">
+              {apiResponse.message}
+            </span>
+          }
         </div>
         <div className="hidden">
           souhlasím s podmínkami registrace

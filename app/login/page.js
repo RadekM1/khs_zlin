@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import SpinnerSmallOrange from "@/components/spinners/spinnerSmallOrange";
 import InputField from "@/components/auth-form/inputField";
 import Link from "next/link";
-import { validateEmail } from "@/functions/validateEmail";
+import { validateEmail } from "@/lib/functions/validateEmail";
 
 export default function Page() {
 

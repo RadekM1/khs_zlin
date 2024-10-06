@@ -4,7 +4,7 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { ThemeProvider } from '@mui/material/styles';
-import muiTheme from '@/functions/mui_color_palets';  
+import muiTheme from '@/lib/functions/mui_color_palets';  
 import Link from 'next/link';
 
 export default function BtnArticleShow() {
