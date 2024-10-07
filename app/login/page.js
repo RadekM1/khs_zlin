@@ -124,7 +124,7 @@ const [responseForgoten, setResponseForgoten] = useState(undefined)
     }
   else {      
   let msg = {};
-  msg['error'] = 'nevhodné přihlašovací údaje'
+  msg['error'] = 'špatně zadané heslo nebo email'
   setResponseText(msg)}
 
 }
