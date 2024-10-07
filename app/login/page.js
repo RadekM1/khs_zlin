@@ -92,22 +92,15 @@ const [responseForgoten, setResponseForgoten] = useState(undefined)
   // ---------------- API LOGIN ------------------------
   const handleLogin = async (e) => {
     e.preventDefault();
-{
-        const result = await signIn('credentials', {
-          redirect: '/dashboard', 
+{             setDisableLogin(true)
+              setFetching(true)
+        await signIn('credentials', {
+          redirect: true, 
+          callbackUrl: '/dashboard',
           account: user, 
           password: password, 
         });
-        
-       
 
-        if (result.ok) {
-          
-          console.log('Přihlášení bylo úspěšné!');
-        } else {
-         
-          console.error('Chyba při přihlášení', result.error);
-        }
       };
       
 }
