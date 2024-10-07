@@ -8,6 +8,7 @@ import SpinnerSmallOrange from "@/components/spinners/spinnerSmallOrange";
 import InputField from "@/components/auth-form/inputField";
 import Link from "next/link";
 import { validateEmail } from "@/lib/functions/validateEmail";
+import { signIn } from 'next-auth/react';
 
 export default function Page() {
 
@@ -91,42 +92,24 @@ const [responseForgoten, setResponseForgoten] = useState(undefined)
   // ---------------- API LOGIN ------------------------
   const handleLogin = async (e) => {
     e.preventDefault();
-    if(user && password && (!errorEmail || errorEmail === false) ){
-
-      const data = {
-        user:user,
-        password:password,
-        operation: 'login'
-      }
-
-
-      try{
-        setDisableLogin(true)
-        setFetching(true)
-        const response = await fetch('api/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type' : 'application/json'
-          }, 
-          body: JSON.stringify(data)
+{
+        const result = await signIn('credentials', {
+          redirect: '/dashboard', 
+          account: user, 
+          password: password, 
         });
+        
+       
 
-        const result = await response.json()
-        setResponseText(result)
-      }catch (error){
-        let chyba = {};
-        chyba['error'] = 'nepodařilo se zadat údaje do databáze'
-        setResponseText(chyba.error)
-      }finally{
-        setDisableLogin(false)
-        setFetching(false)
-      }
-    }
-  else {      
-  let msg = {};
-  msg['error'] = 'špatně zadané heslo nebo email'
-  setResponseText(msg)}
-
+        if (result.ok) {
+          
+          console.log('Přihlášení bylo úspěšné!');
+        } else {
+         
+          console.error('Chyba při přihlášení', result.error);
+        }
+      };
+      
 }
   // ---------------- API LOGIN ------------------------
 
