@@ -48,6 +48,6 @@ export async function POST(request) {
                 return NextResponse.json({ error: 'Neznámý typ operace' }, { status: 400 });
         }
     } catch(error){
-        return NextResponse.json({ error: 'nepodařilo se připravit data pro zadání do databáze'}, {status: 500})
+        return NextResponse.json({ error: 'nepodařilo se připravit data pro zadání do databáze' + error.message}, {status: 500})
     } 
 }
