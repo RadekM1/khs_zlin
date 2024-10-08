@@ -168,8 +168,8 @@ export default function Page() {
                   hesla jsou krátká, nebo rozdílná
               </div>
               <div className={`${passwordStrong === false ? '' : 'hidden'} flex-wrap  text-xs text-red-400`}>
-                  heslo musí obsahovat alespoň 9 znaků, <br />
-                  jedno velké písmeno a speciální znak
+                  heslo musí obsahovat alespoň 8 znaků, <br />
+                  jedno velké písmeno a číslo
               </div>
               <div className={`flex ${passwordStrong === true ? '' : 'hidden'} justify-center mt-2 flex-row`}>
                 <div className="text-xs text-green-400">dostatečná síla hesla</div>

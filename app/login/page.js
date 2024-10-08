@@ -5,108 +5,85 @@ import UserField from "@/components/auth-form/userField";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { useState, useEffect } from "react";
 import SpinnerSmallOrange from "@/components/spinners/spinnerSmallOrange";
-import InputField from "@/components/auth-form/inputField";
 import Link from "next/link";
 import { validateEmail } from "@/lib/functions/validateEmail";
 import { signIn } from 'next-auth/react';
+import { useRouter } from "next/navigation";
+import InputField from "@/components/auth-form/inputField";
+
 
 export default function Page() {
 
-{/* ověření přihlášení */}
-const [errorEmail, setErrorEmail] = useState(undefined)
-const [emailErrorMessage, setEmailErrorMessage] = useState(undefined)
-
-
-{/* ověření zapomenuté heslo */}
-const [forgotenErrorMessage, setForgotenErrorMessage] = useState(undefined)
-const [errorForgoten, setErrorForgoten] = useState(false)
-
-
-const [forgotenVisible, setForgotenVisible] = useState('hidden')
-const [disableLogin, setDisableLogin] = useState(false)
-const [responseText, setResponseText] = useState(undefined)
-const [fetching, setFetching] = useState(false)
-const [responseForgoten, setResponseForgoten] = useState(undefined)
-  
-  {/* proměnné formuláře */}
-  const [user, setUser] = useState(undefined)
   const [email, setEmail] = useState(undefined)
-  const [password, setPassword] = useState(undefined)
+  const router = useRouter();
+  const [responseForgoten, setResponseForgoten] = useState(undefined)
+  const [forgotenErrorMessage, setForgotenErrorMessage] = useState(undefined)
+  const [errorForgoten, setErrorForgoten] = useState(false)
+  const [forgotenVisible, setForgotenVisible] = useState('hidden')
 
-  
-  
-    {/* plnič proměnných */}
+  const [errorEmail, setErrorEmail] = useState(undefined);
+  const [emailErrorMessage, setEmailErrorMessage] = useState(undefined);
+  const [responseText, setResponseText] = useState(undefined);
+  const [disableLogin, setDisableLogin] = useState(false);
+  const [fetching, setFetching] = useState(false); 
+
+
+  const [user, setUser] = useState(undefined);
+  const [password, setPassword] = useState(undefined);
+
+ 
   const handleChange = (e, id) => {
-    const tempVal = e.target.value
-    const tempId = id
+    const tempVal = e.target.value;
+    const tempId = id;
 
-    switch(tempId){
-      case 'user': {setUser(tempVal);break;} 
-      case 'password': {setPassword(tempVal)};break;
+    switch (tempId) {
+      case 'user': { setUser(tempVal); break; }
+      case 'password': { setPassword(tempVal); break; }
       case 'forgoten': {setEmail(tempVal)};break;
       default: break;
     }
-  }
-
-  {/* kontrola formuláře */}
-  useEffect(()=>{
-    if(user && !validateEmail(user)){
-      setErrorEmail(true)
-      setEmailErrorMessage('nevyhovující formát')
-    }
-    else if (user && validateEmail(user)){
-      setErrorEmail(false)
-      setEmailErrorMessage(undefined)
-    }
-    else if (!user){
-      setErrorEmail(false)
-      setEmailErrorMessage(undefined)
-    }
-    if(email && !validateEmail(email)){
-      setErrorForgoten(true)
-      setForgotenErrorMessage('nevyhovující formát')
-    }
-    else if (email && validateEmail(email)){
-      setErrorForgoten(false)
-      setForgotenErrorMessage(undefined)
-    }
-    else if (!email){
-      setErrorForgoten(false)
-      setForgotenErrorMessage(undefined)
-    }
-  }, [user, email,errorEmail ])
-
- 
-
-  
-
-
-
-
+  };
 
   const handleForgotenVisibility = () => {
     setForgotenVisible('')
   }
 
 
+  useEffect(() => {
+    if (user && !validateEmail(user)) {
+      setErrorEmail(true);
+      setEmailErrorMessage('Nevyhovující formát');
+    } else if (user && validateEmail(user)) {
+      setErrorEmail(false);
+      setEmailErrorMessage(undefined);
+    } else if (!user) {
+      setErrorEmail(false);
+      setEmailErrorMessage(undefined);
+    }
+  }, [user]);
+
   // ---------------- API LOGIN ------------------------
   const handleLogin = async (e) => {
     e.preventDefault();
-{             setDisableLogin(true)
-              setFetching(true)
-        await signIn('credentials', {
-          redirect: true, 
-          callbackUrl: '/dashboard',
-          account: user, 
-          password: password, 
-        });
+    setDisableLogin(true);
+    setFetching(true); 
 
-      };
-      
-}
+    const result = await signIn('credentials', {
+      redirect: false,
+      account: user,
+      password: password,
+    });
+
+    setFetching(false); 
+
+    if (result.error) {
+      setResponseText('Špatné přihlašovací údaje'); 
+      setDisableLogin(false);
+    } else {
+      router.push('/dashboard') 
+    }
+  };
   // ---------------- API LOGIN ------------------------
-
-
 
   // ---------------- API FORGOTTEN EMAIL --------------
 
@@ -148,56 +125,42 @@ const [responseForgoten, setResponseForgoten] = useState(undefined)
 
 
 
-
-
-    return (
-      <div className="flex w-full flex-col text-center justify-center items-center">
-        <div className="flex justify-center flex-row items-center mb-4">
-          <MdAdminPanelSettings className=" mr-2 w-8 h-8" />
-          <div className="text-2xl">Přihlášení</div>
-        </div>
-        <div className="flex flex-col items-center mx-10">
-          <div className="rounded-2xl p-3 flex flex-col items-center">
-            <form onSubmit={handleLogin}>
+  return (
+    <div className="flex w-full flex-col text-center justify-center items-center">
+      <div className="flex justify-center flex-row items-center mb-4">
+        <MdAdminPanelSettings className=" mr-2 w-8 h-8" />
+        <div className="text-2xl">Přihlášení</div>
+      </div>
+      <div className="flex flex-col items-center mx-10">
+        <div className="rounded-2xl p-3 flex flex-col items-center">
+          <form onSubmit={handleLogin}>
             <div className="w-full max-w-sm">
-              <UserField 
-              error={errorEmail} 
-              handleChange={handleChange} 
-              />
+              <UserField error={errorEmail} handleChange={handleChange} />
               <span className="text-xs text-red-400">{emailErrorMessage}</span>
             </div>
-            <div className="mt-4" >
-              <PassField 
-              id='password' 
-              label='Heslo' 
-              handleChange={handleChange} 
-              />
+            <div className="mt-4">
+              <PassField id='password' label='Heslo' handleChange={handleChange} />
             </div>
             <div className="mt-4">
-              <button 
-              type="submit"
-              className="bg-orange-500 hover:bg-orange-600 disabled:bg-orange-100 dark:disabled:bg-gray-600 disabled:border-gray-200 dark:disabled:border-gray-500 text-white dark:disabled:text-gray-400 py-2 px-4 border border-orange-600 rounded"
-              disabled={disableLogin}
+              <button
+                type="submit"
+                className="bg-orange-500 hover:bg-orange-600 disabled:bg-orange-100 dark:disabled:bg-gray-600 disabled:border-gray-200 dark:disabled:border-gray-500 text-white dark:disabled:text-gray-400 py-2 px-4 border border-orange-600 rounded"
+                disabled={disableLogin}
               >
                 <div className="flex h-min flex-row">
-                {fetching ? <SpinnerSmallOrange /> : 'Přihlásit'}
+                  {fetching ? <SpinnerSmallOrange /> : 'Přihlásit'}
                 </div>
               </button>
             </div>
-            </form>
-            {responseText?.error &&
+          </form>
+          {responseText && (
             <span className="mt-2 text-red-400 text-xs">
-              {responseText.error}
+              {responseText}
             </span>
-          }
-          {responseText?.message &&
-            <span className="mt-2 text-green-400 text-xs">
-              {responseText.message}
-            </span>
-          }
-            </div>
-          </div>
-          <div className="flex flex-col md:flex-row justify-center   w-full">
+          )}
+        </div>
+      </div>
+      <div className="flex flex-col md:flex-row justify-center   w-full">
             <div className="text-sm mb-10 flex w-full flex-col text-center justify-center mt-8">
               <div>
                   <a href="#" onClick={()=>handleForgotenVisibility()} className="hover:text-orange-600  dark:hover:text-orange-200">Zapomenuté heslo ?</a>
@@ -246,7 +209,6 @@ const [responseForgoten, setResponseForgoten] = useState(undefined)
               <input id="login_confirm" value='unchecked' onClick={()=>{setDisableLogin(true)}} type="checkbox" />
             </div>
           </div>
-        </div>
-  
-    );
+    </div>
+  );
 }

@@ -51,13 +51,18 @@ const handler = NextAuth({
           return { email: cleanUser };
 
         } catch (error) {
-          throw new Error(error.message);
+          return null;
         } finally {
           sqlConnection.release();
         }
       },
     }),
   ],
+  pages:{
+    signIn: '/dashboard',
+    signOut: '/login',
+    error: '/login'
+  }
 });
 
 export const GET = handler;
