@@ -4,6 +4,7 @@ import SpinnerBigOrange from "@/components/spinners/spinnerBigOrange";
 import { Suspense } from "react";
 import { SessionProvider } from "next-auth/react";
 
+
 export default function Layout({ children }) {
   return (
     <SessionProvider>

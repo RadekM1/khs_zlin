@@ -17,15 +17,7 @@ export async function POST(request) {
                     return NextResponse.json({ message: registrationResult.message }, { status: registrationResult.status });
                 }
             }; 
-            case 'login' : {
-                const userService = new UserService(body)
-                const loginResult = await userService.login();
-                if (loginResult.error) {
-                    return NextResponse.json({ error: loginResult.error }, { status: loginResult.status });
-                } else {
-                    return NextResponse.json({ message: loginResult.message }, { status: loginResult.status });
-                }
-            }
+
             case 'restorePassword' : {
                 const userService = new UserService(body)
                 const restorePasswordResult = await userService.restorePassword();

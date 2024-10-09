@@ -91,13 +91,9 @@ const oNas = [
 
 export default function Navbar() {
   const { data: session, status } = useSession();
-  
-  
-
-
-  
-  
-
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [clearance, setClearance] = useState([])
+  const boolSessionStatus = !status
   const searchParams = useSearchParams();
   const currentFilter = searchParams.get('filter');
   let pathName = usePathname();
@@ -109,8 +105,7 @@ export default function Navbar() {
 
   
 
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [clearance, setClearance] = useState([])
+  
 
 
 
@@ -321,22 +316,25 @@ export default function Navbar() {
                         </PopoverButton>
                         <PopoverPanel className="border-gray-200 top-14 right-0 border-[1px] dark:border-gray-500  shadow-gray-400/50 dark:shadow-gray-700/50 border- absolute drop-shadow-xl z-10 w-60 rounded dark:bg-gray-800 bg-slate-100 shadow-lg">
                           <div className="p-4">
-                            {userPanel.map((item) => (
+                          {userPanel.filter(item => {
+                              if (item.id === 'login' && session) return false; 
+                              if (item.id === 'logout' && !session) return false; 
+                              if (item.id === 'reg' && session) return false; 
+                              return true; 
+                            }).map((item) => (
                               <Link 
-                              onClick={item.id === 'logout' ? ()=>{handleLogout(), close()}  : ()=>close() }
-                              key={item.id} 
-                              href={item.href} 
-                              className={`text-sm 
-                                ${item.id === 'login' && session ? 'hidden' : ''} 
-                                ${item.id === 'logout' && !session ? 'hidden' : ''} 
-                                ${item.id === 'reg' && session ? 'hidden' : ''} 
-                                leading-6 dark:text-gray-300 text-gray-700`}
-                              
-                              
+                                onClick={item.id === 'logout' ? ()=>{handleLogout(); close();}  : ()=>close() }
+                                key={item.id} 
+                                href={item.href} 
+                                className={`text-sm 
+                                  ${item.id === 'login' && !session ? 'visible-class' : 'hidden-class'} 
+                                  ${item.id === 'logout' && boolSessionStatus ? 'visible-class' : 'hidden-class'} 
+                                  ${item.id === 'reg' && !session ? 'visible-class' : 'hidden-class'} 
+                                  leading-6 dark:text-gray-300 text-gray-700`}
                               >
                                 <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
                                   <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
-                                    <item.icon aria-hidden="true"  className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
+                                    <item.icon aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
                                   </div>
                                   <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
                                     {item.name}

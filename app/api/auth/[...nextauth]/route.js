@@ -23,42 +23,79 @@ const handler = NextAuth({
         const sqlConnection = await pool.connect();
 
         try {
+        
           if (!validateEmail(credentials.account) || !validatePassword(credentials.password)) {
             throw new Error('Nevhodné heslo nebo jméno');
           }
-
+      
           const cleanUser = credentials.account;
-
+      
+          let wrongPassCount = 0;
+         
           const result = await executeQuery({
             sqlConnection,
             query: 'SELECT * FROM users WHERE account = $1',
             values: [cleanUser],
           });
-          
+      
           if (result.rows.length === 0) {
             throw new Error('Uživatel v databázi nenalezen');
           }
-
+      
           const row = result.rows[0];
+          const isBlocked = new Date(row.ban_time_stamp);
+          
           const passFromDatabase = row.hash_password;
           const passFromClient = credentials.password;
-
-          const passEqual = await compare(passFromClient, passFromDatabase);
-
-          if (!passEqual) {
-            throw new Error('Zadané heslo není správné');
+      
+          if (!isNaN(isBlocked.getTime()) && isBlocked > new Date()) {
+            throw new Error('Účet je stále zablokován');
           }
 
+          const passEqual = await compare(passFromClient, passFromDatabase);
+      
+          if (!passEqual) {
+            const resWrongPass = await executeQuery({
+              sqlConnection,
+              query: 'UPDATE users SET wrong_pass_check = wrong_pass_check + 1 WHERE account = $1 RETURNING wrong_pass_check',
+              values: [cleanUser],
+            });
+
+            wrongPassCount = parseInt(resWrongPass.rows[0].wrong_pass_check);
+      
+            if (wrongPassCount >= 5) {
+              const resBlockAccount = await executeQuery({
+                sqlConnection,
+                query: `
+                UPDATE users SET 
+                ban_time_stamp = NOW() + INTERVAL '15 minutes'
+                WHERE account = $1`,
+                values: [cleanUser],
+              });
+              throw new Error('Účet byl z bezpečnostních důvodů na 15 minut zablokován, velký počet neplatných pokusů o přihlášení');
+            }
+            throw new Error('Nesprávné heslo');
+          } else {
+            const resWrongPass = await executeQuery({
+              sqlConnection,
+              query: 'UPDATE users SET wrong_pass_check = 0 WHERE account = $1 RETURNING wrong_pass_check',
+              values: [cleanUser],
+            });
+          }
+
+          
+       
           return { 
             email: cleanUser, 
-            avatar: result.rows[0].avatar,
-            clearance: result.rows[0].clearance,
-            name: result.rows[0].name,
-            lastName: result.rows[0].lastname
+            avatar: row.avatar,
+            clearance: row.clearance,
+            name: row.name,
+            lastName: row.lastname,
           };
-
+      
         } catch (error) {
-          return null;
+         
+          throw new Error(error.message);
         } finally {
           sqlConnection.release();
         }
@@ -76,6 +113,7 @@ const handler = NextAuth({
         token.clearance = user.clearance;
         token.name = user.name;
         token.lastName = user.lastName;
+    
       }
       return token;
     },
@@ -88,6 +126,8 @@ const handler = NextAuth({
       session.user.clearance = token.clearance;
       session.user.name = token.name;
       session.user.lastName = token.lastName;
+
+      
       return session;
     }
   }

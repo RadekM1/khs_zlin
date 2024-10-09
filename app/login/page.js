@@ -13,12 +13,14 @@ import { useSearchParams } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 
 
+
 export default function Page() {
+  const router = useRouter();
 
   const { data: session} = useSession();
 
   const [email, setEmail] = useState(undefined)
-  const router = useRouter();
+
   const [responseForgoten, setResponseForgoten] = useState(undefined)
   const [forgotenErrorMessage, setForgotenErrorMessage] = useState(undefined)
   const [errorForgoten, setErrorForgoten] = useState(false)
@@ -48,7 +50,6 @@ export default function Page() {
     setForgotenVisible('')
   }
 
-
  
 
 
@@ -77,20 +78,21 @@ export default function Page() {
     e.preventDefault();
     setDisableLogin(true);
     setFetching(true); 
-
+  
     const result = await signIn('credentials', {
       redirect: false,
       account: user,
       password: password,
     });
-
-    setFetching(false); 
-
+  
+    setFetching(false);
+  
     if (result.error) {
-      setResponseText('Špatné přihlašovací údaje'); 
+      setResponseText(result.error); 
+
       setDisableLogin(false);
     } else {
-      router.push('/dashboard') 
+      router.push('/dashboard'); 
     }
   };
   // ---------------- API LOGIN ------------------------

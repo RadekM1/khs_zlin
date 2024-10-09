@@ -10,13 +10,13 @@ import SpinnerSmallOrange from "@/components/spinners/spinnerSmallOrange";
 import { validateEmail } from "@/lib/functions/validateEmail";
 import { validatePassword } from "@/lib/functions/validatePassword";
 import InputField from "@/components/auth-form/inputField";
-import { z } from 'zod'
+import { validateName } from "@/lib/functions/validateName";
 
 export default function Page() {
 
   const [errorUser, setErrorUser] = useState(false);
   const [userErrorMessage, setUserErrorMessage] = useState('');
-  const [errorPass, setErrorPass] = useState(false);
+  const [errorPass, setErrorPass] = useState(undefined);
   const [passwordStrong, setPasswordStrong] = useState(false);
   const [passwordEqual, setPasswordEqual] = useState(undefined);
   const [disabled, setDisabled] = useState(true);
@@ -28,8 +28,8 @@ export default function Page() {
   const [apiResponse, setApiResponse] = useState(null)
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [errorFirstName, setErrorFirstName] = useState('')
-  const [errorLastName, setErrorLastName] = useState('')
+  const [errorFirstName, setErrorFirstName] = useState(undefined)
+  const [errorLastName, setErrorLastName] = useState(undefined)
   const [errorFirstNameMsg, setErrorFirstNameMsg] = useState(undefined)
   const [errorLastNameMsg, setErrorLastNameMsg] = useState(undefined)
 
@@ -49,7 +49,25 @@ export default function Page() {
   };
 
   useEffect(() => {
-    // Validace e-mailu
+
+    if (firstName && !validateName(firstName).valid){
+      setErrorFirstName(true)
+      let temp = validateName(firstName).error
+      setErrorFirstNameMsg(temp)
+    } else {
+      setErrorFirstName(false)
+      setErrorFirstNameMsg(undefined)
+    }
+
+    if (lastName && !validateName(lastName).valid){
+      setErrorLastName(true)
+      let temp = validateName(lastName).error
+      setErrorLastNameMsg(temp)
+    } else {
+      setErrorLastName(false)
+      setErrorLastNameMsg(undefined)
+    }
+    
     if (user && !validateEmail(user)) {
       setUserErrorMessage('Nevyhovující formát');
       setErrorUser(true);
@@ -61,16 +79,18 @@ export default function Page() {
       setUserErrorMessage('');
     }
 
-    // Validace hesla
-    if (validatePassword(password)) {
+ 
+    if (password && validatePassword(password)) {
       setPasswordStrong(true);
       setErrorPass(false);
     } else {
       setPasswordStrong(false);
-      setErrorPass(true);
+
     }
 
-    // Kontrola, zda hesla souhlasí
+    
+
+
     if (password === passwordCheck && passwordCheck) {
       setPasswordEqual(true);
       setErrorPass(false);
@@ -79,50 +99,25 @@ export default function Page() {
       setErrorPass(true);
     }
 
-    // Kontrola všech validací
+
+
+   
     const isFormValid =
       validateEmail(user) &&
       validatePassword(password) &&
-      passwordEqual && // Kontrola, zda hesla souhlasí
+      passwordEqual && 
       !errorFirstName &&
       !errorLastName &&
       !checkbox;
 
-    setDisabled(!isFormValid);  // Tlačítko se povolí jen pokud je formulář validní
+    setDisabled(!isFormValid);  
 }, [user, password, passwordCheck, checkbox, firstName, lastName, errorUser, errorPass, errorFirstName, errorLastName, passwordEqual]);
 
   
 
-  const nameSchema = z.string()
-  .min(2, { message: "Jméno nebo příjmení musí mít alespoň 2 znaky." })
-  .max(50, { message: "Jméno nebo příjmení nesmí být delší než 50 znaků." })
-  .regex(/^[a-zA-Z\s\-]+$/, { message: "Jméno nebo příjmení může obsahovat pouze písmena, mezery a pomlčky." });
 
-  function validateFirstName(firsName) {
-    try {
-      nameSchema.parse(firsName);
-      setErrorFirstName(false)
-      setErrorFirstNameMsg(undefined); 
-      return true;  
-    } catch (e) {
-      setErrorFirstName(true)
-      setErrorFirstNameMsg(e.errors[0].message); 
-      return false;  
-    }
-  }
 
-  function validateLastName(lastName) {
-    try {
-      nameSchema.parse(lastName);
-      setErrorLastName(false)
-      setErrorLastNameMsg(undefined)
-      return true;  
-    } catch (e) {
-      setErrorLastName(true)
-      setErrorLastNameMsg(e.errors[0].message);  
-      return false;  
-    }
-  }
+
 
 
   // ---------------- API ------------------------
@@ -155,6 +150,7 @@ export default function Page() {
     
       const result = await response.json();
       setApiResponse(result)
+      console.log(result)
     } catch (error){
       let chyba = {};
       chyba['error'] = 'nepodařilo se zadat údaje do databáze'
@@ -169,6 +165,7 @@ export default function Page() {
   // ---------------- API ------------------------
 
 
+
   return (
     <div className="flex w-full flex-col text-center justify-center items-center">
       <div className="flex justify-center flex-row items-center mb-4">
@@ -181,13 +178,13 @@ export default function Page() {
             <div className="w-full max-w-sm  ">
               <InputField label='Jméno' widthInput='280' id='firstName' error={errorFirstName} value={firstName} handleChange={handleChange} />
             </div>
-            <div className="-mt-2 mb-4 text-xs text-red-400 flex-wrap flex ">
+            <div className="-mt-2 mb-4 text-xs text-center text-red-400 flex-wrap flex ">
               {errorFirstName && errorFirstNameMsg}
             </div>
             <div className="w-full mt-5 max-w-sm">
               <InputField label='Příjmení' widthInput='280' error={errorLastName} id='lastName' value={lastName} handleChange={handleChange} />
             </div>  
-            <div className="-mt-2 mb-4 text-xs text-red-400 flex-wrap flex">
+            <div className="-mt-2 mb-4 text-xs text-center text-red-400 flex-wrap flex">
               {errorLastName && errorLastNameMsg}
             </div>
             <div className="w-full max-w-sm">
