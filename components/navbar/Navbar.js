@@ -1,6 +1,7 @@
 'use client'
+
 import Image from 'next/image'
-import { useState} from 'react'
+import { useState, useEffect} from 'react'
 import {
   Dialog,
   DialogPanel,
@@ -21,7 +22,7 @@ import { GiHiking, GiMountainClimbing, GiNewspaper, GiSkis  } from "react-icons/
 import { LiaMountainSolid } from "react-icons/lia";
 import BoulderIcon from '../boulderIcon'
 import { CiLogout, CiLogin  } from "react-icons/ci";
-import { IoIosSettings, IoIosHelpCircleOutline, IoIosInformationCircleOutline  } from "react-icons/io";
+import { IoIosSettings, IoIosInformationCircleOutline  } from "react-icons/io";
 import { FiPhone } from "react-icons/fi";
 import ThemeToggle from '../ThemeToggle'
 import { VscChecklist } from "react-icons/vsc";
@@ -38,8 +39,7 @@ import { FaIcicles, FaRegSnowflake } from "react-icons/fa";
 import { usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation'
 import { IoPeopleOutline } from "react-icons/io5";
-
-
+import {useSession, signOut } from 'next-auth/react';
 
 const articles = [
   { id:1, name: 'Skály', description: 'Od písků v Ádru až po rulu v Chamonix', href: '/clanky?filter=skaly', filter:'skaly', icon: GiMountainClimbing },
@@ -49,16 +49,16 @@ const articles = [
 ]
 
 const userPanel = [
-  { id: 1, name: 'Články',  href: '/dashboard/clanky', icon: RiBook3Line },
-  { id: 2, name: 'Novinky',  href: '/dashboard/novinky', icon: GiNewspaper },
-  { id: 3, name: 'Kalendář',  href: '/dashboard/kalendar', icon: LuCalendarRange },
-  { id: 4, name: 'Knihovna',  href: '/dashboard/knihovna', icon: IoLibraryOutline },
-  { id: 5, name: 'Půjčovna',  href: '/dashboard/pujcovna', icon: GiSkis },
-  { id: 6, name: 'Nastavení účtu',  href: '/dashboard/nastaveni', icon: IoIosSettings },
-  { id: 7, name: 'Uživatelé', href: '/dashboard/uzivatele', icon: MdAdminPanelSettings },
-  { id: 8, name: 'Odhlásit', href: '/login', icon: CiLogout },
-  { id: 9, name: 'Přihlásit', href: '/login', icon: CiLogin },
-  { id: 10, name: 'Registrovat', href: '/registration', icon: HiOutlineUserPlus },
+  { id: 1, name: 'Články', clearance: ['member, editor, admin'],  href: '/dashboard/clanky', icon: RiBook3Line },
+  { id: 2, name: 'Novinky', clearance: ['editor, admin'],  href: '/dashboard/novinky', icon: GiNewspaper },
+  { id: 3, name: 'Kalendář', clearance: ['editor, admin'],  href: '/dashboard/kalendar', icon: LuCalendarRange },
+  { id: 4, name: 'Knihovna', clearance: ['editor, admin'],  href: '/dashboard/knihovna', icon: IoLibraryOutline },
+  { id: 5, name: 'Půjčovna',clearance: ['editor, admin'],  href: '/dashboard/pujcovna', icon: GiSkis },
+  { id: 6, name: 'Nastavení účtu', clearance: ['visitor, member, editor, admin'], href: '/dashboard/nastaveni', icon: IoIosSettings },
+  { id: 7, name: 'Uživatelé', clearance: ['editor, admin'],href: '/dashboard/uzivatele', icon: MdAdminPanelSettings },
+  { id: 8, name: 'Odhlásit',clearance: ['visitor, member, editor, admin'], id:'logout', href: '#', icon: CiLogout },
+  { id: 9, name: 'Přihlásit', clearance: ['visitor, member, editor, admin'],id:'login',href: '/login', icon: CiLogin },
+  { id: 10, name: 'Registrovat', clearance: ['visitor, member, editor, admin'], id:'reg',href: '/registration', icon: HiOutlineUserPlus },
   
 ]
 
@@ -90,8 +90,13 @@ const oNas = [
 
 
 export default function Navbar() {
+  const { data: session, status } = useSession();
+  
+  
 
- 
+
+  
+  
 
   const searchParams = useSearchParams();
   const currentFilter = searchParams.get('filter');
@@ -105,15 +110,34 @@ export default function Navbar() {
   
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [clearance, setClearance] = useState([])
 
 
+
+  useEffect(()=>{
+    if(session){
+      setClearance(session.clearance)
+      
+    }
+  },
+  [session])
+
+ 
+
+  const handleLogout = () => {
+   
+    signOut({
+      callbackUrl: '/login?filter=logout'
+    })
+  }
 
 
   return (
+
       
     <header className=" fixed z-30 w-full top-0 backdrop-blur-sm bg-slate-100/90 dark:bg-[#1E1E1E]/80 border-b-gray-300 dark:border-b-gray-600 border-b
      
-    " >
+    " > 
       <nav aria-label="Global" className="mx-auto flex  max-w-7xl items-end justify-between lg:justify-start p-2 lg:px-8">
         <div className="flex lg:flex-4">
           <div className="flex lg:hidden ">
@@ -134,6 +158,10 @@ export default function Navbar() {
             </Link>
           </div>
         </div>
+
+       
+
+
         <div className='flex-grow ml-4  flex relative mr-2'>                               
         </div> {/* NAVIGAČNÍ LIŠTA DOLE */}
         <PopoverGroup className="hidden lg:flex flex-grow ml-10 lg:gap-x-5">
@@ -279,7 +307,7 @@ export default function Navbar() {
               <div>
                 <PopoverGroup>
                   <Popover className='relative flex  '>
-                    {({ open }) => (
+                    {({ open, close }) => (
                       <>
                         <PopoverButton className="ml-5 flex focus:outline-none items-center gap-x-2 text-sm leading-6 dark:text-gray-300 text-gray-700">
                           <Image 
@@ -295,16 +323,20 @@ export default function Navbar() {
                           <div className="p-4">
                             {userPanel.map((item) => (
                               <Link 
-                                key={item.id} 
-                                href={item.href}
-                                className="text-sm leading-6 dark:text-gray-300 text-gray-700"
+                              onClick={item.id === 'logout' ? ()=>{handleLogout(), close()}  : ()=>close() }
+                              key={item.id} 
+                              href={item.href} 
+                              className={`text-sm 
+                                ${item.id === 'login' && session ? 'hidden' : ''} 
+                                ${item.id === 'logout' && !session ? 'hidden' : ''} 
+                                ${item.id === 'reg' && session ? 'hidden' : ''} 
+                                leading-6 dark:text-gray-300 text-gray-700`}
+                              
+                              
                               >
                                 <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
                                   <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
-                                    <item.icon 
-                                      aria-hidden="true" 
-                                      className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" 
-                                    />
+                                    <item.icon aria-hidden="true"  className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
                                   </div>
                                   <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
                                     {item.name}
@@ -481,7 +513,8 @@ export default function Navbar() {
           </div>
         </DialogPanel>
       </Dialog>
+    
     </header>
-       
+    
   )
 }

@@ -7,12 +7,15 @@ import { useState, useEffect } from "react";
 import SpinnerSmallOrange from "@/components/spinners/spinnerSmallOrange";
 import Link from "next/link";
 import { validateEmail } from "@/lib/functions/validateEmail";
-import { signIn } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 import InputField from "@/components/auth-form/inputField";
+import { useSearchParams } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
 
 
 export default function Page() {
+
+  const { data: session} = useSession();
 
   const [email, setEmail] = useState(undefined)
   const router = useRouter();
@@ -20,14 +23,11 @@ export default function Page() {
   const [forgotenErrorMessage, setForgotenErrorMessage] = useState(undefined)
   const [errorForgoten, setErrorForgoten] = useState(false)
   const [forgotenVisible, setForgotenVisible] = useState('hidden')
-
   const [errorEmail, setErrorEmail] = useState(undefined);
   const [emailErrorMessage, setEmailErrorMessage] = useState(undefined);
   const [responseText, setResponseText] = useState(undefined);
   const [disableLogin, setDisableLogin] = useState(false);
   const [fetching, setFetching] = useState(false); 
-
-
   const [user, setUser] = useState(undefined);
   const [password, setPassword] = useState(undefined);
 
@@ -49,6 +49,13 @@ export default function Page() {
   }
 
 
+ 
+
+
+  const searchParams = useSearchParams();
+  const logoutTrigger = searchParams.get('filter');
+ 
+
   useEffect(() => {
     if (user && !validateEmail(user)) {
       setErrorEmail(true);
@@ -61,6 +68,9 @@ export default function Page() {
       setEmailErrorMessage(undefined);
     }
   }, [user]);
+
+
+
 
   // ---------------- API LOGIN ------------------------
   const handleLogin = async (e) => {
@@ -130,7 +140,13 @@ export default function Page() {
       <div className="flex justify-center flex-row items-center mb-4">
         <MdAdminPanelSettings className=" mr-2 w-8 h-8" />
         <div className="text-2xl">Přihlášení</div>
+        
+
+
       </div>
+      <div>
+          {logoutTrigger === 'logout' && (session === undefined || session === null) ? <span className="text-green-500">byli jste úšpěšně odhlášení</span> : ''}
+          </div>
       <div className="flex flex-col items-center mx-10">
         <div className="rounded-2xl p-3 flex flex-col items-center">
           <form onSubmit={handleLogin}>

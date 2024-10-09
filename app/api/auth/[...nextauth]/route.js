@@ -9,6 +9,7 @@ import { validatePassword } from "@/lib/functions/validatePassword";
 const handler = NextAuth({
   session: {
     jwt: true,
+    maxAge: 1 * 24 * 60 * 60
   },
   secret: process.env.NODE_ENV === 'production' ? process.env.NEXTAUTH_SECRET : undefined,
   providers: [
@@ -33,7 +34,7 @@ const handler = NextAuth({
             query: 'SELECT * FROM users WHERE account = $1',
             values: [cleanUser],
           });
-
+          
           if (result.rows.length === 0) {
             throw new Error('Uživatel v databázi nenalezen');
           }
@@ -48,7 +49,13 @@ const handler = NextAuth({
             throw new Error('Zadané heslo není správné');
           }
 
-          return { email: cleanUser };
+          return { 
+            email: cleanUser, 
+            avatar: result.rows[0].avatar,
+            clearance: result.rows[0].clearance,
+            name: result.rows[0].name,
+            lastName: result.rows[0].lastname
+          };
 
         } catch (error) {
           return null;
@@ -58,11 +65,33 @@ const handler = NextAuth({
       },
     }),
   ],
-  pages:{
-    signIn: '/dashboard',
-    signOut: '/login',
-    error: '/login'
+
+  callbacks: {
+   
+    async jwt({ token, user }) {
+      if (user) {
+     
+        token.email = user.email;
+        token.avatar = user.avatar;
+        token.clearance = user.clearance;
+        token.name = user.name;
+        token.lastName = user.lastName;
+      }
+      return token;
+    },
+
+  
+    async session({ session, token }) {
+     
+      session.user.email = token.email;
+      session.user.avatar = token.avatar;
+      session.user.clearance = token.clearance;
+      session.user.name = token.name;
+      session.user.lastName = token.lastName;
+      return session;
+    }
   }
+
 });
 
 export const GET = handler;

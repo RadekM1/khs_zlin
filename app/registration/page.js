@@ -9,8 +9,8 @@ import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import SpinnerSmallOrange from "@/components/spinners/spinnerSmallOrange";
 import { validateEmail } from "@/lib/functions/validateEmail";
 import { validatePassword } from "@/lib/functions/validatePassword";
-
-
+import InputField from "@/components/auth-form/inputField";
+import { z } from 'zod'
 
 export default function Page() {
 
@@ -26,6 +26,13 @@ export default function Page() {
   const [passwordCheck, setPasswordCheck] = useState('');
   const [fetching, setFetching] = useState(false)
   const [apiResponse, setApiResponse] = useState(null)
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [errorFirstName, setErrorFirstName] = useState('')
+  const [errorLastName, setErrorLastName] = useState('')
+  const [errorFirstNameMsg, setErrorFirstNameMsg] = useState(undefined)
+  const [errorLastNameMsg, setErrorLastNameMsg] = useState(undefined)
+
 
 
   const handleChange = (e, id) => {
@@ -35,12 +42,14 @@ export default function Page() {
       case 'user': setUser(tempVal); break;
       case 'password': setPassword(tempVal); break;
       case 'passwordCheck': setPasswordCheck(tempVal); break;
+      case 'firstName' : setFirstName(tempVal); break;
+      case 'lastName' : setLastName(tempVal); break;
       default: break;
     }
   };
 
   useEffect(() => {
-
+    // Validace e-mailu
     if (user && !validateEmail(user)) {
       setUserErrorMessage('Nevyhovující formát');
       setErrorUser(true);
@@ -52,37 +61,68 @@ export default function Page() {
       setUserErrorMessage('');
     }
 
-    if(validatePassword(password)){
-      setPasswordStrong(true)
-      setErrorPass(false)
-    }else if(!validatePassword(password)){
-      setPasswordStrong(false)
-      setErrorPass(true)
+    // Validace hesla
+    if (validatePassword(password)) {
+      setPasswordStrong(true);
+      setErrorPass(false);
+    } else {
+      setPasswordStrong(false);
+      setErrorPass(true);
     }
 
-    if(password === passwordCheck){
-      setPasswordEqual(true)
-      setErrorPass(false)
-    } else if (password !== passwordCheck){
-      setPasswordEqual(false)
-      setErrorPass(true)
+    // Kontrola, zda hesla souhlasí
+    if (password === passwordCheck && passwordCheck) {
+      setPasswordEqual(true);
+      setErrorPass(false);
+    } else {
+      setPasswordEqual(false);
+      setErrorPass(true);
     }
 
+    // Kontrola všech validací
+    const isFormValid =
+      validateEmail(user) &&
+      validatePassword(password) &&
+      passwordEqual && // Kontrola, zda hesla souhlasí
+      !errorFirstName &&
+      !errorLastName &&
+      !checkbox;
 
+    setDisabled(!isFormValid);  // Tlačítko se povolí jen pokud je formulář validní
+}, [user, password, passwordCheck, checkbox, firstName, lastName, errorUser, errorPass, errorFirstName, errorLastName, passwordEqual]);
 
-    if(validatePassword(passwordCheck) === false || validatePassword(passwordCheck) === false){
-      setPasswordEqual(false)
+  
+
+  const nameSchema = z.string()
+  .min(2, { message: "Jméno nebo příjmení musí mít alespoň 2 znaky." })
+  .max(50, { message: "Jméno nebo příjmení nesmí být delší než 50 znaků." })
+  .regex(/^[a-zA-Z\s\-]+$/, { message: "Jméno nebo příjmení může obsahovat pouze písmena, mezery a pomlčky." });
+
+  function validateFirstName(firsName) {
+    try {
+      nameSchema.parse(firsName);
+      setErrorFirstName(false)
+      setErrorFirstNameMsg(undefined); 
+      return true;  
+    } catch (e) {
+      setErrorFirstName(true)
+      setErrorFirstNameMsg(e.errors[0].message); 
+      return false;  
     }
+  }
 
-    if(validateEmail(user) === true && validatePassword(password) === true && validatePassword(passwordCheck) === true && checkbox !== true){
-      setDisabled(false)
-    } else if(validateEmail(user) === false || validatePassword(password) === false || validatePassword(passwordCheck) === false || checkbox === true){
-      setDisabled(true)
+  function validateLastName(lastName) {
+    try {
+      nameSchema.parse(lastName);
+      setErrorLastName(false)
+      setErrorLastNameMsg(undefined)
+      return true;  
+    } catch (e) {
+      setErrorLastName(true)
+      setErrorLastNameMsg(e.errors[0].message);  
+      return false;  
     }
-
-  }, [user, password, passwordCheck, checkbox]);
-
-
+  }
 
 
   // ---------------- API ------------------------
@@ -95,6 +135,8 @@ export default function Page() {
     e.preventDefault();
 
     const data = {
+      firstName: firstName,
+      lastName: lastName,
       user: user,
       password: password,
       operation: 'registration',
@@ -124,16 +166,7 @@ export default function Page() {
   };
 
 
-    
-
   // ---------------- API ------------------------
-
-
-
-
-
-
-
 
 
   return (
@@ -145,11 +178,23 @@ export default function Page() {
       <div className="flex flex-col items-center mx-10">
         <div className="rounded-2xl p-3 flex flex-col items-center">
           <form onSubmit={handleSubmit}>
+            <div className="w-full max-w-sm  ">
+              <InputField label='Jméno' widthInput='280' id='firstName' error={errorFirstName} value={firstName} handleChange={handleChange} />
+            </div>
+            <div className="-mt-2 mb-4 text-xs text-red-400 flex-wrap flex ">
+              {errorFirstName && errorFirstNameMsg}
+            </div>
+            <div className="w-full mt-5 max-w-sm">
+              <InputField label='Příjmení' widthInput='280' error={errorLastName} id='lastName' value={lastName} handleChange={handleChange} />
+            </div>  
+            <div className="-mt-2 mb-4 text-xs text-red-400 flex-wrap flex">
+              {errorLastName && errorLastNameMsg}
+            </div>
             <div className="w-full max-w-sm">
-              <UserField error={errorUser} handleChange={handleChange} />
+              <UserField error={errorUser}  handleChange={handleChange} />
               <span className="text-xs text-red-400">{userErrorMessage}</span>
             </div>
-            <div className="mt-4 flex-col">
+            <div className="mt-8 flex-col">
               <div className="flex-row relative">
                 <div>
                   <PassField id='password' label='Heslo' error={errorPass} handleChange={handleChange} />
@@ -164,14 +209,14 @@ export default function Page() {
               <div className="absolute top-6 -right-5">
                 {passwordEqual && <IoShieldCheckmarkOutline className="text-green-400" />}
               </div>
-              <div className={`${passwordEqual === false ? '' : 'hidden'} flex-wrap  text-xs text-red-400`}>
-                  hesla jsou krátká, nebo rozdílná
+              <div className={`${passwordEqual === false ? '' : 'hidden'} flex-wrap  mb-2  text-xs text-red-400`}>
+                  - hesla jsou krátká, nebo rozdílná
               </div>
               <div className={`${passwordStrong === false ? '' : 'hidden'} flex-wrap  text-xs text-red-400`}>
-                  heslo musí obsahovat alespoň 8 znaků, <br />
+                  - heslo musí obsahovat alespoň 8 znaků, <br />
                   jedno velké písmeno a číslo
               </div>
-              <div className={`flex ${passwordStrong === true ? '' : 'hidden'} justify-center mt-2 flex-row`}>
+              <div className={`flex ${passwordStrong === true ? '' : 'hidden'} justify-center mb-2  mt-2 flex-row`}>
                 <div className="text-xs text-green-400">dostatečná síla hesla</div>
                 <div><FaShieldAlt className="text-green-400 ml-2 w-4 h-4" /></div>
               </div>
