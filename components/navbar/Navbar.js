@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState, useEffect} from 'react'
+import { useEffect, useState} from 'react'
 import {
   Dialog,
   DialogPanel,
@@ -33,7 +33,7 @@ import { LuCalendarRange } from "react-icons/lu";
 import { IoLibraryOutline, IoSchoolOutline } from "react-icons/io5";
 import { TbMoodBoy } from "react-icons/tb";
 import { GoThumbsup } from "react-icons/go";
-import { MdHistory, MdAdminPanelSettings } from "react-icons/md";
+import { MdHistory, MdAdminPanelSettings,MdAccountCircle } from "react-icons/md";
 import { FaPeopleGroup, FaHillAvalanche, FaListCheck } from "react-icons/fa6";
 import { FaIcicles, FaRegSnowflake } from "react-icons/fa";
 import { usePathname } from 'next/navigation';
@@ -89,33 +89,28 @@ const oNas = [
 
 
 export default function Navbar() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [clearance, setClearance] = useState([])
-  const boolSessionStatus = !status
   const searchParams = useSearchParams();
   const currentFilter = searchParams.get('filter');
+  const [clearance, setClearance] = useState(undefined)
   let pathName = usePathname();
+
 
   let active = 'text-orange-600 dark:text-orange-300 border-b-orange-600 dark:border-b-orange-200  border-b-2'
   let inActive = 'text-gray-700 dark:text-white dark:hover:text-orange-200 hover:text-orange-600'
   let activeMobile = 'dark:border-orange-200 border-orange-600 text-orange-600 dark:text-orange-200 border-l '
   let inActiveMobile = 'dark:hover:border-orange-200 hover:bg-gray-50 dark:hover:bg-slate-800 dark:border-gray-500  border-l border-gray-200 hover:border-orange-600  dark:hover:text-orange-200 hover:text-orange-600'
 
-  
-
-  
-
-
+ 
 
   useEffect(()=>{
     if(session){
-      setClearance(session.clearance)
-      
+      setClearance(session.user.clearance)
+    }else{
+      setClearance(undefined)
     }
-  },
-  [session])
-
+  }, [session])
  
 
   const handleLogout = () => {
@@ -315,20 +310,26 @@ export default function Navbar() {
                         </PopoverButton>
                         <PopoverPanel className="border-gray-200 top-14 right-0 border-[1px] dark:border-gray-500  shadow-gray-400/50 dark:shadow-gray-700/50 border- absolute drop-shadow-xl z-10 w-60 rounded dark:bg-gray-800 bg-slate-100 shadow-lg">
                           <div className="p-4">
+
+                            {(clearance === 'member' || clearance === 'editor' || clearance === 'admin' ) && 
                               <Link 
-                                onClick={()=>close()}
-                                href='/dashboard/clanky' 
-                                className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
-                                <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
-                                  <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
-                                    <RiBook3Line aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
-                                  </div>
-                                  <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
-                                    Články
-                                  </div>
+                              onClick={()=>close()}
+                              href='/dashboard/clanky' 
+                              className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
+                              <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
+                                <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
+                                  <RiBook3Line aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
                                 </div>
-                              </Link>
-                              <Link 
+                                <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
+                                  Články
+                                </div>
+                              </div>
+                          </Link>
+                            }
+
+                            {(clearance === 'editor' || clearance === 'admin' ) && 
+                            
+                            <Link 
                                 onClick={()=>close()}
                                 href='/dashboard/novinky' 
                                 className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
@@ -341,35 +342,45 @@ export default function Navbar() {
                                   </div>
                                 </div>
                               </Link>
+                            }
+                              
+                              {(clearance === 'editor' || clearance === 'admin' ) && 
+                                 <Link 
+                                 onClick={()=>close()}
+                                 href='/dashboard/kalendar' 
+                                 className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
+                                 <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
+                                   <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
+                                     <LuCalendarRange aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
+                                   </div>
+                                   <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
+                                     Kalendář
+                                   </div>
+                                 </div>
+                               </Link>
+                              }
+
+                              {(clearance === 'editor' || clearance === 'admin' ) && 
                               <Link 
-                                onClick={()=>close()}
-                                href='/dashboard/kalendar' 
-                                className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
-                                <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
-                                  <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
-                                    <LuCalendarRange aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
-                                  </div>
-                                  <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
-                                    Kalendář
-                                  </div>
+                              onClick={()=>close()}
+                              href='/dashboard/knihovna' 
+                              className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
+                              <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
+                                <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
+                                  <IoLibraryOutline aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
                                 </div>
-                              </Link>
-                              <Link 
-                                onClick={()=>close()}
-                                href='/dashboard/knihovna' 
-                                className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
-                                <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
-                                  <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
-                                    <IoLibraryOutline aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
-                                  </div>
-                                  <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
-                                    Knihovna
-                                  </div>
+                                <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
+                                  Knihovna
                                 </div>
+                              </div>
                               </Link>
+                              }
+                              
+                              {(clearance === 'editor' || clearance === 'admin' ) && 
+                              
                               <Link 
                                 onClick={()=>close()}
-                                href='/dashboard/clanky' 
+                                href='/dashboard/pujcovna' 
                                 className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
                                 <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
                                   <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
@@ -380,19 +391,26 @@ export default function Navbar() {
                                   </div>
                                 </div>
                               </Link>
+                              }
+                                  
+                              {session &&   
                               <Link 
                                 onClick={()=>close()}
-                                href='/dashboard/nastaveni' 
+                                href='/dashboard/profil' 
                                 className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
                                 <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
                                   <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
-                                    <IoIosSettings aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
+                                    <MdAccountCircle aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
                                   </div>
                                   <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
-                                    Nastavení
+                                    Profil
                                   </div>
                                 </div>
                               </Link>
+                              }
+
+                              {(clearance === 'admin' ) && 
+                              
                               <Link 
                                 onClick={()=>close()}
                                 href='/dashboard/uzivatele' 
@@ -406,6 +424,8 @@ export default function Navbar() {
                                   </div>
                                 </div>
                               </Link>
+                              }
+                              
 
                               {session && 
                                 <a 

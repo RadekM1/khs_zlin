@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import FormHelperText from '@mui/material/FormHelperText';
 import { createTheme, ThemeProvider, Box, TextField } from '@mui/material';
 
-export default function InputField({ dataIn, widthInput, id, label, error, size, helperText, handleChange }) {
+export default function InputField({ value, widthInput, id, label, error, size, helperText, handleChange }) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -38,7 +38,7 @@ export default function InputField({ dataIn, widthInput, id, label, error, size,
   return (
     <ThemeProvider theme={resolvedTheme === 'light' ? lightTheme : darkTheme}>
       <Box
-        component="div" // Změněno z form na div, aby nedošlo k vnoření form elementů
+        component="div" 
         sx={{
           '& > :not(style)': {
             m: 1,
@@ -53,7 +53,7 @@ export default function InputField({ dataIn, widthInput, id, label, error, size,
           error={error}
           color="primary"
           label={label}
-          value={dataIn}
+          value={value}
           onChange={(e) => handleChange(e, id)}
           size={size ? size : 'normal'}
         />

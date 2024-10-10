@@ -13,7 +13,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { createTheme, ThemeProvider} from '@mui/material';
 
 
-export default function PassField({ handleChange, label, id, error }) {
+export default function PassField({ handleChange, label, id, size, error }) {
   const { resolvedTheme } = useNextTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -59,7 +59,8 @@ export default function PassField({ handleChange, label, id, error }) {
         <OutlinedInput
           id={id}
           error={error}
-          type={showPassword ? 'text' : 'password'}
+          type={'password'}
+          size={size ? size : 'normal'}
           autoComplete="current-password"
           onChange={(e) => handleChange(e, id)}
           endAdornment={

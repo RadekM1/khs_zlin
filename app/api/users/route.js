@@ -36,6 +36,15 @@ export async function POST(request) {
                     return NextResponse.json({ message: forgotenPasswordChangeResult.message }, { status: forgotenPasswordChangeResult.status });
                 }
             }
+            case 'authentication' : {
+                const userService = new UserService(body)
+                const autheticationResult = await userService.authentication();
+                if (autheticationResult.error) {
+                    return NextResponse.json({ error: autheticationResult.error }, { status: autheticationResult.status });
+                } else {
+                    return NextResponse.json({ message: autheticationResult.message }, { status: autheticationResult.status });
+                }
+            }
             default:
                 return NextResponse.json({ error: 'Neznámý typ operace' }, { status: 400 });
         }

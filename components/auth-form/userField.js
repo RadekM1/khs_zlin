@@ -5,7 +5,7 @@ import { useTheme as useNextTheme } from 'next-themes';
 import { MdOutlineMailLock } from "react-icons/md";
 import { createTheme, ThemeProvider, Box, TextField, InputAdornment } from '@mui/material';
 
-export default function UserField({handleChange, error}) {
+export default function UserField({handleChange, value, size,  error}) {
   const { resolvedTheme } = useNextTheme();
   const [mounted, setMounted] = React.useState(false);
 
@@ -37,6 +37,8 @@ export default function UserField({handleChange, error}) {
     },
   });
 
+ 
+
   return (
     <ThemeProvider theme={resolvedTheme === 'light' ? lightTheme : darkTheme}>
       <Box
@@ -49,6 +51,9 @@ export default function UserField({handleChange, error}) {
           id="user"
           error={error}
           color="primary"
+          type='email'
+          size={size ? size : 'normal'}
+          value={value}
           autoComplete='username'
           onChange={(e)=>handleChange(e, 'user')}
           label="Email"

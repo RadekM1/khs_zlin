@@ -11,6 +11,7 @@ import { validateEmail } from "@/lib/functions/validateEmail";
 import { validatePassword } from "@/lib/functions/validatePassword";
 import InputField from "@/components/auth-form/inputField";
 import { validateName } from "@/lib/functions/validateName";
+import { MdMarkEmailRead } from "react-icons/md";
 
 export default function Page() {
 
@@ -32,7 +33,7 @@ export default function Page() {
   const [errorLastName, setErrorLastName] = useState(undefined)
   const [errorFirstNameMsg, setErrorFirstNameMsg] = useState(undefined)
   const [errorLastNameMsg, setErrorLastNameMsg] = useState(undefined)
-
+  const [pendingReg, setPendingReg] = useState(true)
 
 
   const handleChange = (e, id) => {
@@ -136,10 +137,10 @@ export default function Page() {
       password: password,
       operation: 'registration',
     }
-      
+    setDisabled(true)
+    setFetching(true)
     try{
-      setDisabled(true)
-      setFetching(true)
+
       const response = await fetch('api/users', {
         method: 'POST', 
         headers: {
@@ -150,7 +151,7 @@ export default function Page() {
     
       const result = await response.json();
       setApiResponse(result)
-      console.log(result)
+      setPendingReg(false)
     } catch (error){
       let chyba = {};
       chyba['error'] = 'nepodařilo se zadat údaje do databáze'
@@ -174,24 +175,29 @@ export default function Page() {
       </div>
       <div className="flex flex-col items-center mx-10">
         <div className="rounded-2xl p-3 flex flex-col items-center">
+          {pendingReg && 
+          
           <form onSubmit={handleSubmit}>
             <div className="w-full max-w-sm  ">
               <InputField label='Jméno' widthInput='280' id='firstName' error={errorFirstName} value={firstName} handleChange={handleChange} />
             </div>
-            <div className="-mt-2 mb-4 text-xs text-center text-red-400 flex-wrap flex ">
+            <div className="  text-xs text-center  text-red-400 -mt-3 h-5 flex-wrap flex ">
               {errorFirstName && errorFirstNameMsg}
             </div>
-            <div className="w-full mt-5 max-w-sm">
+            <div className="w-full max-w-sm">
               <InputField label='Příjmení' widthInput='280' error={errorLastName} id='lastName' value={lastName} handleChange={handleChange} />
             </div>  
-            <div className="-mt-2 mb-4 text-xs text-center text-red-400 flex-wrap flex">
+            <div className="text-xs text-center text-red-400 -mt-3 h-5  flex-wrap flex">
               {errorLastName && errorLastNameMsg}
             </div>
-            <div className="w-full max-w-sm">
-              <UserField error={errorUser}  handleChange={handleChange} />
-              <span className="text-xs text-red-400">{userErrorMessage}</span>
+            <div className="w-full mb-2 max-w-sm">
+              <UserField error={errorUser} value={user} handleChange={handleChange} />
+              
             </div>
-            <div className="mt-8 flex-col">
+            <div className="-mt-3 h-5 text-start text-xs text-red-400">
+            {userErrorMessage}
+            </div>
+            <div className="flex-col mb-2">
               <div className="flex-row relative">
                 <div>
                   <PassField id='password' label='Heslo' error={errorPass} handleChange={handleChange} />
@@ -201,7 +207,7 @@ export default function Page() {
                 </div>
               </div>
             </div>
-            <div className="mt-4 flex flex-col relative">
+            <div className="flex flex-col relative">
               <PassField id='passwordCheck' error={errorPass} label='Ověřit heslo' handleChange={handleChange} />
               <div className="absolute top-6 -right-5">
                 {passwordEqual && <IoShieldCheckmarkOutline className="text-green-400" />}
@@ -230,15 +236,19 @@ export default function Page() {
               </button>
             </div>
           </form>
+          
+          }
           {apiResponse?.error &&
             <span className="mt-2 text-red-400 text-xs">
               {apiResponse.error}
             </span>
           }
           {apiResponse?.message &&
-            <span className="mt-2 text-green-400 text-xs">
+            <span className="mt-14 flex-col items-center md:flex-row flex text-green-400 text-xl">
               {apiResponse.message}
+              <MdMarkEmailRead className="ml-4 w-6 h-6 " />
             </span>
+            
           }
         </div>
         <div className="hidden">

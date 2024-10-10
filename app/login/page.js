@@ -7,15 +7,16 @@ import { useState, useEffect } from "react";
 import SpinnerSmallOrange from "@/components/spinners/spinnerSmallOrange";
 import Link from "next/link";
 import { validateEmail } from "@/lib/functions/validateEmail";
-import { useRouter } from "next/navigation";
 import InputField from "@/components/auth-form/inputField";
 import { useSearchParams } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 
 
 
+
 export default function Page() {
-  const router = useRouter();
+
+  const searchParams = useSearchParams();
 
   const { data: session} = useSession();
 
@@ -30,10 +31,79 @@ export default function Page() {
   const [responseText, setResponseText] = useState(undefined);
   const [disableLogin, setDisableLogin] = useState(false);
   const [fetching, setFetching] = useState(false); 
-  const [user, setUser] = useState(undefined);
+  const [user, setUser] = useState('');
   const [password, setPassword] = useState(undefined);
+  const [activationTokenState, setActivationTokenState] = useState(undefined)
+  const [activationTokenStateMsg, setActivationTokenStateMsg] = useState('')
 
- 
+
+
+  useEffect(() =>{
+    const activationToken = searchParams.get('token');
+    const userToAuth = searchParams.get('account')
+    
+    if (userToAuth) {
+      setUser(userToAuth);
+    }
+
+    if (activationToken) {
+      setActivationTokenState(activationToken);
+    }
+
+},[searchParams]);
+
+//--------------------------authentication API----------------------
+
+useEffect(() => {
+  if (activationTokenState) {
+    AuthenticateUser();
+  }
+}, [activationTokenState]);
+
+const AuthenticateUser = async () => {
+  setDisableLogin(true);
+  setFetching(true); 
+
+  const data = {
+    authToken: activationTokenState,
+    operation: 'authentication',
+  }
+
+
+
+  try{
+    const response = await fetch('api/users',{
+      method: 'POST', 
+      headers: {
+        'Content-Type' : 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+    if(result.message){
+      setActivationTokenStateMsg(result.message)
+
+    }
+    if(result.error){
+      setActivationTokenStateMsg(result.error)
+    }
+
+  }catch (error) {
+    setActivationTokenStateMsg(error)
+  } finally {
+    setDisableLogin(false);
+    setFetching(false); 
+    setActivationTokenState(undefined)
+  }
+  
+}
+
+
+    //--------------------------authentication API----------------------
+
+
+
   const handleChange = (e, id) => {
     const tempVal = e.target.value;
     const tempId = id;
@@ -53,7 +123,7 @@ export default function Page() {
  
 
 
-  const searchParams = useSearchParams();
+
   const logoutTrigger = searchParams.get('filter');
  
 
@@ -69,6 +139,7 @@ export default function Page() {
       setEmailErrorMessage(undefined);
     }
   }, [user]);
+
 
 
 
@@ -92,11 +163,14 @@ export default function Page() {
 
       setDisableLogin(false);
     } else {
-        window.location.href='/dashboard'
+        window.location.href='/dashboard/profil'
       
     }
   };
   // ---------------- API LOGIN ------------------------
+
+
+
 
   // ---------------- API FORGOTTEN EMAIL --------------
 
@@ -133,7 +207,6 @@ export default function Page() {
     }
   }
 
-
     // ---------------- API FORGOTTEN EMAIL --------------
 
 
@@ -144,9 +217,10 @@ export default function Page() {
         <MdAdminPanelSettings className=" mr-2 w-8 h-8" />
         <div className="text-2xl">Přihlášení</div>
         
-
+    
 
       </div>
+      <div className="text-orange-500 text-xl border-b-orange-400 borde-b">{activationTokenStateMsg}</div>
       <div>
           {logoutTrigger === 'logout' && (session === undefined || session === null) ? <span className="text-green-500">byli jste úšpěšně odhlášení</span> : ''}
           </div>
@@ -154,7 +228,7 @@ export default function Page() {
         <div className="rounded-2xl p-3 flex flex-col items-center">
           <form onSubmit={handleLogin}>
             <div className="w-full max-w-sm">
-              <UserField error={errorEmail} handleChange={handleChange} />
+              <UserField error={errorEmail} value={user} handleChange={handleChange} />
               <span className="text-xs text-red-400">{emailErrorMessage}</span>
             </div>
             <div className="mt-4">

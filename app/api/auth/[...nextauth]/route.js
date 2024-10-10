@@ -6,7 +6,7 @@ import { compare } from 'bcryptjs';
 import { validateEmail } from "@/lib/functions/validateEmail";
 import { validatePassword } from "@/lib/functions/validatePassword";
 
-const handler = NextAuth({
+export const authOptions = {
   session: {
     jwt: true,
     maxAge: 1 * 24 * 60 * 60
@@ -41,12 +41,19 @@ const handler = NextAuth({
           if (result.rows.length === 0) {
             throw new Error('Uživatel v databázi nenalezen');
           }
+
+          
       
           const row = result.rows[0];
           const isBlocked = new Date(row.ban_time_stamp);
           
           const passFromDatabase = row.hash_password;
           const passFromClient = credentials.password;
+          const locked = row.locked
+
+          if(locked){
+            throw new Error ('neautorizovaný účet')
+          }
       
           if (!isNaN(isBlocked.getTime()) && isBlocked > new Date()) {
             throw new Error('Účet je stále zablokován');
@@ -89,8 +96,8 @@ const handler = NextAuth({
             email: cleanUser, 
             avatar: row.avatar,
             clearance: row.clearance,
-            name: row.name,
-            lastName: row.lastname,
+            firstName: row.name,
+            lastName: row.last_name,
           };
       
         } catch (error) {
@@ -111,7 +118,7 @@ const handler = NextAuth({
         token.email = user.email;
         token.avatar = user.avatar;
         token.clearance = user.clearance;
-        token.name = user.name;
+        token.firstName = user.firstName;
         token.lastName = user.lastName;
     
       }
@@ -124,7 +131,7 @@ const handler = NextAuth({
       session.user.email = token.email;
       session.user.avatar = token.avatar;
       session.user.clearance = token.clearance;
-      session.user.name = token.name;
+      session.user.firstName = token.firstName;
       session.user.lastName = token.lastName;
 
       
@@ -132,7 +139,11 @@ const handler = NextAuth({
     }
   }
 
-});
+};
+
+
+const handler = NextAuth(authOptions);
+
 
 export const GET = handler;
 export const POST = handler;
