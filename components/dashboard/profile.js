@@ -2,7 +2,8 @@
 
 import {useSession} from 'next-auth/react';
 import { useState, useEffect } from 'react';
-import AvatarCrop from './avatarCrop';
+import ModalCrop from '../modals/modalCrop';
+import AvatarPicture from './avatarPicture';
 
 export default function Profile () {
 
@@ -11,6 +12,7 @@ export default function Profile () {
     const [firstName, setFirstName] = useState(undefined)
     const [lastName, setLastName] = useState(undefined)
     const [email, setEmail] = useState(undefined)
+    const [open, setOpen] = useState(false)
 
     useEffect(()=>{
         if(session){
@@ -22,7 +24,9 @@ export default function Profile () {
         }
       }, [session])
 
-  
+      const handleCLick = () =>{
+        setOpen(true)
+      }
 
     return (
         <div className="flex-col justify-center md:justify-normal flex md:flex-row w-full mt-5">
@@ -46,8 +50,14 @@ export default function Profile () {
             
 
             
-            <div className="md:ml-auto">
-                <AvatarCrop />
+            <div className="md:ml-auto flex-col ">
+                <AvatarPicture handleCLick={handleCLick}/>
+           
+                <div className='hidden'>
+                    <ModalCrop  open={open} setOpen={setOpen}/>
+                </div>
+                
+
             </div>
             
         </div>

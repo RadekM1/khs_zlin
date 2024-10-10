@@ -94,6 +94,7 @@ export default function Navbar() {
   const searchParams = useSearchParams();
   const currentFilter = searchParams.get('filter');
   const [clearance, setClearance] = useState(undefined)
+  const [avatar, setAvatar] = useState('https://storage.googleapis.com/khs-zlin/avatars/User-avatar.svg.png')
   let pathName = usePathname();
 
 
@@ -107,6 +108,7 @@ export default function Navbar() {
   useEffect(()=>{
     if(session){
       setClearance(session.user.clearance)
+      setAvatar(session.user.avatar)
     }else{
       setClearance(undefined)
     }
@@ -120,6 +122,8 @@ export default function Navbar() {
     })
   }
 
+
+  
 
   return (
 
@@ -298,11 +302,11 @@ export default function Navbar() {
                   <Popover className='relative flex  '>
                     {({ open, close }) => (
                       <>
-                        <PopoverButton className="ml-5 flex focus:outline-none items-center gap-x-2 text-sm leading-6 dark:text-gray-300 text-gray-700">
+                        <PopoverButton className="ml-5 flex rounded-full focus:outline-none items-center gap-x-2 text-sm leading-6 dark:text-gray-300 text-gray-700">
                           <Image 
-                            src="https://storage.googleapis.com/khs-zlin/avatar4.jpg" 
+                            src={avatar}
                             alt="User Avatar" 
-                            className="rounded-full" 
+                            className="rounded-full img-contain" 
                             width={50} 
                             height={50} 
                             priority 
