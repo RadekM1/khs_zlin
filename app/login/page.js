@@ -92,7 +92,8 @@ export default function Page() {
 
       setDisableLogin(false);
     } else {
-      router.push('/dashboard'); 
+        window.location.href='/dashboard'
+      
     }
   };
   // ---------------- API LOGIN ------------------------

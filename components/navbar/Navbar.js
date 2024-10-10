@@ -48,7 +48,7 @@ const articles = [
   { id:4, name: 'Ostatní', description: 'Zápisky z výprav po celém světě', href: '/clanky?filter=ostatni', filter:'ostatni', icon: GiHiking  },
 ]
 
-const userPanel = [
+const userPanel = [ // bohužel se nepoužívá, je dáno natvrdo kvůli problémům s autentizací
   { id: 1, name: 'Články', clearance: ['member, editor, admin'],  href: '/dashboard/clanky', icon: RiBook3Line },
   { id: 2, name: 'Novinky', clearance: ['editor, admin'],  href: '/dashboard/novinky', icon: GiNewspaper },
   { id: 3, name: 'Kalendář', clearance: ['editor, admin'],  href: '/dashboard/kalendar', icon: LuCalendarRange },
@@ -59,7 +59,6 @@ const userPanel = [
   { id: 8, name: 'Odhlásit',clearance: ['visitor, member, editor, admin'], id:'logout', href: '#', icon: CiLogout },
   { id: 9, name: 'Přihlásit', clearance: ['visitor, member, editor, admin'],id:'login',href: '/login', icon: CiLogin },
   { id: 10, name: 'Registrovat', clearance: ['visitor, member, editor, admin'], id:'reg',href: '/registration', icon: HiOutlineUserPlus },
-  
 ]
 
 const proCleny = [
@@ -316,32 +315,145 @@ export default function Navbar() {
                         </PopoverButton>
                         <PopoverPanel className="border-gray-200 top-14 right-0 border-[1px] dark:border-gray-500  shadow-gray-400/50 dark:shadow-gray-700/50 border- absolute drop-shadow-xl z-10 w-60 rounded dark:bg-gray-800 bg-slate-100 shadow-lg">
                           <div className="p-4">
-                          {userPanel.filter(item => {
-                              if (item.id === 'login' && session) return false; 
-                              if (item.id === 'logout' && !session) return false; 
-                              if (item.id === 'reg' && session) return false; 
-                              return true; 
-                            }).map((item) => (
                               <Link 
-                                onClick={item.id === 'logout' ? ()=>{handleLogout(); close();}  : ()=>close() }
-                                key={item.id} 
-                                href={item.href} 
-                                className={`text-sm 
-                                  ${item.id === 'login' && !session ? 'visible-class' : 'hidden-class'} 
-                                  ${item.id === 'logout' && boolSessionStatus ? 'visible-class' : 'hidden-class'} 
-                                  ${item.id === 'reg' && !session ? 'visible-class' : 'hidden-class'} 
-                                  leading-6 dark:text-gray-300 text-gray-700`}
-                              >
+                                onClick={()=>close()}
+                                href='/dashboard/clanky' 
+                                className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
                                 <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
                                   <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
-                                    <item.icon aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
+                                    <RiBook3Line aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
                                   </div>
                                   <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
-                                    {item.name}
+                                    Články
                                   </div>
                                 </div>
                               </Link>
-                            ))}
+                              <Link 
+                                onClick={()=>close()}
+                                href='/dashboard/novinky' 
+                                className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
+                                <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
+                                  <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
+                                    <GiNewspaper aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
+                                  </div>
+                                  <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
+                                    Novinky
+                                  </div>
+                                </div>
+                              </Link>
+                              <Link 
+                                onClick={()=>close()}
+                                href='/dashboard/kalendar' 
+                                className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
+                                <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
+                                  <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
+                                    <LuCalendarRange aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
+                                  </div>
+                                  <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
+                                    Kalendář
+                                  </div>
+                                </div>
+                              </Link>
+                              <Link 
+                                onClick={()=>close()}
+                                href='/dashboard/knihovna' 
+                                className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
+                                <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
+                                  <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
+                                    <IoLibraryOutline aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
+                                  </div>
+                                  <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
+                                    Knihovna
+                                  </div>
+                                </div>
+                              </Link>
+                              <Link 
+                                onClick={()=>close()}
+                                href='/dashboard/clanky' 
+                                className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
+                                <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
+                                  <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
+                                    <RiBook3Line aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
+                                  </div>
+                                  <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
+                                    Půjčovna
+                                  </div>
+                                </div>
+                              </Link>
+                              <Link 
+                                onClick={()=>close()}
+                                href='/dashboard/nastaveni' 
+                                className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
+                                <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
+                                  <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
+                                    <IoIosSettings aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
+                                  </div>
+                                  <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
+                                    Nastavení
+                                  </div>
+                                </div>
+                              </Link>
+                              <Link 
+                                onClick={()=>close()}
+                                href='/dashboard/uzivatele' 
+                                className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
+                                <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
+                                  <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
+                                    <MdAdminPanelSettings aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
+                                  </div>
+                                  <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
+                                    Uživatelé
+                                  </div>
+                                </div>
+                              </Link>
+
+                              {session && 
+                                <a 
+                                  href='#' 
+                                  onClick={()=>{close(); handleLogout();}}
+                                  className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
+                                  <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
+                                    <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
+                                      <CiLogout aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
+                                    </div>
+                                    <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
+                                    Odhlásit
+                                    </div>
+                                  </div>
+                                </a>
+                              }
+
+                              {!session && 
+                                 <a 
+                                 href='/login' 
+                                 onClick={()=>close()}
+                                 className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
+                                 <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
+                                   <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
+                                     <CiLogin aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
+                                   </div>
+                                   <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
+                                     Přihlásit
+                                   </div>
+                                 </div>
+                               </a>
+                              }
+                           
+                              {!session &&                               
+                                <Link 
+                                href='/registration' 
+                                onClick={()=>close()}
+                                className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
+                                <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
+                                  <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
+                                    <HiOutlineUserPlus aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
+                                  </div>
+                                  <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
+                                    Registrovat
+                                  </div>
+                                </div>
+                              </Link>}
+
                           </div>
                         </PopoverPanel>
                       </>
