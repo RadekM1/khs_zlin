@@ -2,6 +2,7 @@
 
 import {useSession} from 'next-auth/react';
 import { useState, useEffect } from 'react';
+import AvatarCrop from './avatarCrop';
 
 export default function Profile () {
 
@@ -46,7 +47,7 @@ export default function Profile () {
 
             
             <div className="md:ml-auto">
-                ikona
+                <AvatarCrop />
             </div>
             
         </div>
