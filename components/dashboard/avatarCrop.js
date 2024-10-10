@@ -41,17 +41,19 @@ export default function AvatarCrop() {
       />
 
       {/* Editor avataru */}
-      <AvatarEditor
-        ref={editorRef}
-        image={image}
-        width={300}
-        height={300}
-        border={20}
-        borderRadius={150} // Kulatý tvar
-        color={[255, 255, 255, 0.6]} // Poloprůhledné bílé pozadí
-        scale={scale}
-        rotate={0}
-      />
+      <div className="w-full max-w-xs">
+        <AvatarEditor
+          ref={editorRef}
+          image={image}
+          width={300}
+          height={300}
+          border={20}
+          color={[255, 255, 255, 0.6]} // Poloprůhledné bílé pozadí
+          scale={scale}
+          rotate={0}
+          style={{ width: '100%', height: 'auto', maxWidth: '100%' }} // Přidání dynamické šířky a výšky
+        />
+      </div>
 
       {/* Slider pro nastavení zoomu */}
       <div className="mt-4">
