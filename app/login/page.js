@@ -228,7 +228,7 @@ const AuthenticateUser = async () => {
         <div className="rounded-2xl p-3 flex flex-col items-center">
           <form onSubmit={handleLogin}>
             <div className="w-full max-w-sm">
-              <UserField error={errorEmail} value={user} handleChange={handleChange} />
+              <UserField error={errorEmail} handleChange={handleChange} />
               <span className="text-xs text-red-400">{emailErrorMessage}</span>
             </div>
             <div className="mt-4">
