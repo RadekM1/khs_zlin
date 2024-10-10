@@ -89,7 +89,7 @@ export default function AvatarCrop() {
         }, 'image/png');
       });
 
-      const trimmedEmail = session.user.email.split('@')[0];
+      const trimmedEmail = session.user.email
       const fileName = `${trimmedEmail}.png`;
       const success = await handleImageUpload(imageBlob, fileName);
 
