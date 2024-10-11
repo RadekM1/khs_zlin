@@ -108,7 +108,6 @@ export default function Navbar() {
   useEffect(()=>{
     if(session){
       setClearance(session.user.clearance)
-      setAvatar(session.user.avatar)
     }else{
       setClearance(undefined)
     }
@@ -304,7 +303,7 @@ export default function Navbar() {
                       <>
                         <PopoverButton className="ml-5 flex rounded-full focus:outline-none items-center gap-x-2 text-sm leading-6 dark:text-gray-300 text-gray-700">
                           <Image 
-                            src={avatar}
+                            src='https://storage.googleapis.com/khs-zlin/avatar4.jpg'
                             alt="User Avatar" 
                             className="rounded-full img-contain" 
                             width={50} 
