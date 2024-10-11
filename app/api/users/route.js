@@ -45,6 +45,50 @@ export async function POST(request) {
                     return NextResponse.json({ message: autheticationResult.message }, { status: autheticationResult.status });
                 }
             }
+            case 'userList' : {
+                const userService = new UserService(body)
+                const userListResult = await userService.userList();
+                if (userListResult.error) {
+                    return NextResponse.json({ error: userListResult.error }, { status: userListResult.status });
+                } else {
+                    return NextResponse.json({userListResult}, { status: userListResult.status });
+                }
+            }
+            case 'updateClearance': {
+                const userService = new UserService(body)
+                const result = await userService.updateClearance();
+            
+                return NextResponse.json(result, { status: result.status });
+            }
+
+            case 'updateLocked': {
+                const userService = new UserService(body)
+                const result = await userService.updateLocked();
+                return NextResponse.json(result, { status: result.status });
+            }
+
+            default:
+                return NextResponse.json({ error: 'Neznámý typ operace' }, { status: 400 });
+        }
+    } catch(error){
+        return NextResponse.json({ error: 'nepodařilo se připravit data pro zadání do databáze' + error.message}, {status: 500})
+    } 
+}
+
+export async function DELETE(request) {
+    try{
+        const body = await request.json();
+        const operation = body.operation;
+
+
+        switch(operation){
+
+            case 'accountDel': {
+                const userService = new UserService(body)
+                const result = await userService.deleteAccount();
+                return NextResponse.json(result, { status: result.status });
+            }
+
             default:
                 return NextResponse.json({ error: 'Neznámý typ operace' }, { status: 400 });
         }

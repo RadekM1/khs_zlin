@@ -104,10 +104,11 @@ export default function Navbar() {
   let inActiveMobile = 'dark:hover:border-orange-200 hover:bg-gray-50 dark:hover:bg-slate-800 dark:border-gray-500  border-l border-gray-200 hover:border-orange-600  dark:hover:text-orange-200 hover:text-orange-600'
 
  
-
+  
   useEffect(()=>{
     if(session){
       setClearance(session.user.clearance)
+      setAvatar(session.user.avatar)
     }else{
       setClearance(undefined)
     }
@@ -122,7 +123,6 @@ export default function Navbar() {
   }
 
 
-  
 
   return (
 
@@ -303,7 +303,7 @@ export default function Navbar() {
                       <>
                         <PopoverButton className="ml-5 flex rounded-full focus:outline-none items-center gap-x-2 text-sm leading-6 dark:text-gray-300 text-gray-700">
                           <Image 
-                            src='https://storage.googleapis.com/khs-zlin/avatar4.jpg'
+                            src={avatar ? avatar : `https://storage.googleapis.com/khs-zlin/avatars/User-avatar.svg.png` }
                             alt="User Avatar" 
                             className="rounded-full img-contain" 
                             width={50} 
