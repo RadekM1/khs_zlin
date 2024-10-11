@@ -96,7 +96,7 @@ export default function AvatarCrop() {
       if (success) {
         setFeedback('Obrázek byl úspěšně nahrán.');
         await update(); // Aktualizace session pro načtení nového avataru
-        setPreviewImage(`${session.user.avatar}?timestamp=${new Date().getTime()}`);
+        setPreviewImage(`https://storage.googleapis.com/khs-zlin/avatars/User-avatar.svg.png`);
       } else {
         setFeedback('Nahrání obrázku selhalo.');
       }
