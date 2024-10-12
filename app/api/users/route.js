@@ -84,11 +84,12 @@ export async function DELETE(request) {
         switch(operation){
 
             case 'accountDel': {
+                console.log('api connected')
                 const userService = new UserService(body)
                 const result = await userService.deleteAccount();
-                return NextResponse.json(result, { status: result.status });
+                console.log('výsledek z metody:',result)
+                return NextResponse.json({ status: result.status });
             }
-
             default:
                 return NextResponse.json({ error: 'Neznámý typ operace' }, { status: 400 });
         }

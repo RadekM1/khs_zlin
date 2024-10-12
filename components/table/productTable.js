@@ -10,7 +10,8 @@ import ResetBtn from "./resetBtn";
 import { MdDeleteForever } from "react-icons/md";
 import SpinnerBigOrange from "../spinners/spinnerBigOrange";
 
-export default function UserTable() {
+
+export default function ProductTable() {
 
   
 

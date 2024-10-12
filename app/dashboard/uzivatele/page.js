@@ -15,7 +15,7 @@ export default async function Page() {
   return (
    <Suspense fallback={ <Spinner />} >
         <div className="flex w-full flex-col">
-          <span className="text-2xl">Seznam článků</span>
+          <span className="text-2xl">Uživatelské účty</span>
           
           <div className="flex justify-center my-10">
             {

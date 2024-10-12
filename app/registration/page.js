@@ -151,7 +151,12 @@ export default function Page() {
     
       const result = await response.json();
       setApiResponse(result)
-      setPendingReg(false)
+        if(!result.error){
+          setPendingReg(false)
+        }
+          
+      
+      
     } catch (error){
       let chyba = {};
       chyba['error'] = 'nepodařilo se zadat údaje do databáze'

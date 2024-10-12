@@ -12,6 +12,7 @@ import Pagination from '@mui/material/Pagination';
 import {handleChangePaginat} from "@/lib/functions/handleChangePaginat";
 import { ArraySort } from '@/lib/functions/arraySort';
 import SearchField from "./searchField"
+import ModalRental from "../modals/modalRental";
 import ResetBtn from "./resetBtn";
 
 export default function DefaultTable({inputRows}) {
@@ -176,6 +177,7 @@ return (
           <span className="text-gray-600 items-center text-sm mt-4 m-2 md:mr-6"> {filteredRows.length} položek</span>
         </div>
       </div>
+      <ModalRental />
     </div>
 
   );

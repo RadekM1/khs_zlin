@@ -18,6 +18,7 @@ export default function SearchField({ searchField, handleChange }) {
       value={searchField}
       name="search"
       placeholder="fulltext" 
+      className='dark:text-white'
       style={{
         padding: '8px 12px',
         fontSize: '16px',
