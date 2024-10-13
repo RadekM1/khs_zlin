@@ -254,7 +254,7 @@ const AuthenticateUser = async () => {
         </div>
       </div>
       <div className="flex flex-col md:flex-row justify-center   w-full">
-            <div className="text-sm mb-10 flex w-full flex-col text-center justify-center mt-8">
+            <div className="mb-10 flex w-full flex-col text-center justify-center mt-8">
               <div>
                   <a href="#" onClick={()=>handleForgotenVisibility()} className="hover:text-orange-600  dark:hover:text-orange-200">Zapomenuté heslo ?</a>
               </div>
@@ -290,7 +290,7 @@ const AuthenticateUser = async () => {
             </span>
           }
             </div>
-              <div className="w-full md:1/2 text-center mt-4">
+              <div className="mb-10 flex w-full flex-col text-center justify-center mt-8">
                 <Link href={'/registration'} className="hover:text-orange-600 dark:hover:text-orange-200 " >
                   Zaregistrovat
                 </Link>
