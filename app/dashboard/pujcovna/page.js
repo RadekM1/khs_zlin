@@ -12,7 +12,7 @@ export default async function Page() {
   return (
    
       <div className="flex w-full flex-col">
-        <span className="text-2xl">Seznam článků</span>
+        <span className="text-2xl">Půjčovna</span>
         <div className="flex justify-center">
           {
           (clearance === 'editor' || clearance === 'admin') ? 

@@ -16,15 +16,15 @@ export default async function Page() {
     );
   }
 
-  // Podmíněné vykreslení podle clearance
+
   if (clearance === 'rejected') {
     return <Rejected />;
   }
 
   return (
     <div className="flex w-full flex-col">
-      <span className="text-2xl">Uživatelský účet</span>
-      <div className="flex justify-center mx-10">
+
+      <div className="flex justify-center md:mx-5">
         {/* Vykreslení profilu uživatele */}
         <Profile session={session} />
       </div>

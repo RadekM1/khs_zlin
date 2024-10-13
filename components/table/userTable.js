@@ -311,8 +311,12 @@ export default function UserTable() {
         </table>
 
       </div>
+
+      <div className="my-10">
+        {rowsLoading && <SpinnerBigOrange /> }
+      </div>
       
-      {rowsLoading && <SpinnerBigOrange /> }
+      
       <div className="flex-col flex">
         <div className="flex w-full dark:text-white gap-3 md:justify-between mt-4 flex-col-reverse md:flex-row">
           <Pagination

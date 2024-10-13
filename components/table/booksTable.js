@@ -15,7 +15,7 @@ import SpinnerSmallOrange from "../spinners/spinnerSmallOrange";
 
 
 
-export default function RentalTable() {
+export default function BooksTable() {
 
   
 

@@ -9,7 +9,7 @@ import { validatePassword } from "@/lib/functions/validatePassword";
 export const authOptions = {
   session: {
     jwt: true,
-    maxAge: 1 * 24 * 60 * 60
+    maxAge: 7 * 24 * 60 * 60
   },
   secret: process.env.NODE_ENV === 'production' ? process.env.NEXTAUTH_SECRET : undefined,
   providers: [
