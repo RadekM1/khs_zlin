@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Pagination from '@mui/material/Pagination';
 import { handleChangePaginat } from "@/lib/functions/handleChangePaginat";
@@ -14,11 +14,10 @@ import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import SpinnerSmallOrange from "../spinners/spinnerSmallOrange";
 
 
-
 export default function BooksTable() {
 
   
-
+  const fileInputRef = useRef(null);
   const [rows, setRows] = useState([]);
   const [sortingColumn, setsortingColumn] = useState(null)
   const [sortingOrder, setSortingOrder] = useState('asc')
@@ -29,14 +28,18 @@ export default function BooksTable() {
   const [disabled, setDisabled] = useState(false)
   const [editActive, setEditActive] = useState(false)
   const [idToEdit, setIdToEdit] = useState('')
-  const [productName, setProductName] = useState('')
-  const [pieces, setPieces] = useState('')
+  const [name, setName] = useState('')
+  const [creator, setCreator] = useState('')
   const [onStock, setOnStock] = useState(false)
-  const [isReserved, setIsReserved] = useState(false)
-  const [whoReserved, setWhoResereved] = useState('')
   const [whoRented, setWhoRented] = useState('')
+  const [release, setRelease] = useState('')
+  const [pictureUrl, setPictureUrl] = useState('')
+  const [description, setDescription] = useState('')
   const [loading, setLoading] = useState(false)
-
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imgNameToSql, setImgNameToSql] = useState('')
+  const [imgNameToGoogle, setImgNameToGoogle] = useState('')
+  const [nextHighestId, setNextHighestId] = useState('')
 
 //------------- fetch API down -----------------------------
 
@@ -49,21 +52,25 @@ export default function BooksTable() {
   const fetchData = async () => {
     setRowsLoading(true)
     try {
-      const response = await fetch('/api/rental', {
+      const response = await fetch('/api/books', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ operation: 'rentalList' })
+        body: JSON.stringify({ operation: 'booksList' })
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch rental list');
+        throw new Error('Failed to fetch books list');
       }
 
       const data = await response.json();
-      console.log(data.rentalListResult)
-      setRows(data.rentalListResult); 
+
+      const nextDatabaseId = Math.max(...data.books.map(row => row.id)) + 1;
+      setNextHighestId(nextDatabaseId)
+
+ 
+      setRows(data.books); 
     } catch (error) {
       console.error('Error fetching user list:', error);
     }finally{
@@ -76,15 +83,15 @@ export default function BooksTable() {
 
 
 
-
   const columnsNamesMainList = [
     { key: 'id', label: 'kod', sorting: true },
-    { key: 'item_name', label: 'Vybavení', sorting: true },
-    { key: 'pieces', label: 'ks', sorting: true },
-    { key: 'on_stock', label: 'skladem', sorting: true },
-    { key: 'reserved', label: 'zarezervováno', sorting: true },
-    { key: 'member_reserved', label: 'zarezervoval', sorting: true },
-    { key: 'member_rented', label: 'vypůjčil', sorting: true },
+    { key: 'name', label: 'Název', sorting: true },
+    { key: 'creator', label: 'Autor', sorting: true },
+    { key: 'on_stock', label: 'Skladem', sorting: true },
+    { key: 'whoRented', label: 'Zapůjčil', sorting: true },
+    { key: 'release', label: 'Rok vydání', sorting: true },
+    { key: 'picture_url', label: 'Fotka', sorting: false },
+    { key: 'description', label: 'Popis', sorting: true },
     { label: 'del', id:'delLabel', sorting: false },
     { label: 'edit', id:'editLabel', sorting: false },
   ];
@@ -93,23 +100,25 @@ export default function BooksTable() {
 
 
   const handleDel = async (id) => {
-    let confirmDel = confirm(`opravdu chcete smazat produkt č. ${id} ?`)
+    
+    let confirmDel = confirm(`opravdu chcete smazat knihu č. ${id} ?`)
     if(!confirmDel){
       return;
     }
     setDisabled(true)
     setLoading(true)
     try{
-      const response = await fetch('/api/rental', {
+      const response = await fetch('/api/books', {
         method: 'DELETE', 
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
-          operation: 'productDel',
-          productId: id,
+          operation: 'bookDel',
+          bookId: id,
         })
       })
+  
       if(!response.ok){
         console.log(response.error)
       }
@@ -135,28 +144,34 @@ export default function BooksTable() {
 
 
   const handleSqlProductChange = async () => {
-    if(productName.length <= 1 || pieces < 1){
-      alert("není zadán název produktu nebo počet kusů")
+    setDisabled(true)
+    setLoading(true)
+    if(name.length <= 1){
+      alert("není zadán název knihy")
       return
     }
 
-    setDisabled(true)
-    setLoading(true)
+    if(selectedFile){
+      await handleFileChange(selectedFile, imgNameToGoogle)
+    }
+
+
     try{
-      const response = await fetch('/api/rental', {
+      const response = await fetch('/api/books', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
-          productId: idToEdit,
-          productName: productName,
-          pieces: pieces,
+          bookId: idToEdit,
+          name: name,
+          creator: creator,
           onStock: onStock,
-          isReserved: isReserved,
-          whoReserved: whoReserved,
           whoRented: whoRented,
-          operation: 'productUpdate'
+          release: release, 
+          pictureUrl: imgNameToSql,
+          description: description,
+          operation: 'bookUpdate'
         })
       });
       console.log(response)
@@ -184,31 +199,34 @@ export default function BooksTable() {
   //-------------ADD API down   ------------------------------------
 
   const handleAdd = async () => {
-    if(productName.length <= 1 || pieces < 1){
-      alert("není zadán název produktu nebo počet kusů")
+    if(name.length <= 1){
+      alert("není zadán název knihy")
       return
+    }
+
+    if(selectedFile){
+      await handleFileChange(selectedFile, imgNameToGoogle)
     }
 
     setDisabled(true)
     setLoading(true)
     try{
-      const response = await fetch('/api/rental', {
+      const response = await fetch('/api/books', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
-          productId: idToEdit,
-          productName: productName,
-          pieces: pieces,
+          name: name,
+          creator: creator,
           onStock: onStock,
-          isReserved: isReserved,
-          whoReserved: whoReserved,
           whoRented: whoRented,
-          operation: 'productInsert'
+          release: release, 
+          pictureUrl: imgNameToSql,
+          description: description,
+          operation: 'bookAdd'
         })
       });
-      console.log(response)
       console.log(response.message)
       if(!response.ok){
         console.log(response.error)
@@ -288,46 +306,111 @@ export default function BooksTable() {
     let tempId = id
 
     switch(tempId){
-      case 'productName' : {setProductName(tempE)};break;
-      case 'pieces' : {setPieces(tempE)};break;
+      case 'name' : {setName(tempE)};break;
+      case 'creator' : {setCreator(tempE)};break;
       case 'onStock' : {setOnStock(tempE)};break;
-      case 'isReserved' : {setIsReserved(tempE)};break;
-      case 'whoReserved' : {setWhoResereved(tempE)};break;
       case 'whoRented' : {setWhoRented(tempE)};break;
+      case 'release' : {setRelease(tempE)};break;
+      case 'pictureUrl' : {setPictureUrl(tempE)};break;
+      case 'description' : {setDescription(tempE)};break;
       default: break;
     }
   }
 
+    
   const handleProductEdit = (rowId) =>{
     let tempId = rowId;
     let row = rows.find(row => tempId === row.id);
-    let rentedPerson = row.member_rented === null ? '' : row.member_rented
-    let reservedPerson = row.member_reserved === null ? '' : row.member_reserved
+    let RepairedUrl = row.picture_url === null ? '' : row.picture_url
+    let whoRentedRepaired = row.member_rented === null ? '' : row.member_rented
+
 
     setEditActive(true)
-    setIdToEdit(row.id);
-    setProductName(row.item_name)
-    setPieces(row.pieces)
+    setIdToEdit(row.id)
+    setName(row.name)
+    setCreator(row.creator)
     setOnStock(row.on_stock)
-    setIsReserved(row.reserved)
-    setWhoResereved(row.member_reserved) === null ? setWhoRented('') : setWhoResereved(reservedPerson)
-    setWhoRented(row.member_rented) ===  setWhoRented(rentedPerson) 
+    setPictureUrl(RepairedUrl)
+    setRelease(row.release)
+    setWhoRented(whoRentedRepaired) 
+    setDescription(row.description)
   }
 
   const handleResetForm = () => {
     setIdToEdit('');
-    setProductName('')
-    setPieces('')
+    setName('')
+    setCreator('')
     setOnStock(false)
-    setIsReserved(false)
-    setWhoResereved('')
     setWhoRented('')
+    setDescription('')
+    setRelease('')
+    setPictureUrl('')
+    setSelectedFile(null);
+    fileInputRef.current.value = ""
   }
 
 
 
+
+  
+
+
+
+  useEffect(()=>{
+    let bookName = ''
+    let googleBookName = ''
+    if(editActive === true) {
+      bookName = `https://storage.googleapis.com/khs-zlin/books/book-${idToEdit}.png`
+      googleBookName = `book-${idToEdit}.png`
+    } else {
+      bookName = `https://storage.googleapis.com/khs-zlin/books/book-${nextHighestId}.png`
+      googleBookName = `book-${nextHighestId}.png`
+    }
+    
+    setImgNameToSql(bookName)
+    setImgNameToGoogle(googleBookName)
+
+  }, [editActive, idToEdit, nextHighestId])
+
+  useEffect(() => {
+    console.log('odkazDoSql:', imgNameToSql);
+    console.log('odkazDoGoogle:', imgNameToGoogle);
+  }, [imgNameToSql, imgNameToGoogle]);
+
+  const handleFileChange = async (file) => {
+    const response = await fetch(`/api/book-img-upload?file=${imgNameToGoogle}`, {
+      method: 'GET',
+    });
+  
+    const data = await response.json();
+  
+    if (response.ok && data.url) {
+ 
+      const uploadResponse = await fetch(data.url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': file.type, 
+        },
+        body: file,
+      });
+
+
+  
+      if (uploadResponse.ok) {
+        console.log('Soubor byl úspěšně nahrán');
+        setPictureUrl(data.url); 
+      } else {
+        console.error('Nahrání souboru selhalo', uploadResponse);
+      }
+    } else {
+      console.error('Získání podpisovaného URL selhalo:', data.error);
+    }
+  };
+  
+
+
   return (
-    <div className="flex-grow md:border bg-white dark:bg-zinc-400 dark:border-gray-400 w-full">
+    <div className="flex-grow bg-white dark:bg-zinc-400 dark:border-gray-400 w-full">
       <div className="flex flex-col overflow-hidden  md:flex-row">
         <div className="m-4">
           <SearchField searchField={searchField} handleChange={handleChange} />
@@ -387,26 +470,27 @@ export default function BooksTable() {
               type="text"
               placeholder="Zadejte název"
               className="w-full min-w-32 h-8 border rounded dark:bg-zinc-100"
-              onChange={(event) => handleProductChange(event.target.value, 'productName')}
-              value={productName}
+              onChange={(event) => handleProductChange(event.target.value, 'name')}
+              value={name}
+              disabled={disabled}
+            />
+          </td>
+
+      
+          <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
+          <input
+              type="text"
+              placeholder="Zadejte název"
+              className="w-full min-w-32 h-8 border rounded dark:bg-zinc-100"
+              onChange={(event) => handleProductChange(event.target.value, 'creator')}
+              value={creator}
               disabled={disabled}
             />
           </td>
           
-   
+              
           <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-            <input
-              type="number"
-              placeholder="Zadejte počet"
-              className="w-full h-8 border dark:bg-zinc-100 rounded"
-              onChange={(event) => handleProductChange(event.target.value, 'pieces')}
-              value={pieces}
-              disabled={disabled}
-            />
-          </td>
-         
-          <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-            <select 
+          <select 
             className="w-full min-w-20 h-8 dark:bg-zinc-100 border rounded"
             onChange={(event) => handleProductChange(event.target.value, 'onStock')}
             value={onStock}
@@ -417,40 +501,61 @@ export default function BooksTable() {
             </select>
           </td>
           
-    
-          <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-            <select 
-            className="w-full min-w-20 h-8 dark:bg-zinc-100 border rounded"
-            onChange={(event) => handleProductChange(event.target.value, 'isReserved')}
-            value={isReserved}
-            disabled={disabled}
-            >
-              <option value="true">Ano</option>
-              <option value="false">Ne</option>
-            </select>
-          </td>
-          
-      
-          <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
+          <td className="py-2 md:mx-2 md:px-2 border-[1px]  text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
             <input
               type="text"
-              className="w-full min-w-24 h-8 px-1 border dark:bg-zinc-100 rounded"
-              onChange={(event) => handleProductChange(event.target.value, 'whoReserved')}
-              value={whoReserved}
-              disabled={disabled}
-            />
-          </td>
-
-              
-          <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-            <input
-              type="text"
-              className="w-full min-w-24 h-8 px-1 border dark:bg-zinc-100 rounded"
+              placeholder="Zadejte název"
+              className="w-full min-w-32 h-8 border rounded dark:bg-zinc-100"
               onChange={(event) => handleProductChange(event.target.value, 'whoRented')}
               value={whoRented}
               disabled={disabled}
             />
           </td>
+          <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
+            <input
+              type="text"
+              className="w-full min-w-24 h-8 px-1 border dark:bg-zinc-100 rounded"
+              onChange={(event) => handleProductChange(event.target.value, 'release')}
+              value={release}
+              disabled={disabled}
+            />
+          </td>
+
+              
+          <td className="py-2 md:mx-2 md:px-2 flex-col  text-gray-800 text-xs md:text-sm max-w whitespace-normal">
+          <div className="relative w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" aria-label="File input icon" role="graphics-symbol" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute w-5 h-5 left-4 top-3 stroke-slate-400 text-slate-400 peer-disabled:cursor-not-allowed">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+            </svg>
+            <input
+              type="file"
+              ref={fileInputRef}
+              className="peer relative min-w-[180px] h-10 w-full rounded border border-slate-200 px-4 py-2.5 pl-12 text-sm text-slate-500 placeholder-transparent outline-none transition-all autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-amber-500 focus:outline-none invalid:focus:border-pink-500 focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400 [&::file-selector-button]:hidden"
+              onChange={(e) => setSelectedFile(e.target.files[0])}
+              disabled={disabled}
+            />
+          </div>
+
+
+            
+          </td>
+          <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
+            <input
+              type="text"
+              className="w-full min-w-24 h-20 px-1 border dark:bg-zinc-100 rounded"
+              onChange={(event) => handleProductChange(event.target.value, 'description')}
+              value={description}
+              disabled={disabled}
+            />
+          </td>
+
+
+
+
+
+
+
+
 
           {!editActive && 
           <td colSpan={2} className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
@@ -507,11 +612,11 @@ export default function BooksTable() {
                   </td>
        
                   <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                    {row.item_name}
+                    {row.name}
                   </td>
   
                   <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                    {row.pieces}
+                    {row.creator}
                   </td>
                   
             
@@ -524,21 +629,32 @@ export default function BooksTable() {
                   </td>
          
                   <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                  {row.reserved ? (
-                    <span className="text-red-700">ANO</span>
-                  ) : (
-                    <span className="text-green-700">NE</span>
-                  )}
+                  {row.member_rented}
+
                   </td>
              
                   <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                    {row.member_reserved}
+                    {row.release}
                   </td>
-                  
-       
+
                   <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                    {row.member_rented}
+
+                  <div className="relative w-full h-full"> 
+                    {row.picture_url && 
+                    <img
+                    alt=""
+                    src={row.picture_url}
+                    className="object-cover"
+                  />
+                    
+                    }
+                  </div>
                   </td>
+
+                  <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
+                    {row.description}
+                  </td>
+
                   
                 
                   <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
@@ -593,7 +709,6 @@ export default function BooksTable() {
           <span className="text-gray-600 dark:text-white items-center text-sm mt-4 m-2 md:mr-6"> {filteredRows.length} položek</span>
         </div>
       </div>
-
     </div>
   );
 }

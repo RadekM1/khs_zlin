@@ -20,10 +20,10 @@ export async function POST(request) {
             }
 
             case 'productInsert' : {
-                console.log('case in api signal')
+
                 const rentalService = new RentalService(body)
                 const productInsertResult = await rentalService.productInsert();
-                console.log('after insert signal')
+
                 if (productInsertResult.error) {
                     return NextResponse.json({ error: productInsertResult.error }, { status: productInsertResult.status });
                 } else {
