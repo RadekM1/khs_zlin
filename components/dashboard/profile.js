@@ -35,7 +35,7 @@ export default function Profile () {
      
 
     return (
-        <div className="justify-center lg:justify-normal mx-4 flex-col-reverse flex lg:flex-row w-full mt-5">
+        <div className="justify-center container mx-auto overflow-hidden lg:justify-normal flex-col-reverse flex lg:flex-row w-full mt-5">
             {/*  */} 
             <div className="justify-start w-full lg:w-2/3   overflow-hidden mt-2 bg-white lg:m-5 dark:text-gray-200 dark:border-gray-800 border-gray-200 border-[1px] p-3 shadow-md dark:bg-gray-900 rounded-2xl flex flex-col">
             <section className="w-full divide-y divide-slate-200 rounded">
@@ -172,7 +172,7 @@ export default function Profile () {
                         </ul>
                         
                     </div>
-                    <div className='flex-shrink'>
+                    <div className='mx-2 flex-shrink'>
                         <AvatarPicture handleCLick={handleCLick}/>
                     </div>
                 </div>

@@ -644,7 +644,7 @@ export default function BooksTable() {
                     <img
                     alt=""
                     src={row.picture_url}
-                    className="object-cover"
+                    className="object-cover rounded "
                   />
                     
                     }
