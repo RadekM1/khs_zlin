@@ -12,7 +12,7 @@ export default async function Page() {
    
       <div className="flex w-full flex-col">
         <span className="text-2xl">Knihovna</span>
-        <div className="flex justify-center mx-10">
+        <div className="flex justify-center">
           {
           (clearance === 'editor' || clearance === 'admin') ? 
            <BooksTable /> : <Rejected />
