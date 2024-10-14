@@ -12,17 +12,18 @@ export async function POST(request) {
                 
                 const calendarService = new CalendarService(body)
                 const calendarListResult = await calendarService.calendarList();
+
                 if (calendarListResult.error) {
                     return NextResponse.json({ error: calendarListResult.error }, { status: calendarListResult.status });
                 } else {
-                    return NextResponse.json({calendarListResult}, { status: calendarListResult.status });
+                    return NextResponse.json({calendar: calendarListResult}, { status: calendarListResult.status });
                 }
             }
 
-            case 'calendarInsert' : {
-
+            case 'eventAdd' : {
+                
                 const calendarService = new CalendarService(body)
-                const calendarInsertResult = await calendarService.calendarInsert();
+                const calendarInsertResult = await calendarService.eventInsert();
 
                 if (calendarInsertResult.error) {
                     return NextResponse.json({ error: calendarInsertResult.error }, { status: calendarInsertResult.status });
@@ -34,7 +35,6 @@ export async function POST(request) {
                 return NextResponse.json({ error: 'Neznámý typ operace' }, { status: 400 });
         }
     } catch(error){
-        console.log('penetration test')
         return NextResponse.json({ error: 'nepodařilo se připravit data pro zadání do databáze' + error.message}, {status: 500})
     } 
 
@@ -48,9 +48,10 @@ export async function PUT(request) {
 
 
         switch(operation){
-            case 'calendarUpdate' : {
+            case 'eventEdit' : {
                 const calendarService = new CalendarService(body)
                 const calendarUpdateResult = await calendarService.calendarUpdate();
+            
                 if (calendarUpdateResult.error) {
                     return NextResponse.json({ error: calendarUpdateResult.error }, { status: calendarUpdateResult.status });
                 } else {
@@ -58,7 +59,9 @@ export async function PUT(request) {
                 }
             }
             default:
+      
                 return NextResponse.json({ error: 'Neznámý typ operace' }, { status: 400 });
+                
         }
     } catch(error){
         
@@ -74,10 +77,10 @@ export async function DELETE(request) {
 
         switch(operation){
 
-            case 'calendarDel': {
+            case 'eventDel': {
                 console.log('api connected')
                 const calendarService = new CalendarService(body)
-                const calendarDelResult = await calendarService.deletecalendar();
+                const calendarDelResult = await calendarService.deleteEvent();
                 console.log('výsledek z metody:',calendarDelResult)
                 return NextResponse.json({ status: calendarDelResult.status });
             }
