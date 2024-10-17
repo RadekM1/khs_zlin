@@ -12,12 +12,11 @@ import Pagination from '@mui/material/Pagination';
 import {handleChangePaginat} from "@/lib/functions/handleChangePaginat";
 import { ArraySort } from '@/lib/functions/arraySort';
 import SearchField from "./searchField"
-import ModalRental from "../modals/modalRental";
 import ResetBtn from "./resetBtn";
 
 export default function DefaultTable({inputRows}) {
 
-const [rows, setRows] = useState(inputRows)
+const [rows, setRows] = useState([])
 const [sortingColumn, setsortingColumn] = useState(null)
 const [sortingOrder, setSortingOrder] = useState('asc')
 const [currentPage, setCurrentPage] = useState(1)
@@ -88,7 +87,7 @@ const paginatedRows = filteredRows.slice(startIndex, startIndex + rowsPerPage)
 
 return (
   
-    <div className="flex-grow md:border bg-white dark:bg-gray-900  rounded-xl w-full"> 
+    <div className="flex-grow md:border h-screen bg-white dark:bg-gray-900  rounded-xl w-full"> 
       <div className="flex flex-col md:flex-row">
         <div className="m-4">
           <SearchField searchField ={searchField} handleChange={handleChange} />
@@ -177,7 +176,7 @@ return (
           <span className="text-gray-600 items-center text-sm mt-4 m-2 md:mr-6"> {filteredRows.length} položek</span>
         </div>
       </div>
-      <ModalRental />
+
     </div>
 
   );

@@ -19,7 +19,7 @@ const ceskeMesice = [
 
 const ceskeDny = ['Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'];
 
-// Generování dní v kalendáři
+
 const generateCalendarDays = (currentMonth) => {
   const startOfMonth = currentMonth.startOf('month');
   const daysInMonth = currentMonth.daysInMonth();
@@ -611,7 +611,7 @@ const handleEdit = (id) =>{
                   <td className="py-2 text-xs sm:text-sm text-orange-600 dark:text-orange-200 font-thin text-end flex-shrink">
                     {
                     
-                    ` ${checkDay && checkDay} ${checkDay ? '' : eventStartInCycle} ${ checkDay ? '' : '-'} ${checkNoEnd ? checkNoEnd : ''} ${checkDay ? '' : eventEndInCycle}`
+                    ` ${checkDay && checkDay} ${checkDay ? '' : eventStartInCycle} ${ checkDay ? '' : '-'} ${checkNoEnd ? checkNoEnd : ''} ${checkDay || checkNoEnd ? '' : eventEndInCycle}`
                     }
                   </td>
                   <td>

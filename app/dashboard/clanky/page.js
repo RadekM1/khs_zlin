@@ -1,6 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Rejected from '@/components/dashboard/rejected';
+import ArticlesMainComponent from '@/components/blog/articlesMainComponent';
 
 export default async function Page() {
 
@@ -10,11 +11,11 @@ export default async function Page() {
   return (
    
       <div className="flex w-full flex-col">
-        <span className="text-2xl">Seznam článků</span>
-        <div className="flex justify-center mx-10">
+        <span className="text-2xl">Články</span>
+        <div className="flex justify-center mx-4 mt-10">
           {
           (clearance === 'editor' || clearance === 'admin' || clearance === 'member') ? 
-           <p className="text-start my-5">CHRÁNĚNÁ KOMPONENTA</p> : <Rejected />
+           <ArticlesMainComponent /> : <Rejected />
           }
         </div>
       </div>

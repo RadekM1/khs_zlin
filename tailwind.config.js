@@ -7,4 +7,5 @@ export const content = [
 export const darkMode = 'class';
 export const plugins = [
   require('tailwind-scrollbar'),
+  require('@tailwindcss/typography'),
 ];

@@ -3,12 +3,12 @@ import { MdRssFeed } from "react-icons/md";
 import BtnArticleShow from "../blog/BtnArticleShow";
 
 const newsFeedInput = [
-  { id:1, date: '17.5.2024', title: 'Na skály v úterý', description: 'Demonstrativní krátky příspěvek který nemá v databázi definováno že obsahuje článek (nebude tlačítko)', article: false, url:'#' },
-  { id:2, date: '17.5.2024', title: 'Předpověď počasí pro víkendový výstup', description: 'Tento krátký příspěvek má definováno že obsahuje i článek.', article: true, url:'#' },
-  { id:3, date: '14.8.2024', title: 'Deštivé úterý zruší trénink na skále', description: 'Bude pršet v celém Zlíně, takže nebude trénink, nedá se nic dělat, bude se muset jít "bohužel" na pivo', article: false, url:'#' },
-  { id:4, date: '10.5.2024', title: 'Počasí na středeční výstup v Zlíně', description: 'Bude pršet v celém Zlíně, takže nebude trénink, nedá se nic dělat, bude se muset jít "bohužel" na pivo', article: true, url:'#' },
-  { id:5, date: '3.5.2024', title: 'Čtvrteční slunečný trénink na skále', description: 'Bude krásně, ideální počasí na trénink venku', article: true, url:'#' },
-  { id:6, date: '1.4.2024', title: 'Zamračená sobota, trénink pod střechou', description: 'Bude zataženo, možná bude třeba přesunout trénink na stěnu.', article: true, url:'#' },
+  { id:1, created_time: '17.5.2024', title: 'Na skály v úterý', description: 'Demonstrativní krátky příspěvek který nemá v databázi definováno že obsahuje článek (nebude tlačítko)', isArticle: false, url:'#' },
+  { id:2, created_time: '17.5.2024', title: 'Předpověď počasí pro víkendový výstup', description: 'Tento krátký příspěvek má definováno že obsahuje i článek.', isArticle: true, url:'#' },
+  { id:3, created_time: '14.8.2024', title: 'Deštivé úterý zruší trénink na skále', description: 'Bude pršet v celém Zlíně, takže nebude trénink, nedá se nic dělat, bude se muset jít "bohužel" na pivo', isArticle: false, url:'#' },
+  { id:4, created_time: '10.5.2024', title: 'Počasí na středeční výstup v Zlíně', description: 'Bude pršet v celém Zlíně, takže nebude trénink, nedá se nic dělat, bude se muset jít "bohužel" na pivo', isArticle: true, url:'#' },
+  { id:5, created_time: '3.5.2024', title: 'Čtvrteční slunečný trénink na skále', description: 'Bude krásně, ideální počasí na trénink venku', isArticle: true, url:'#' },
+  { id:6, created_time: '1.4.2024', title: 'Zamračená sobota, trénink pod střechou', description: 'Bude zataženo, možná bude třeba přesunout trénink na stěnu.', isArticle: true, url:'#' },
 ]  
 
 export default function NewsFeed() {
@@ -45,7 +45,7 @@ export default function NewsFeed() {
                 
                 <h3 className="lg:text-base text-xs dark:border-gray-600 border-gray-200 pt-1  border-t ml-2 leading-7 dark:text-gray-200 text-orange-600">
                   <span className=" text-slate-400 text-end text-xs  mr-5">
-                  {item.date}
+                  {item.created_time}
                   </span>
                 {item.title}
 
@@ -54,7 +54,7 @@ export default function NewsFeed() {
                   {item.description}
                 </p>
                 <div className="flex justify-end">
-                  {item.article === true && <BtnArticleShow/>}
+                  {item.isArticle === true && <BtnArticleShow/>}
                 </div>
                 
               </div>
