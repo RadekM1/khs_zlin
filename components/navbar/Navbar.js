@@ -307,7 +307,7 @@ export default function Navbar() {
                             {(clearance === 'member' || clearance === 'editor' || clearance === 'admin' ) && 
                               <Link 
                               onClick={()=>close()}
-                              href='/dashboard/dash-clanek' 
+                              href='/dashboard/dashboard-clanky' 
                               className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
                               <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
                                 <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
@@ -324,7 +324,7 @@ export default function Navbar() {
                             
                             <Link 
                                 onClick={()=>close()}
-                                href='/dashboard/dash-news' 
+                                href='/dashboard/dashboard-novinky' 
                                 className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
                                 <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
                                   <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">

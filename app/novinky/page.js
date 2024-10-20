@@ -19,6 +19,9 @@ export default async function page() {
     }));
   } catch (error) {
     console.error('Chyba při načítání novinek:', error.message);
+    return {
+      notFound: true, 
+    };
   } finally {
     sqlConnection.release();
   }

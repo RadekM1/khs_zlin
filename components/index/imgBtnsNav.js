@@ -11,7 +11,7 @@ const images = [
     },
     {
         id: 2,
-        img: 'https://storage.googleapis.com/khs-zlin/horokrouzek.jpg',
+        img: 'https://storage.googleapis.com/khs-zlin/vyhody3.png',
         title: 'Výhody členství',
         url: '/clenstvi-v-oddile/vyhody-clenstvi'
     },
@@ -32,7 +32,7 @@ export default function ImgBtnsNav () {
 
     return (
 
-            <div className="grid grid-cols-1 mt-10 pt-10 md:mt-5 m-10 justify-between md:grid-cols-4 w-full gap-3" >
+            <div className="grid grid-cols-1 sm:grid-cols-2 mt-10 pt-10 md:mt-5 m-10 justify-between lg:grid-cols-4 w-full gap-3" >
                     {images.map((image)=>{
                         return(
                             <Link key={image.id} href={image.url} passHref>

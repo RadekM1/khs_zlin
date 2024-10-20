@@ -8,7 +8,7 @@ import ButtonBase from '@mui/material/ButtonBase';
 
 export default function ImgBtnNav({data}) {
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: '100%', width: '100%' }}>
+    <Box sx={{ display: 'flex', flexWrap: 'no-wrap', minWidth: '100%', width: '100%' }}>
       
         
         <ButtonBase
