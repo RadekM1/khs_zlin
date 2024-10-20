@@ -17,7 +17,7 @@ export default function SearchField({ searchField, handleChange }) {
       onChange={handleChange} 
       value={searchField}
       name="search"
-      placeholder="fulltext" 
+      placeholder="hledat obsah" 
       className='dark:text-white'
       style={{
         padding: '8px 12px',
@@ -30,7 +30,7 @@ export default function SearchField({ searchField, handleChange }) {
       }}
     />
     <div style={{ marginLeft: '8px' }}>
-      <FaSearch /> 
+      <FaSearch className='text-gray-500' /> 
     </div>
   </div>
 );

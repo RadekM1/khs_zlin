@@ -234,7 +234,7 @@ export default function RentalTable() {
 
     //-------------ADD API up   ------------------------------------
 
-  const rowsPerPage = 50;
+  const rowsPerPage = 20;
 
   useEffect(() => {
     

@@ -1,12 +1,14 @@
+import BooksTableFrontend from "@/components/frontend/booksTableFrontend";
+
 
 export default function page() {
     return (
       
       <div className="flex w-full flex-col justify-center">
-        <span className="text-2xl">Nadpis stránky</span>
-        <div className="flex mx-10">
+        <span className="text-2xl">Oddílová knihovna</span>
+        <div className="flex">
 
-        <p className="text-start my-5">první odstavec stránky</p>
+       <BooksTableFrontend />
 
 
 

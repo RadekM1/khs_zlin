@@ -6,26 +6,26 @@ const images = [
     {   
         id: 1,
         img: 'https://storage.googleapis.com/khs-zlin/horoskola_main.jpg',
-        title: 'HOROŠKOLA',
-        url: '/'
+        title: 'Kurzy',
+        url: '/kurzy'
     },
     {
         id: 2,
         img: 'https://storage.googleapis.com/khs-zlin/horokrouzek.jpg',
-        title: 'HOROKRUH',
-        url: '/'
+        title: 'Výhody členství',
+        url: '/clenstvi-v-oddile/vyhody-clenstvi'
     },
     {
         id: 3,
         img: 'https://storage.googleapis.com/khs-zlin/for_members.jpg',
-        title: 'PRO ČLENY',
-        url: '/'
+        title: 'Pro členy',
+        url: '/clenstvi-v-oddile'
     },
     {
         id: 4,
         img: 'https://storage.googleapis.com/khs-zlin/about_us.jpg',
-        title: 'O NÁS',
-        url: '/'
+        title: 'O nás',
+        url: '/o-nas'
     },
   ];
 export default function ImgBtnsNav () {

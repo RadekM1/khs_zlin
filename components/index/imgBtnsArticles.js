@@ -7,25 +7,25 @@ const images = [
         id: 1,
         img: 'https://storage.googleapis.com/khs-zlin/picture_btn/horolezectvi.png',
         title: 'HOROLEZECTVÍ',
-        url: '/'
+        url: '/clanky?filter=horolezectvi'
     },
     {   
         id: 2,
         img: 'https://storage.googleapis.com/khs-zlin/picture_btn/skalni_lezeni.jpg',
         title: 'SKÁLY',
-        url: '/'
+        url: '/clanky?filter=skaly'
     },
     {
         id: 3,
         img: 'https://storage.googleapis.com/khs-zlin/picture_btn/oddil.jpeg',
         title: 'ODDÍL',
-        url: '/'
+        url: '/clanky?filter=oddil'
     },
     {   
         id: 4,
         img: 'https://storage.googleapis.com/khs-zlin/blog/blog4.jpg',
         title: 'OSTATNÍ',
-        url: '/'
+        url: '/clanky?filter=ostatni'
       }
   ];
 export default function ImgBtnsArticles () {

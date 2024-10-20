@@ -558,8 +558,8 @@ const handleEdit = (id) =>{
             </div>
         </div>
         <div className='border-b-[1px] border-b-slate-200 mb-6 dark:border-b-slate-800 self-center flex flex-row'>
-          <CheckBox handleChange={handleChange} disabled={disabled} checked={checkBoxDayValue} id='checkBoxDay' label='celodenní' helperText={'místo hodin pouze "celodenní"'}  />
-          <CheckBox handleChange={handleChange} disabled={disabled} checked={checkBoxNoEndValue} id='checkBoxNoEnd' label='bez ukončení   ' helperText={'text bude: "neurčeno"'} />
+          <CheckBox handleChange={handleChange} disabled={disabled} checked={checkBoxDayValue} id='checkBoxDay' label='celodenní'   />
+          <CheckBox handleChange={handleChange} disabled={disabled} checked={checkBoxNoEndValue} id='checkBoxNoEnd' label='bez ukončení' />
         </div>
 
 

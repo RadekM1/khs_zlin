@@ -4,9 +4,9 @@ import ArticleSimpleEditor from '@/components/blog/articleSimpleEditor';
 import { useState ,useEffect } from 'react';
 import ModalNewsList from '../modals/modalNewsList';
 import {useSession } from 'next-auth/react';
-import SpinnerSmallOrange from '../spinners/spinnerSmallOrange';
 import { CiViewList } from "react-icons/ci";
 import { FaSave } from "react-icons/fa";
+import SpinnerSmallWhite from '../spinners/spinnerSmallWhite';
 
 
 export default function NewsMainComponent ({tiny}) {
@@ -169,7 +169,7 @@ const handleSqlNewsChange = async () => {
                       disabled={disabled}
                       onClick={()=>{handleSqlNewsChange()}}
                     >
-                       {!loading ? <span>Aktualizovat</span> : <SpinnerSmallOrange /> }
+                       {!loading ? <span>Aktualizovat</span> : <SpinnerSmallWhite /> }
                     </button> 
                     
 
@@ -182,7 +182,7 @@ const handleSqlNewsChange = async () => {
                       
                       <span> Zrušit úpravy </span> 
                       
-                      : <SpinnerSmallOrange /> 
+                      : <SpinnerSmallWhite /> 
                       }
                     </button> 
                   </div>
@@ -203,19 +203,25 @@ const handleSqlNewsChange = async () => {
                     <span>Uložit</span> 
                     <FaSave />
                   </>
-                  : <SpinnerSmallOrange /> 
+                  : <SpinnerSmallWhite /> 
                   }
                 </button> 
 
               }
-
+                
+                
                 <button 
                 onClick={()=>setOpen(true)}  
                 disabled={disabled}
                 className="inline-flex mx-2 dark:bg-orange-700 dark:hover:bg-orange-800 items-center justify-center h-10 gap-2 px-5 text-sm font-medium tracking-wide text-white transition duration-300 rounded whitespace-nowrap bg-orange-500 hover:bg-orange-600 focus:bg-orange-700 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-orange-300 disabled:bg-orange-300 disabled:shadow-none">
-                    <span>Seznam článků</span>
+                  {!loading ?   
+                  
+                  <>
+                    <span>Seznam článků</span> 
                     <CiViewList />
-
+                  </>
+                  : <SpinnerSmallWhite /> 
+                  }
 
                     <ModalNewsList open={open} setIdToEdit={setIdToEdit} setEditActive={setEditActive} setAccount={setAccount} setTitle={setTitle} setSummary={setSummary} setEditorContent={setEditorContent} setExpirationDate={setExpirationDate} setOpen={setOpen} />
                 </button>

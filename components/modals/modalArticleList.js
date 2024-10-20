@@ -3,7 +3,7 @@
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import ArticleTable from '../table/articleTable';
 
-export default function ModalRental({ open, setIdToEdit, setOpen, setTitle, setCategory, setGallery, setThumbnail, setAccount, setEditActive, setEditorContent}) {
+export default function ModarArticleList({ open, setEditedArticleSlug, setIdToEdit, setOpen, setTitle, setCategory, setGallery, setThumbnail, setAccount, setEditActive, setEditorContent}) {
   return (
     <Dialog open={open} onClose={() => setOpen(false)} className="relative z-50">
       <DialogBackdrop
@@ -16,7 +16,7 @@ export default function ModalRental({ open, setIdToEdit, setOpen, setTitle, setC
           >
             <div className="bg-white dark:bg-gray-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
-                <ArticleTable setIdToEdit={setIdToEdit} setTitle={setTitle} setEditActive={setEditActive} setAccount={setAccount} setEditorContent={setEditorContent} setThumbnail={setThumbnail} setGallery={setGallery} setCategory={setCategory} setOpen={setOpen}  />
+                <ArticleTable setIdToEdit={setIdToEdit} setEditedArticleSlug={setEditedArticleSlug} setTitle={setTitle} setEditActive={setEditActive} setAccount={setAccount} setEditorContent={setEditorContent} setThumbnail={setThumbnail} setGallery={setGallery} setCategory={setCategory} setOpen={setOpen}  />
               </div>
             </div>
             <div className="bg-gray-50 dark:bg-gray-800 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">

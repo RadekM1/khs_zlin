@@ -1,27 +1,23 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
+import SpinnerBigOrange from "../spinners/spinnerBigOrange";
 
 
-const ceskeMesice = [
-  'Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 
-  'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'
-];
 
 
-const calendarFeedInput = [
-  { id: 1, date: '2024-09-01' },
-  { id: 2, date: '2024-09-03' },
-  { id: 3, date: '2024-09-05' },
-  { id: 4, date: '2024-09-10' },
-  { id: 5, date: '2024-09-13' },
-  { id: 6, date: '2024-09-15' },
-  { id: 7, date: '2024-09-20' },
-  { id: 8, date: '2024-09-22' }
-];
 
 
+
+export default function Calendar() {
+
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(false)
+  const [currentMonth, setCurrentMonth] = useState(dayjs());
+
+
+  
 const generateCalendarDays = (currentMonth) => {
   const startOfMonth = currentMonth.startOf('month');
   const daysInMonth = currentMonth.daysInMonth();
@@ -41,16 +37,59 @@ const generateCalendarDays = (currentMonth) => {
   return days;
 };
 
-export default function Calendar() {
-  const [currentMonth, setCurrentMonth] = useState(dayjs());
-
   const daysOfWeek = ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne']; 
 
   const isHighlighted = (day) => {
-    return calendarFeedInput.some((item) =>
+    return rows.some((item) =>
       dayjs(item.date).isSame(day, 'day')
     );
   };
+
+
+  console.log(rows)
+
+  
+useEffect(() => {
+  fetchData();
+}, []);
+
+
+
+//------------- fetch API down -----------------------------
+
+const fetchData = async () => {
+  setLoading(true)
+  
+  try {
+    const response = await fetch('/api/calendar', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ operation: 'calendarList' })
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch events list');
+    }
+    const data = await response.json();
+
+    setRows(data.calendar); 
+  } catch (error) {
+    console.error('Error fetching user list:', error);
+  }finally{
+
+    setLoading(false)
+
+  }
+};
+
+//------------- fetch API UP -----------------------------
+
+
+
+
+
 
   const isToday = (day) => {
     return dayjs().isSame(day, 'day');
@@ -59,30 +98,10 @@ export default function Calendar() {
   const calendarDays = generateCalendarDays(currentMonth);
 
   return (
-    <div className="w-full max-w-md mx-auto m-4 p-4 border border-gray-200  dark:border-gray-500 rounded-lg bg-gray-50 dark:bg-[#151515] shadow-lg">
-      <div className="flex justify-between items-center mb-4">
-        
-      {/*
-      
-      <button
-          onClick={() => setCurrentMonth(currentMonth.subtract(1, 'month'))}
-          className="text-md bg-transparent border-none cursor-pointer"
-        >
-          ←
-        </button>
-        <h2 className="text-sm">
-          {ceskeMesice[currentMonth.month()]} {currentMonth.year()}
-        </h2>
-        <button
-          onClick={() => setCurrentMonth(currentMonth.add(1, 'month'))}
-          className="text-xl bg-transparent border-none cursor-pointer"
-        >
-          →
-        </button>
-      
-      */}  
-      </div>
+    <div className="w-full max-w-[400px]  mx-auto m-4 p-4 border border-gray-200  dark:border-gray-500 rounded-lg bg-gray-50 dark:bg-[#151515] shadow-lg">
 
+
+  
       <div className="grid grid-cols-7 gap-2 text-center">
         {daysOfWeek.map((day, index) => (
           <div key={index} className=" text-sm text-gray-700 dark:text-gray-300">
@@ -104,6 +123,8 @@ export default function Calendar() {
           </div>
         ))}
       </div>
+
+
     </div>
   );
 }

@@ -1,16 +1,15 @@
+import RentalTableFrontEnd from "@/components/frontend/rentalTableFrontend";
+
 
 export default function page() {
     return (
       
       <div className="flex w-full flex-col justify-center">
-        <span className="text-2xl">Nadpis stránky</span>
-        <div className="flex mx-10">
-
-        <p className="text-start my-5">první odstavec stránky</p>
+        <span className="text-2xl">Vybavení k zapůjčení</span>
+        <div className="flex">
 
 
-
-
+        <RentalTableFrontEnd />
 
 
 

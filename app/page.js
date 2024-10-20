@@ -9,7 +9,7 @@ import { FcCalendar } from "react-icons/fc";
 import dayjs from 'dayjs';
 import LogoCloudPartners from '@/components/index/logoCloudPartners';
 import LogoCloudSponsors from '@/components/index/logoCloudSponsors';
-
+import AdminCalendarFrontend from '@/components/frontend/adminCalendarFrontend';
 
 
 export default function LandingPart() {
@@ -70,13 +70,8 @@ export default function LandingPart() {
                   </div>
                 </div>
               </div>
-              <div className='grid lg:grid-cols-2'>
-                <div className='col-auto md:mx-5 '>
-                  <Calendar  />
-                </div>
-                <div className='col-auto md:mx-5'>
-                  <CalendarFeed />
-                </div>
+              <div className='flex w-full'>
+                <AdminCalendarFrontend />
               </div>
             </div>
           </div>

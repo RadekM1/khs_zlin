@@ -11,7 +11,7 @@ import executeQuery from "@/lib/db";
 
 
 
-export default async function NewsFeed() {
+export default async function NewsFeedPage() {
 
   let rows = [];
   const sqlConnection = await pool.connect();
@@ -41,10 +41,10 @@ export default async function NewsFeed() {
 
   return (
     <>
-      <div className=" lg:max-h-[600px] dark:bg-[#1E1E1E] dark:border-gray-600 border-[1px]  py-4 my-6  lg:overflow-auto scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-gray-400 scrollbar-track-gray-100 dark:scrollbar-track-gray-800 bg-white flex flex-col text-center rounded shadow-[0_10px_25px_rgba(0,0,0,0.1),0_10px_50px_rgba(0,0,0,0.2)] border-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
-        <div className="flex mb-3 pb-2 text-2xl font-bold dark:text-gray-100  border-gray-100  text-gray-800">
+      
+        <div className="flex mb-3 pb-2 text-2xl mx-10  self-center items-center justify-center font-bold dark:text-gray-100  border-gray-100  text-gray-800">
           <div className='flex mt-3 flex-grow flex-row justify-center '>   
-            <div className='flex-shrink  flex'>
+            <div className='flex-grow  flex'>
               <MdRssFeed  className=" self-end text-gray-400 w-8 h-8 " /> 
             </div>
             <div className='flex-shrink dark:text-gray-200  flex ml-5 text-lg md:text-2xl'>
@@ -52,11 +52,11 @@ export default async function NewsFeed() {
             </div>
           </div>
         </div>
-        <div className="flex">
+        <div className="flex w-full">
           <ul
             aria-label="Novinky"
             role="feed"
-            className="relative flex flex-col pl-3 text-sm before:absolute before:top-0 before:left-6 before:h-full  before:border-slate-200 after:absolute after:top-6 after:left-3 after:bottom-6 after:-translate-x-1/2 after:border dark:after:border-gray-600 after:border-slate-200"
+            className="relative flex flex-grow flex-col pl-3 text-sm before:absolute before:top-0 before:left-6 before:h-full  before:border-slate-200 after:absolute after:top-6 after:left-3 after:bottom-6 after:-translate-x-1/2 after:border dark:after:border-gray-600 after:border-slate-200"
           >
             {rows.map((item)=>{
               return (
@@ -78,7 +78,7 @@ export default async function NewsFeed() {
                 <p className=" text-slate-500 dark:text-gray-300 ml-2 mt text-xs md:text-sm text-start">
                   {item.description}
                 </p>
-                <div className="flex justify-end">
+                <div className="flex justify-start">
                   <BtnArticleShow url={item.id}/>
                 </div>
                 
@@ -88,7 +88,6 @@ export default async function NewsFeed() {
             })}
           </ul>
         </div>
-      </div>
     </>
   )
 }

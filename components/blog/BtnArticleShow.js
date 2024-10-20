@@ -7,12 +7,13 @@ import { ThemeProvider } from '@mui/material/styles';
 import muiTheme from '@/lib/functions/mui_color_palets';  
 import Link from 'next/link';
 
-export default function BtnArticleShow() {
+export default function BtnArticleShow({url}) {
   return (
     <ThemeProvider theme={muiTheme}>
       <Box sx={{ '& button': { m: 1 } }}>
 
-        <Link href=''  passHref >
+        <Link href={`/novinky/${url}`}  passHref >
+
           <Button
             className='dark:text-gray-200 dark:bg-gray-700'
             variant="contained"
@@ -24,7 +25,7 @@ export default function BtnArticleShow() {
               minWidth: 'auto',  
             }}
           >
-            celý článek
+            podrobnosti
           </Button>
         </Link>
 

@@ -252,7 +252,7 @@ export default function BooksTable() {
 
     //-------------ADD API up   ------------------------------------
 
-  const rowsPerPage = 50;
+  const rowsPerPage = 20;
 
   useEffect(() => {
     
@@ -349,13 +349,6 @@ export default function BooksTable() {
     fileInputRef.current.value = ""
   }
 
-
-
-
-  
-
-
-
   useEffect(()=>{
     let bookName = ''
     let googleBookName = ''
@@ -373,8 +366,7 @@ export default function BooksTable() {
   }, [editActive, idToEdit, nextHighestId])
 
   useEffect(() => {
-    console.log('odkazDoSql:', imgNameToSql);
-    console.log('odkazDoGoogle:', imgNameToGoogle);
+
   }, [imgNameToSql, imgNameToGoogle]);
 
   const handleFileChange = async (file) => {
@@ -549,14 +541,6 @@ export default function BooksTable() {
             />
           </td>
 
-
-
-
-
-
-
-
-
           {!editActive && 
           <td colSpan={2} className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
             
@@ -654,9 +638,6 @@ export default function BooksTable() {
                   <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
                     {row.description}
                   </td>
-
-                  
-                
                   <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
                     {!loading ?
                     <button disabled={disabled} onClick={() => handleDel(row.id)}>

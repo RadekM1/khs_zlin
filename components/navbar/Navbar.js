@@ -19,6 +19,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { GiHiking, GiMountainClimbing, GiNewspaper, GiSkis  } from "react-icons/gi";
+import { MdRssFeed } from "react-icons/md";
 import { LiaMountainSolid } from "react-icons/lia";
 import BoulderIcon from '../boulderIcon'
 import { CiLogout, CiLogin  } from "react-icons/ci";
@@ -48,18 +49,7 @@ const articles = [
   { id:4, name: 'Ostatní', description: 'Zápisky z výprav po celém světě', href: '/clanky?filter=ostatni', filter:'ostatni', icon: GiHiking  },
 ]
 
-const userPanel = [ // bohužel se nepoužívá, je dáno natvrdo kvůli problémům s autentizací
-  { id: 1, name: 'Články', clearance: ['member, editor, admin'],  href: '/dashboard/clanky', icon: RiBook3Line },
-  { id: 2, name: 'Novinky', clearance: ['editor, admin'],  href: '/dashboard/novinky', icon: GiNewspaper },
-  { id: 3, name: 'Kalendář', clearance: ['editor, admin'],  href: '/dashboard/kalendar', icon: LuCalendarRange },
-  { id: 4, name: 'Knihovna', clearance: ['editor, admin'],  href: '/dashboard/knihovna', icon: IoLibraryOutline },
-  { id: 5, name: 'Půjčovna',clearance: ['editor, admin'],  href: '/dashboard/pujcovna', icon: GiSkis },
-  { id: 6, name: 'Nastavení účtu', clearance: ['visitor, member, editor, admin'], href: '/dashboard/nastaveni', icon: IoIosSettings },
-  { id: 7, name: 'Uživatelé', clearance: ['editor, admin'],href: '/dashboard/uzivatele', icon: MdAdminPanelSettings },
-  { id: 8, name: 'Odhlásit',clearance: ['visitor, member, editor, admin'], id:'logout', href: '#', icon: CiLogout },
-  { id: 9, name: 'Přihlásit', clearance: ['visitor, member, editor, admin'],id:'login',href: '/login', icon: CiLogin },
-  { id: 10, name: 'Registrovat', clearance: ['visitor, member, editor, admin'], id:'reg',href: '/registration', icon: HiOutlineUserPlus },
-]
+
 
 const proCleny = [
   { id: 1, name: 'Oddílové akce', href: '/clenstvi-v-oddile/oddilove-akce', icon: HiOutlineTrophy },
@@ -317,11 +307,11 @@ export default function Navbar() {
                             {(clearance === 'member' || clearance === 'editor' || clearance === 'admin' ) && 
                               <Link 
                               onClick={()=>close()}
-                              href='/dashboard/clanky' 
+                              href='/dashboard/dash-clanek' 
                               className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
                               <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
                                 <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
-                                  <RiBook3Line aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
+                                  <GiNewspaper aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
                                 </div>
                                 <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
                                   Články
@@ -334,11 +324,11 @@ export default function Navbar() {
                             
                             <Link 
                                 onClick={()=>close()}
-                                href='/dashboard/novinky' 
+                                href='/dashboard/dash-news' 
                                 className={`text-sm leading-6 dark:text-gray-300 text-gray-700`}>
                                 <div className="group relative flex items-center border-b-[1px] border-b-gray-200 dark:border-b-gray-700 gap-x-6  text-sm leading-6 hover:bg-gray-200 dark:hover:bg-gray-700">
                                   <div className="flex h-11 w-11  flex-none items-center justify-center  bg-slate-100 dark:bg-gray-800 dark:group-hover:bg-gray-700 group-hover:bg-gray-200 ">
-                                    <GiNewspaper aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
+                                    <MdRssFeed aria-hidden="true" className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-white" />
                                   </div>
                                   <div className="flex-auto group-hover:text-orange-600 dark:group-hover:text-white">
                                     Novinky

@@ -34,7 +34,7 @@ export async function POST(request) {
                 return NextResponse.json({ error: 'Neznámý typ operace' }, { status: 400 });
         }
     } catch(error){
-        console.log('penetration test')
+        console.log(error)
         return NextResponse.json({ error: 'nepodařilo se připravit data pro zadání do databáze' + error.message}, {status: 500})
     } 
 
@@ -67,24 +67,26 @@ export async function PUT(request) {
 }
 
 export async function DELETE(request) {
-    try{
+    try {
         const body = await request.json();
         const operation = body.operation;
 
-
-        switch(operation){
-
+        switch (operation) {
             case 'articleDel': {
-                console.log('api connected')
-                const articleService = new ArticleService(body)
+                const articleService = new ArticleService(body);
                 const articleDelResult = await articleService.deleteArticle();
-                console.log('výsledek z metody:',articleDelResult)
-                return NextResponse.json({ status: articleDelResult.status });
+
+                if (articleDelResult.error) {
+                    return NextResponse.json({ error: articleDelResult.error }, { status: articleDelResult.status });
+                } else {
+                    return NextResponse.json({ message: 'Článek byl úspěšně smazán', status: 200 });
+                }
             }
             default:
                 return NextResponse.json({ error: 'Neznámý typ operace' }, { status: 400 });
         }
-    } catch(error){
-        return NextResponse.json({ error: 'nepodařilo se připravit data pro zadání do databáze' + error.message}, {status: 500})
-    } 
+    } catch (error) {
+        return NextResponse.json({ error: 'nepodařilo se připravit data pro zadání do databáze: ' + error.message }, { status: 500 });
+    }
 }
+

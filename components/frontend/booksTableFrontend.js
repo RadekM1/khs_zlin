@@ -1,23 +1,24 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Pagination from '@mui/material/Pagination';
 import { handleChangePaginat } from "@/lib/functions/handleChangePaginat";
 import { ArraySort } from '@/lib/functions/arraySort';
-import SearchField from "./searchField";
-import ResetBtn from "./resetBtn";
+import SearchField from "@/components/table/searchField";
+import ResetBtn from "@/components/table/resetBtn";
 import { MdDeleteForever } from "react-icons/md";
 import SpinnerBigOrange from "../spinners/spinnerBigOrange";
 import { CiEdit } from "react-icons/ci";
+import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import SpinnerSmallOrange from "../spinners/spinnerSmallOrange";
 
 
-export default function ArticleTable({setTitle, setThumbnail, setGallery, setCategory, setEditedArticleSlug, setIdToEdit,  setEditActive, setEditorContent, setOpen}) {
+export default function BooksTableFrontend() {
 
   
-
-  const [rows, setRows] = useState([])
+  const fileInputRef = useRef(null);
+  const [rows, setRows] = useState([]);
   const [sortingColumn, setsortingColumn] = useState(null)
   const [sortingOrder, setSortingOrder] = useState('asc')
   const [currentPage, setCurrentPage] = useState(1)
@@ -25,14 +26,20 @@ export default function ArticleTable({setTitle, setThumbnail, setGallery, setCat
   const [filteredRows, setFilteredRows] = useState(rows)
   const [rowsLoading, setRowsLoading] = useState(false)
   const [disabled, setDisabled] = useState(false)
+  const [editActive, setEditActive] = useState(false)
+  const [idToEdit, setIdToEdit] = useState('')
+  const [name, setName] = useState('')
+  const [creator, setCreator] = useState('')
+  const [onStock, setOnStock] = useState(false)
+  const [whoRented, setWhoRented] = useState('')
+  const [release, setRelease] = useState('')
+  const [pictureUrl, setPictureUrl] = useState('')
+  const [description, setDescription] = useState('')
   const [loading, setLoading] = useState(false)
-
-
-
-  const HandleReset = () => {
-    setSearchField('');
-    setFilteredRows(rows);
-  };
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imgNameToSql, setImgNameToSql] = useState('')
+  const [imgNameToGoogle, setImgNameToGoogle] = useState('')
+  const [nextHighestId, setNextHighestId] = useState('')
 
 //------------- fetch API down -----------------------------
 
@@ -42,28 +49,30 @@ export default function ArticleTable({setTitle, setThumbnail, setGallery, setCat
   }, []);
 
 
-
   const fetchData = async () => {
-    console.log('fire test')
     setRowsLoading(true)
     try {
-      const response = await fetch('/api/articles', {
+      const response = await fetch('/api/books', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ operation: 'articleList' })
+        body: JSON.stringify({ operation: 'booksList' })
       });
-      console.log(response)
+
       if (!response.ok) {
-        throw new Error('Failed to fetch article list');
+        throw new Error('Failed to fetch books list');
       }
 
       const data = await response.json();
 
-      setRows(data.articleListResult); 
+      const nextDatabaseId = Math.max(...data.books.map(row => row.id)) + 1;
+      setNextHighestId(nextDatabaseId)
+
+ 
+      setRows(data.books); 
     } catch (error) {
-      console.error('Error fetching article list:', error);
+      console.error('Error fetching user list:', error);
     }finally{
       setRowsLoading(false)
       
@@ -74,65 +83,19 @@ export default function ArticleTable({setTitle, setThumbnail, setGallery, setCat
 
 
 
-
   const columnsNamesMainList = [
-    { key: 'title', label: 'Titulek', sorting: true },
-    { key: 'user_email', label: 'Účet', sorting: true },
-    { key: 'category', label: 'Kategorie', sorting: true },
-    { key: 'created_time', label: 'Vytvořeno', sorting: true },
-    { label: 'del', id:'delLabel', sorting: false },
-    { label: 'edit', id:'editLabel', sorting: false },
+    { key: 'name', label: 'Název', sorting: true },
+    { key: 'creator', label: 'Autor', sorting: true },
+    { key: 'on_stock', label: 'Skladem', sorting: true },
+    { key: 'release', label: 'Rok vydání', sorting: true },
+    { key: 'picture_url', label: 'Fotka', sorting: false },
+    { key: 'description', label: 'Popis', sorting: true },
+
   ];
 
-//-------------DELETE API down   ------------------------------------
 
 
-
-const handleDel = async (id) => {
-  console.log('id ke smazání:', id);
-  let confirmDel = confirm('opravdu chcete smazat článek ?');
-  if (!confirmDel) {
-    return;
-  }
-  setDisabled(true);
-  setLoading(true);
-  try {
-    const response = await fetch('/api/articles', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        operation: 'articleDel',
-        idToDel: id,
-      }),
-    });
-
-    if (!response.ok) {
-      console.log(response.error);
-      return;
-    }
-
-    console.log('Článek byl úspěšně smazán');
-
-  } catch (error) {
-    console.log(error);
-  } finally {
-    setDisabled(false);
-    setLoading(false);
-    await fetchData();  
-  }
-};
-
-
-//-------------DELETE API UP   --------------------------------------
-
-
-
-
-
-
-  const rowsPerPage = 10;
+  const rowsPerPage = 20;
 
   useEffect(() => {
     
@@ -156,19 +119,13 @@ const handleDel = async (id) => {
     setSearchField(event.target.value);
   };
 
-  const handleArticlePropsEdit = (idArticleToEdit) =>{
-    let tempId = idArticleToEdit
-    let tempRow = rows.find(row => row.article_id === tempId)
-    setTitle(tempRow.title)
-    setEditorContent(tempRow.clanek)
-    setThumbnail(tempRow.thumbnail)
-    setGallery(tempRow.article_img_gallery)
-    setCategory(tempRow.category)
-    setEditActive(true)
-    setOpen(false)
-    setIdToEdit(tempId)
-    setEditedArticleSlug(tempRow.slug)
-  } 
+  const HandleReset = () => {
+    setSearchField('');
+    setFilteredRows(rows);
+  };
+
+
+
 
   const handleSorting = (key) => {
     if (sortingColumn === key) {
@@ -188,16 +145,92 @@ const handleDel = async (id) => {
 
 
 
+    
+  const handleProductEdit = (rowId) =>{
+    let tempId = rowId;
+    let row = rows.find(row => tempId === row.id);
+    let RepairedUrl = row.picture_url === null ? '' : row.picture_url
+    let whoRentedRepaired = row.member_rented === null ? '' : row.member_rented
 
 
+    setEditActive(true)
+    setIdToEdit(row.id)
+    setName(row.name)
+    setCreator(row.creator)
+    setOnStock(row.on_stock)
+    setPictureUrl(RepairedUrl)
+    setRelease(row.release)
+    setWhoRented(whoRentedRepaired) 
+    setDescription(row.description)
+  }
+
+  const handleResetForm = () => {
+    setIdToEdit('');
+    setName('')
+    setCreator('')
+    setOnStock(false)
+    setWhoRented('')
+    setDescription('')
+    setRelease('')
+    setPictureUrl('')
+    setSelectedFile(null);
+    fileInputRef.current.value = ""
+  }
+
+  useEffect(()=>{
+    let bookName = ''
+    let googleBookName = ''
+    if(editActive === true) {
+      bookName = `https://storage.googleapis.com/khs-zlin/books/book-${idToEdit}.png`
+      googleBookName = `book-${idToEdit}.png`
+    } else {
+      bookName = `https://storage.googleapis.com/khs-zlin/books/book-${nextHighestId}.png`
+      googleBookName = `book-${nextHighestId}.png`
+    }
+    
+    setImgNameToSql(bookName)
+    setImgNameToGoogle(googleBookName)
+
+  }, [editActive, idToEdit, nextHighestId])
+
+  useEffect(() => {
+
+  }, [imgNameToSql, imgNameToGoogle]);
+
+  const handleFileChange = async (file) => {
+    const response = await fetch(`/api/book-img-upload?file=${imgNameToGoogle}`, {
+      method: 'GET',
+    });
+  
+    const data = await response.json();
+  
+    if (response.ok && data.url) {
+ 
+      const uploadResponse = await fetch(data.url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': file.type, 
+        },
+        body: file,
+      });
 
 
   
-
+      if (uploadResponse.ok) {
+        console.log('Soubor byl úspěšně nahrán');
+        setPictureUrl(data.url); 
+      } else {
+        console.error('Nahrání souboru selhalo', uploadResponse);
+      }
+    } else {
+      console.error('Získání podpisovaného URL selhalo:', data.error);
+    }
+  };
+  
 
 
   return (
-    <div className="flex-grow md:border bg-white dark:bg-zinc-400 dark:border-gray-400 w-full">
+    <div className="flex-grow bg-white dark:bg-zinc-400 dark:border-gray-400 w-full">
       <div className="flex flex-col overflow-hidden  md:flex-row">
         <div className="m-4">
           <SearchField searchField={searchField} handleChange={handleChange} />
@@ -238,54 +271,53 @@ const handleDel = async (id) => {
           
           <tbody>
 
+ 
             {paginatedRows.map((row) => (
-              <React.Fragment key={row.article_id}>
+              <React.Fragment key={row.id}>
                 <tr className="text-xs md:text-sm border-b text-start dark:bg-gray-300 dark:text-white dark:even:bg-gray-200 even:bg-zinc-100 odd:bg-white dark:hover:bg-gray hover:bg-gray-50">
-                  
-          
-                  <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                    {row.title}
-                  </td>
-
-                  <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                    {row.user_email}
-                  </td>
-                  
-                  <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                    {row.category}
-                  </td>
-                  
+  
        
                   <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                    {row.created_time.split('T')[0]}
-
+                    {row.name}
                   </td>
-                  
-                
+  
                   <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                    {!loading ?
-                    <button disabled={disabled} onClick={() => handleDel(row.article_id)}>
-                      <MdDeleteForever
-                        className={`h-7 w-7 hover:cursor-pointer ${
-                          disabled ? 'dark:text-red-800 text-red-200' : 'text-red-500'
-                        }`}
-                      />
-                    </button>
-                    :
-                    <SpinnerSmallOrange />
-                    }
+                    {row.creator}
                   </td>
                   
             
                   <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                    <button disabled={disabled} onClick={() => handleArticlePropsEdit(row.article_id)}>
-                      <CiEdit
-                        className={`h-7 w-7 hover:cursor-pointer ${
-                          disabled ? 'dark:text-orange-800 text-orange-200' : 'text-orange-600'
-                        }`}
-                      />
-                    </button>
+                    {row.on_stock ? (
+                      <FaThumbsUp className="h-5 w-5 text-green-700" />
+                    ) : (
+                      <FaThumbsDown className="h-5 w-5 text-red-700" />
+                    )}
                   </td>
+         
+
+             
+                  <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
+                    {row.release}
+                  </td>
+
+                  <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
+
+                  <div className="relative w-full h-full"> 
+                    {row.picture_url && 
+                    <img
+                    alt=""
+                    src={row.picture_url}
+                    className="object-cover rounded "
+                  />
+                    
+                    }
+                  </div>
+                  </td>
+
+                  <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
+                    {row.description}
+                  </td>
+                  
                 </tr>
               </React.Fragment>
             ))}
@@ -311,7 +343,7 @@ const handleDel = async (id) => {
           />
         </div>
         <div className="flex dark:text-white justify-end">
-          <span className="text-gray-600 dark:text-white items-center text-sm mt-4 m-2 md:mr-6"> položek: {filteredRows.length} </span>
+          <span className="text-gray-600 dark:text-white items-center text-sm mt-4 m-2 md:mr-6"> {filteredRows.length} položek</span>
         </div>
       </div>
     </div>

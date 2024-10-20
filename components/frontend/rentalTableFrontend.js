@@ -5,19 +5,19 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import Pagination from '@mui/material/Pagination';
 import { handleChangePaginat } from "@/lib/functions/handleChangePaginat";
 import { ArraySort } from '@/lib/functions/arraySort';
-import SearchField from "./searchField";
-import ResetBtn from "./resetBtn";
-import { MdDeleteForever } from "react-icons/md";
+import SearchField from "@/components/table/searchField";
+import ResetBtn from "@/components/table/resetBtn";
 import SpinnerBigOrange from "../spinners/spinnerBigOrange";
-import { CiEdit } from "react-icons/ci";
-import SpinnerSmallOrange from "../spinners/spinnerSmallOrange";
+import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 
 
-export default function ArticleTable({setTitle, setThumbnail, setGallery, setCategory, setEditedArticleSlug, setIdToEdit,  setEditActive, setEditorContent, setOpen}) {
+
+
+export default function RentalTableFrontEnd() {
 
   
 
-  const [rows, setRows] = useState([])
+  const [rows, setRows] = useState([]);
   const [sortingColumn, setsortingColumn] = useState(null)
   const [sortingOrder, setSortingOrder] = useState('asc')
   const [currentPage, setCurrentPage] = useState(1)
@@ -25,14 +25,16 @@ export default function ArticleTable({setTitle, setThumbnail, setGallery, setCat
   const [filteredRows, setFilteredRows] = useState(rows)
   const [rowsLoading, setRowsLoading] = useState(false)
   const [disabled, setDisabled] = useState(false)
+  const [editActive, setEditActive] = useState(false)
+  const [idToEdit, setIdToEdit] = useState('')
+  const [productName, setProductName] = useState('')
+  const [pieces, setPieces] = useState('')
+  const [onStock, setOnStock] = useState(false)
+  const [isReserved, setIsReserved] = useState(false)
+  const [whoReserved, setWhoResereved] = useState('')
+  const [whoRented, setWhoRented] = useState('')
   const [loading, setLoading] = useState(false)
 
-
-
-  const HandleReset = () => {
-    setSearchField('');
-    setFilteredRows(rows);
-  };
 
 //------------- fetch API down -----------------------------
 
@@ -42,28 +44,26 @@ export default function ArticleTable({setTitle, setThumbnail, setGallery, setCat
   }, []);
 
 
-
   const fetchData = async () => {
-    console.log('fire test')
     setRowsLoading(true)
     try {
-      const response = await fetch('/api/articles', {
+      const response = await fetch('/api/rental', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ operation: 'articleList' })
+        body: JSON.stringify({ operation: 'rentalList' })
       });
-      console.log(response)
+
       if (!response.ok) {
-        throw new Error('Failed to fetch article list');
+        throw new Error('Failed to fetch rental list');
       }
 
       const data = await response.json();
-
-      setRows(data.articleListResult); 
+      console.log(data.rentalListResult)
+      setRows(data.rentalListResult); 
     } catch (error) {
-      console.error('Error fetching article list:', error);
+      console.error('Error fetching user list:', error);
     }finally{
       setRowsLoading(false)
       
@@ -76,63 +76,15 @@ export default function ArticleTable({setTitle, setThumbnail, setGallery, setCat
 
 
   const columnsNamesMainList = [
-    { key: 'title', label: 'Titulek', sorting: true },
-    { key: 'user_email', label: 'Účet', sorting: true },
-    { key: 'category', label: 'Kategorie', sorting: true },
-    { key: 'created_time', label: 'Vytvořeno', sorting: true },
-    { label: 'del', id:'delLabel', sorting: false },
-    { label: 'edit', id:'editLabel', sorting: false },
+    { key: 'id', label: 'id', sorting: true },
+    { key: 'item_name', label: 'Vybavení', sorting: true },
+    { key: 'pieces', label: 'ks', sorting: true },
+    { key: 'on_stock', label: 'skladem', sorting: true },
+    { key: 'reserved', label: 'zarezervováno', sorting: true },
   ];
 
-//-------------DELETE API down   ------------------------------------
 
-
-
-const handleDel = async (id) => {
-  console.log('id ke smazání:', id);
-  let confirmDel = confirm('opravdu chcete smazat článek ?');
-  if (!confirmDel) {
-    return;
-  }
-  setDisabled(true);
-  setLoading(true);
-  try {
-    const response = await fetch('/api/articles', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        operation: 'articleDel',
-        idToDel: id,
-      }),
-    });
-
-    if (!response.ok) {
-      console.log(response.error);
-      return;
-    }
-
-    console.log('Článek byl úspěšně smazán');
-
-  } catch (error) {
-    console.log(error);
-  } finally {
-    setDisabled(false);
-    setLoading(false);
-    await fetchData();  
-  }
-};
-
-
-//-------------DELETE API UP   --------------------------------------
-
-
-
-
-
-
-  const rowsPerPage = 10;
+  const rowsPerPage = 30;
 
   useEffect(() => {
     
@@ -156,19 +108,13 @@ const handleDel = async (id) => {
     setSearchField(event.target.value);
   };
 
-  const handleArticlePropsEdit = (idArticleToEdit) =>{
-    let tempId = idArticleToEdit
-    let tempRow = rows.find(row => row.article_id === tempId)
-    setTitle(tempRow.title)
-    setEditorContent(tempRow.clanek)
-    setThumbnail(tempRow.thumbnail)
-    setGallery(tempRow.article_img_gallery)
-    setCategory(tempRow.category)
-    setEditActive(true)
-    setOpen(false)
-    setIdToEdit(tempId)
-    setEditedArticleSlug(tempRow.slug)
-  } 
+  const HandleReset = () => {
+    setSearchField('');
+    setFilteredRows(rows);
+  };
+
+
+
 
   const handleSorting = (key) => {
     if (sortingColumn === key) {
@@ -186,13 +132,47 @@ const handleDel = async (id) => {
   const paginatedRows = filteredRows.slice(startIndex, startIndex + rowsPerPage);
 
 
+  const handleProductChange = (e, id) => {
 
+    let tempE = e
+    let tempId = id
 
+    switch(tempId){
+      case 'productName' : {setProductName(tempE)};break;
+      case 'pieces' : {setPieces(tempE)};break;
+      case 'onStock' : {setOnStock(tempE)};break;
+      case 'isReserved' : {setIsReserved(tempE)};break;
+      case 'whoReserved' : {setWhoResereved(tempE)};break;
+      case 'whoRented' : {setWhoRented(tempE)};break;
+      default: break;
+    }
+  }
 
+  const handleProductEdit = (rowId) =>{
+    let tempId = rowId;
+    let row = rows.find(row => tempId === row.id);
+    let rentedPerson = row.member_rented === null ? '' : row.member_rented
+    let reservedPerson = row.member_reserved === null ? '' : row.member_reserved
 
+    setEditActive(true)
+    setIdToEdit(row.id);
+    setProductName(row.item_name)
+    setPieces(row.pieces)
+    setOnStock(row.on_stock)
+    setIsReserved(row.reserved)
+    setWhoResereved(row.member_reserved) === null ? setWhoRented('') : setWhoResereved(reservedPerson)
+    setWhoRented(row.member_rented) ===  setWhoRented(rentedPerson) 
+  }
 
-
-  
+  const handleResetForm = () => {
+    setIdToEdit('');
+    setProductName('')
+    setPieces('')
+    setOnStock(false)
+    setIsReserved(false)
+    setWhoResereved('')
+    setWhoRented('')
+  }
 
 
 
@@ -239,53 +219,41 @@ const handleDel = async (id) => {
           <tbody>
 
             {paginatedRows.map((row) => (
-              <React.Fragment key={row.article_id}>
+              <React.Fragment key={row.id}>
                 <tr className="text-xs md:text-sm border-b text-start dark:bg-gray-300 dark:text-white dark:even:bg-gray-200 even:bg-zinc-100 odd:bg-white dark:hover:bg-gray hover:bg-gray-50">
                   
           
                   <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                    {row.title}
+                    {row.id}
                   </td>
-
-                  <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                    {row.user_email}
-                  </td>
-                  
-                  <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                    {row.category}
-                  </td>
-                  
        
                   <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                    {row.created_time.split('T')[0]}
-
+                    {row.item_name}
                   </td>
-                  
-                
+  
                   <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                    {!loading ?
-                    <button disabled={disabled} onClick={() => handleDel(row.article_id)}>
-                      <MdDeleteForever
-                        className={`h-7 w-7 hover:cursor-pointer ${
-                          disabled ? 'dark:text-red-800 text-red-200' : 'text-red-500'
-                        }`}
-                      />
-                    </button>
-                    :
-                    <SpinnerSmallOrange />
-                    }
+                    {row.pieces}
                   </td>
                   
             
                   <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
-                    <button disabled={disabled} onClick={() => handleArticlePropsEdit(row.article_id)}>
-                      <CiEdit
-                        className={`h-7 w-7 hover:cursor-pointer ${
-                          disabled ? 'dark:text-orange-800 text-orange-200' : 'text-orange-600'
-                        }`}
-                      />
-                    </button>
+                    {row.on_stock ? (
+                      <FaThumbsUp className="h-5 w-5 text-green-700" />
+                    ) : (
+                      <FaThumbsDown className="h-5 w-5 text-red-700" />
+                    )}
                   </td>
+         
+                  <td className="py-2 md:mx-2 md:px-2 border-[1px] text-gray-800 text-xs md:text-sm max-w border-gray-300 whitespace-normal">
+                  {row.reserved ? (
+                    <span className="text-red-700">ANO</span>
+                  ) : (
+                    <span className="text-green-700">NE</span>
+                  )}
+                  </td>
+
+                
+
                 </tr>
               </React.Fragment>
             ))}
@@ -311,9 +279,10 @@ const handleDel = async (id) => {
           />
         </div>
         <div className="flex dark:text-white justify-end">
-          <span className="text-gray-600 dark:text-white items-center text-sm mt-4 m-2 md:mr-6"> položek: {filteredRows.length} </span>
+          <span className="text-gray-600 dark:text-white items-center text-sm mt-4 m-2 md:mr-6"> {filteredRows.length} položek</span>
         </div>
       </div>
+
     </div>
   );
 }
