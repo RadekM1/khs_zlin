@@ -130,7 +130,7 @@ console.log(gallery)
   
     const addFiles = async (newFiles) => {
       setImgResize(true); 
-      const maxFileSize = 7 * 1024 * 1024; 
+      const maxFileSize = 3 * 1024 * 1024; 
       const maxFiles = 30;
       let rejectedFiles = [];
       let duplicateFiles = [];
@@ -161,7 +161,7 @@ console.log(gallery)
       }
     
       if (rejectedFiles.length > 0) {
-        alert(`Následující soubory byly odmítnuty, protože přesahují limit 7 MB:\n${rejectedFiles.join("\n")}`);
+        alert(`Následující soubory byly odmítnuty, protože přesahují limit 3 MB:\n${rejectedFiles.join("\n")}`);
       }
     
       
@@ -690,7 +690,7 @@ const handleGoogleUpload = async (slug) => {
                 <span className="text-slate-500 w-full">
                   klikněte a vyberte fotografie nebo je přetáhněte ze složky do vyhrazené oblasti
                 </span>
-                <span className="text-slate-600"> PNG, JPG, JPEG max 7MB</span>
+                <span className="text-slate-600"> PNG, JPG, JPEG max 3MB</span>
                 <span className="text-slate-600"> max 30 fotek u článku</span>
               </p>
 
