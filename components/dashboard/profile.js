@@ -122,7 +122,7 @@ export default function Profile () {
                         </svg>
                     </summary>
                     <p className="mt-4 text-start  dark:text-gray-300 text-slate-500">
-                        Po kliknutí na tlačítko 'články' v menu:
+                        Po kliknutí na tlačítko články v menu:
                         <ul>
                             <li>
                                 - Vyberte kategorii příspěvku
@@ -201,7 +201,7 @@ export default function Profile () {
                         je kalendář v adminu interaktivní (na hlavní stránce je zamčený).
                         Lze vkládat, mazat, editovat nové události. 
                         Na hlavní stránce se zobrazuje pouze aktuální měsíc, v adminu lze vyplnit dopředu. Akce na více dní
-                        je bohužel nutno naklikat "po dni". Zadání v intervalech taky není naprogramováno, musí se naklikat.
+                        je bohužel nutno naklikat po dni. Zadání v intervalech taky není naprogramováno, musí se naklikat.
                     </p>
                     </details>
                     <details className="p-4 group">
@@ -308,10 +308,76 @@ export default function Profile () {
                         </svg>
                     </summary>
                     <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
-                        Ke každému článku lze vložit komentáře a "lajk" buď pod hlavní textem článku, případně 
-                        srdíčko ještě na kartě článku buď v sekci "články" nebo u nejnovějších článků na hlavní straně. 
+                        Ke každému článku lze vložit komentáře a lajk buď pod hlavní textem článku, případně 
+                        srdíčko ještě na kartě článku buď v sekci články nebo u nejnovějších článků na hlavní straně. 
                     </p>
                     </details>
+                    <details className="p-4 group">
+                    <summary className="relative text-start dark:text-white cursor-pointer dark:hover:text-white list-none pr-8 font-medium text-slate-700 transition-colors duration-300 focus-visible:outline-none   [&::-webkit-details-marker]:hidden">
+                        Změna hesla
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="absolute right-0 w-4 h-4 transition duration-300 top-1  shrink-0 stroke-slate-700 group-open:rotate-45"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        aria-labelledby="title-ac02 desc-ac02"
+                        >
+                        <title id="title-ac02">Open icon</title>
+ 
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 4v16m8-8H4"
+                        />
+                        </svg>
+                    </summary>
+                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
+                        Změna hesla není v adminu zatím naprogramovaná, nicméně lze změnit bez problému heslo před přihlášením kliknutím
+                        na zapomenuté heslo.
+                    </p>
+                    </details>
+                    <details className="p-4 group">
+                    <summary className="relative text-start dark:text-white cursor-pointer dark:hover:text-white list-none pr-8 font-medium text-slate-700 transition-colors duration-300 focus-visible:outline-none   [&::-webkit-details-marker]:hidden">
+                        Úrovně oprávnění uživatelů
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="absolute right-0 w-4 h-4 transition duration-300 top-1  shrink-0 stroke-slate-700 group-open:rotate-45"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        aria-labelledby="title-ac02 desc-ac02"
+                        >
+                        <title id="title-ac02">Open icon</title>
+ 
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 4v16m8-8H4"
+                        />
+                        </svg>
+                    </summary>
+                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
+                    Po kliknutí na tlačítko články v menu:
+                        <ul>
+                            <li>
+                                - Admin: jednoduše povoleno vše
+                            </li>
+                            <li>
+                                - Editor: povoleno vše kromě sekce uživatelů
+                            </li>
+                            <li>
+                                - Member: kometáře, srdíčka, články
+                            </li>
+                            <li>
+                                - Visitor: komentáře, srdíčka
+                            </li>
+                        </ul>
+                    </p>
+                    </details>
+                    
 
 
                     
@@ -358,7 +424,7 @@ export default function Profile () {
                         <li className="flex items-start gap-4 px-4 py-3">
                             <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
                                 <h4 className="text-base text-inherit text-slate-700">Lajkovat články, vkládat komentáře</h4>
-                                <p className="w-full text-start text-sm truncate text-slate-500">Každý článek lze pod hlavním textem okomentovat, případně přidat "srdíčko"</p>
+                                <p className="w-full text-start text-sm truncate text-slate-500">Každý článek lze pod hlavním textem okomentovat, případně přidat srdíčko</p>
                             </div>
                         </li>
                         <li className="flex items-start  gap-4 px-4 py-3">
