@@ -32,18 +32,17 @@ export default function Profile () {
         setOpen(true)
       }
 
-     
-
+      
     return (
         <div className="justify-center container mx-auto overflow-hidden lg:justify-normal flex-col-reverse flex lg:flex-row w-full mt-5">
-            {/*  */} 
+          
             <div className="justify-start w-full lg:w-2/3 dark:bg-[#161616] overflow-hidden mt-2 bg-white lg:m-5 dark:text-gray-200 dark:border-gray-800 border-gray-200 border-[1px] p-3 shadow-md  rounded-2xl flex flex-col">
             <section className="w-full divide-y divide-slate-200 rounded">
                 <div className='flex-row flex'>
                     <div className=' text-slate-700 font-bold mr-4 text-xl text-start mb-2'>
                         <IoMdHelpCircleOutline className='text-orange-400 w-8 h-8'/>
                     </div>
-                    <div className=' text-slate-700 dark:hover:text-white font-bold text-xl text-start mb-2'>
+                    <div className=' text-slate-700 dark:text-white dark:hover:text-white font-bold text-xl text-start mb-2'>
                         Nápověda
                     </div>
                 </div>
@@ -101,6 +100,92 @@ export default function Profile () {
                     </p>
                     </details>
                     <details className="p-4 group">
+                    <summary className="relative text-start dark:text-white cursor-pointer dark:hover:text-white list-none pr-8 font-medium text-slate-700 transition-colors duration-300 focus-visible:outline-none   [&::-webkit-details-marker]:hidden">
+                        Změna hesla
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="absolute right-0 w-4 h-4 transition duration-300 top-1  shrink-0 stroke-slate-700 group-open:rotate-45"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        aria-labelledby="title-ac02 desc-ac02"
+                        >
+                        <title id="title-ac02">Open icon</title>
+ 
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 4v16m8-8H4"
+                        />
+                        </svg>
+                    </summary>
+                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
+                        Změna hesla není v adminu zatím naprogramovaná, nicméně lze změnit bez problému heslo před přihlášením kliknutím
+                        na zapomenuté heslo.
+                    </p>
+                    </details>
+                    <details className="p-4 group">
+                    <summary className="relative text-start dark:text-white cursor-pointer dark:hover:text-white list-none pr-8 font-medium text-slate-700 transition-colors duration-300 focus-visible:outline-none   [&::-webkit-details-marker]:hidden">
+                        Profil a výměna obrázku
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="absolute right-0 w-4 h-4 transition duration-300 top-1  shrink-0 stroke-slate-700 group-open:rotate-45"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        aria-labelledby="title-ac02 desc-ac02"
+                        >
+                        <title id="title-ac02">Open icon</title>
+ 
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 4v16m8-8H4"
+                        />
+                        </svg>
+                    </summary>
+                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
+                        Úvodní profilová stránka slouží převážně pro poskytnutí informací o úrovni oprávnění, jaké lze provádět operace, 
+                        změnu úvodní fotografie. Nahrání nové fotografie by mělo proběhnout rychle, změna fotografie se dle zvolené architektury 
+                        webu může projevit se zpožděním až několika minut. 
+                    </p>
+                    </details>
+                    <details className="p-4 group">
+                    <summary className="relative text-start dark:text-white cursor-pointer dark:hover:text-white list-none pr-8 font-medium text-slate-700 transition-colors duration-300 focus-visible:outline-none   [&::-webkit-details-marker]:hidden">
+                        Vkládání komentářů a lajkování (srdíčka)
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="absolute right-0 w-4 h-4 transition duration-300 top-1  shrink-0 stroke-slate-700 group-open:rotate-45"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        aria-labelledby="title-ac02 desc-ac02"
+                        >
+                        <title id="title-ac02">Open icon</title>
+ 
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 4v16m8-8H4"
+                        />
+                        </svg>
+                    </summary>
+                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
+                        Ke každému článku lze vložit komentáře a lajk buď pod hlavní textem článku, případně 
+                        srdíčko ještě na kartě článku buď v sekci články nebo u nejnovějších článků na hlavní straně. 
+                    </p>
+                    </details>
+                    
+                    
+                    
+                    
+                    {(clearance === 'member' || clearance === 'editor' || clearance === 'admin' ) && 
+                    
+                    
+                    <details className="p-4 group">
                     <summary className="relative text-start dark:text-white dark:hover:text-white cursor-pointer list-none pr-8 font-medium text-slate-700 transition-colors duration-300 focus-visible:outline-none [&::-webkit-details-marker]:hidden">
                         Přidání článku krok za krokem
                         <svg
@@ -121,7 +206,7 @@ export default function Profile () {
                         />
                         </svg>
                     </summary>
-                    <p className="mt-4 text-start  dark:text-gray-300 text-slate-500">
+                    <p className="mt-4 text-start  dark:text-gray-300 text-slate-500"> </p>
                         Po kliknutí na tlačítko články v menu:
                         <ul>
                             <li>
@@ -145,8 +230,19 @@ export default function Profile () {
                                 klikněte na ikonku tužky a článek se objeví k editování. Proveďte úpravy, klikněte na uložit.
                             </li>
                         </ul>
-                    </p>
+                   
                     </details>
+                   
+                   
+                    }
+                   
+                   
+                   
+                   {(clearance === 'editor' || clearance === 'admin' ) && 
+
+
+                    <>
+                   
                     <details className="p-4 group">
                     <summary className="relative text-start dark:text-white cursor-pointer dark:hover:text-white list-none pr-8 font-medium text-slate-700 transition-colors duration-300 focus-visible:outline-none   [&::-webkit-details-marker]:hidden">
                         Nahrání novinky 
@@ -257,87 +353,13 @@ export default function Profile () {
                         upravovat, mazat nové položky. Veškeré citlivé údaje nejsou na veřejné stránce k dispozici. 
                     </p>
                     </details>
-                    <details className="p-4 group">
-                    <summary className="relative text-start dark:text-white cursor-pointer dark:hover:text-white list-none pr-8 font-medium text-slate-700 transition-colors duration-300 focus-visible:outline-none   [&::-webkit-details-marker]:hidden">
-                        Profil a výměna obrázku
-                        <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="absolute right-0 w-4 h-4 transition duration-300 top-1  shrink-0 stroke-slate-700 group-open:rotate-45"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        aria-labelledby="title-ac02 desc-ac02"
-                        >
-                        <title id="title-ac02">Open icon</title>
- 
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 4v16m8-8H4"
-                        />
-                        </svg>
-                    </summary>
-                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
-                        Úvodní profilová stránka slouží převážně pro poskytnutí informací o úrovni oprávnění, jaké lze provádět operace, 
-                        změnu úvodní fotografie. Nahrání nové fotografie by mělo proběhnout rychle, změna fotografie se dle zvolené architektury 
-                        webu může projevit se zpožděním až několika minut. 
-                    </p>
-                    </details>
-                    
 
-                    <details className="p-4 group">
-                    <summary className="relative text-start dark:text-white cursor-pointer dark:hover:text-white list-none pr-8 font-medium text-slate-700 transition-colors duration-300 focus-visible:outline-none   [&::-webkit-details-marker]:hidden">
-                        Vkládání komentářů a lajkování (srdíčka)
-                        <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="absolute right-0 w-4 h-4 transition duration-300 top-1  shrink-0 stroke-slate-700 group-open:rotate-45"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        aria-labelledby="title-ac02 desc-ac02"
-                        >
-                        <title id="title-ac02">Open icon</title>
- 
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 4v16m8-8H4"
-                        />
-                        </svg>
-                    </summary>
-                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
-                        Ke každému článku lze vložit komentáře a lajk buď pod hlavní textem článku, případně 
-                        srdíčko ještě na kartě článku buď v sekci články nebo u nejnovějších článků na hlavní straně. 
-                    </p>
-                    </details>
-                    <details className="p-4 group">
-                    <summary className="relative text-start dark:text-white cursor-pointer dark:hover:text-white list-none pr-8 font-medium text-slate-700 transition-colors duration-300 focus-visible:outline-none   [&::-webkit-details-marker]:hidden">
-                        Změna hesla
-                        <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="absolute right-0 w-4 h-4 transition duration-300 top-1  shrink-0 stroke-slate-700 group-open:rotate-45"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        aria-labelledby="title-ac02 desc-ac02"
-                        >
-                        <title id="title-ac02">Open icon</title>
- 
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 4v16m8-8H4"
-                        />
-                        </svg>
-                    </summary>
-                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
-                        Změna hesla není v adminu zatím naprogramovaná, nicméně lze změnit bez problému heslo před přihlášením kliknutím
-                        na zapomenuté heslo.
-                    </p>
-                    </details>
+                    </>
+                    
+                    }
+                    
+                    {(clearance === 'admin' ) && 
+                    
                     <details className="p-4 group">
                     <summary className="relative text-start dark:text-white cursor-pointer dark:hover:text-white list-none pr-8 font-medium text-slate-700 transition-colors duration-300 focus-visible:outline-none   [&::-webkit-details-marker]:hidden">
                         Úrovně oprávnění uživatelů
@@ -359,7 +381,7 @@ export default function Profile () {
                         />
                         </svg>
                     </summary>
-                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
+                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">              </p>
                     Po kliknutí na tlačítko články v menu:
                         <ul>
                             <li>
@@ -375,11 +397,11 @@ export default function Profile () {
                                 - Visitor: komentáře, srdíčka
                             </li>
                         </ul>
-                    </p>
+      
                     </details>
                     
 
-
+                    }
                     
 
 
@@ -420,37 +442,74 @@ export default function Profile () {
                     </div>
                 </div>
                 <div className='flex dark:text-white  justify-start w-full'>
-                    <ul className="divide-y justify-start divide-slate-200">
+                    <ul className="divide-y justify-start dark:text-white divide-slate-200">
+
+
+
                         <li className="flex items-start gap-4 px-4 py-3">
                             <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
-                                <h4 className="text-base text-inherit text-slate-700">Lajkovat články, vkládat komentáře</h4>
+                                <h4 className="text-base dark:text-white text-slate-700">Lajkovat články, vkládat komentáře</h4>
                                 <p className="w-full text-start text-sm truncate text-slate-500">Každý článek lze pod hlavním textem okomentovat, případně přidat srdíčko</p>
                             </div>
                         </li>
                         <li className="flex items-start  gap-4 px-4 py-3">
                             <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
-                                <h4 className="text-base text-inherit text-slate-700">Profil a výměna obrázku</h4>
+                                <h4 className="text-base dark:text-white text-slate-700">Profil a výměna obrázku</h4>
                                 <p className="w-full text-sm text-start truncate text-slate-500">Na stránce profil (první stránka po přihlášení) lze měnit fotografii, více info v nápovědě.</p>
                             </div>
                         </li>
+
+                        {(clearance === 'member' || clearance === 'editor' || clearance === 'admin' ) && 
                         <li className="flex items-start gap-4 px-4 py-3">
                             <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
-                                <h4 className="text-base text-inherit text-slate-700">Customizable</h4>
-                                <p className="w-full text-sm text-start truncate text-slate-500">Easily modify design and color scheme to fit brand.</p>
+                                <h4 className="text-base dark:text-white text-slate-700">Vkládat články</h4>
+                                <p className="w-full text-sm text-start truncate text-slate-500">Náhled na články všech uživatelů včetně úpravy, mazání</p>
+                            </div>
+                        </li>
+
+                        }
+
+                        {(clearance === 'editor' || clearance === 'admin' ) && 
+
+                        <>
+
+                        <li className="flex items-start gap-4 px-4 py-3">
+                            <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
+                                <h4 className="text-base dark:text-white text-slate-700">Publikovat novinky</h4>
+                                <p className="w-full text-sm text-start truncate text-slate-500">Náhled na novinky všech uživatelů včetně úpravy, mazání</p>
                             </div>
                         </li>
                         <li className="flex items-start gap-4 px-4 py-3">
                             <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
-                                <h4 className="text-base text-inherit text-slate-700">Low Learning Curve</h4>
-                                <p className="w-full text-sm text-start truncate text-slate-500">Simple and intuitive syntax for CSS thats easy to learn and progress.</p>
+                                <h4 className="text-base dark:text-white text-slate-700">Správa kalendáře</h4>
+                                <p className="w-full text-sm text-start truncate text-slate-500">Plná kontrola nad funkcemi kalendáře</p>
                             </div>
                         </li>
                         <li className="flex items-start gap-4 px-4 py-3">
                             <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
-                                <h4 className="text-base text-inherit text-slate-700">Scalability</h4>
-                                <p className="w-full text-sm text-start truncate text-slate-500">Easily maintainable and reusable code for large projects.</p>
+                                <h4 className="text-base dark:text-white text-slate-700">Správa knihovny</h4>
+                                <p className="w-full text-sm text-start truncate text-slate-500">Plná kontrola nad knihovnou</p>
                             </div>
                         </li>
+                        <li className="flex items-start gap-4 px-4 py-3">
+                            <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
+                                <h4 className="text-base dark:text-white text-slate-700">Správa půjčovny</h4>
+                                <p className="w-full text-sm text-start truncate text-slate-500">Plná kontrola nad půjčovnou</p>
+                            </div>
+                        </li>
+                        </>
+                        } 
+
+                        {(clearance === 'admin' ) &&  
+
+                        <li className="flex items-start gap-4 px-4 py-3">
+                            <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
+                                <h4 className="text-base dark:text-white text-slate-700">Správa uživatelů</h4>
+                                <p className="w-full text-sm text-start truncate text-slate-500">Blokování, mazání, změna práv uživatelů</p>
+                            </div>
+                        </li>
+
+                        }
                     </ul>
                 </div>
 
