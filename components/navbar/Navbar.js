@@ -514,6 +514,18 @@ export default function Navbar() {
                     <ChevronDownIcon aria-hidden="true" className="h-5  w-5 dark:text-gray-400 flex-none group-data-[open]:rotate-180" />
                   </DisclosureButton>
                     <DisclosurePanel className="mt-2">
+                    <DisclosureButton
+
+                        className="block rounded-lg w-full text-start pl-6 pr-3 text-sm leading-7 ">
+                          <Link href='/clanky' onClick={() => setMobileMenuOpen(false)} passHref>
+                            <div className={`flex p-2 flex-grow ${ pathName.includes('/clanky')  ? activeMobile : inActiveMobile } `}>
+                              <div className='w-full ml-2 text-start' >
+                                Zobrazit vše
+                              </div>
+                            </div>
+                        </Link>
+                        
+                      </DisclosureButton>
                       {articles.map((item) => (
                         <DisclosureButton
                         key={item.name}
@@ -527,6 +539,7 @@ export default function Navbar() {
                             </div>
                              
                         </Link>
+
                       </DisclosureButton>
                       ))}
                     </DisclosurePanel>
