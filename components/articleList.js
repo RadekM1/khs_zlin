@@ -8,6 +8,7 @@ import ResetBtn from "@/components/table/resetBtn";
 import Pagination from '@mui/material/Pagination';
 import {handleChangePaginat} from "@/lib/functions/handleChangePaginat";
 import CheckBox from "./checkbox";
+import { boolean } from "zod";
 
 export default function ArticleList ({importedRows}) {
 
@@ -15,6 +16,12 @@ export default function ArticleList ({importedRows}) {
     const [searchField, setSearchField] = useState('')
     const [filteredRows, setFilteredRows] = useState(rows)
     const [currentPage, setCurrentPage] = useState(1)
+    const [skaly, setSkaly] = useState(true)
+    const [hory, setHory] = useState(true)
+    const [oddil, setOddil] = useState(true)
+    const [ostatni, setOstatni] = useState(true)
+
+
 
     let path = usePathname();
     const searchParams = useSearchParams();
@@ -22,24 +29,48 @@ export default function ArticleList ({importedRows}) {
 
     const rowsPerPage = 5
 
-    useEffect(() => {
-      const filter = rows.filter((row) => { 
-        let keys = Object.keys(row);
-        let fulltextTrue = keys.some((key) => {
-          return String(row[key]).toLowerCase().includes(String(searchField.toLowerCase()));
-        });
-        return fulltextTrue;
-      });
-    
-      setFilteredRows(filter);
-    
-    
-      const maxPage = Math.ceil(filter.length / rowsPerPage);
-      if (currentPage > maxPage) {
-        setCurrentPage(1); 
-      }
-    }, [searchField, rows, currentPage]);
+useEffect(() => {
+  const filter = rows.filter((row) => { 
 
+    let matchesCategory = false;
+
+    if (skaly && row.category.toLowerCase().includes('skaly')) {
+      matchesCategory = true;
+    }
+
+    if (hory && row.category.toLowerCase().includes('hory')) {
+      matchesCategory = true;
+    }
+
+    if (oddil && row.category.toLowerCase().includes('oddil')) {
+      matchesCategory = true;
+    }
+
+    if (ostatni && row.category.toLowerCase().includes('ostatni')) {
+      matchesCategory = true;
+    }
+
+    
+    let keys = Object.keys(row);
+    let fulltextTrue = keys.some((key) => {
+      return String(row[key]).toLowerCase().includes(String(searchField.toLowerCase()));
+    });
+
+  
+    return matchesCategory && fulltextTrue;
+  });
+
+  setFilteredRows(filter);
+
+
+  const maxPage = Math.ceil(filter.length / rowsPerPage);
+  if (currentPage > maxPage) {
+    setCurrentPage(1); 
+  }
+}, [searchField, rows, currentPage, skaly, hory, oddil, ostatni]);
+    
+
+    
         
 const handleChange = (event) => {
     setSearchField(event.target.value);
@@ -53,39 +84,51 @@ const handleChange = (event) => {
     const startIndex = (currentPage - 1) * rowsPerPage
     const paginatedRows = filteredRows.slice(startIndex, startIndex + rowsPerPage)
 
-    const handleCheckbox = () =>{
-        console.log('checkbox fire')
+    const handleCheckbox = (checkbox) =>{
+        let tempCheckBox = checkbox
+        console.log(tempCheckBox)
+        switch(tempCheckBox){
+            case 'skaly' : skaly === true ? setSkaly(false) : setSkaly(true); break;
+            case 'hory' : hory === true ? setHory(false) : setHory(true); break;
+            case 'oddil' : oddil === true ? setOddil(false) : setOddil(true); break;
+            case 'ostatni' : ostatni === true ? setOstatni(false) : setOstatni(true); break;
+        }
     }
 
 
     return (
     <div className="flex  flex-col lg:flex-row-reverse">
-        <div className="flex-col  flex flex-shrink h-min lg:my-10 py-2 lg:py-10 px-5 md:m-2 flex-wrap transition-shadow duration-300 hover:shadow-lg hover:shadow-gray-400 dark:hover:shadow-gray-800  dark:border-gray-600 border-gray-200 border dark:bg-[#1E1E1E] bg-white rounded shadow-lg">
-            <span className="text-orange-500">Prohledat články</span>
-            <div className="flex-row w-[300px]">
-                <div className="mb-4">
+        <div className="flex-col  flex flex-shrink h-min px-5 md:m-2 flex-wrap transition-shadow duration-300 hover:shadow-lg hover:shadow-gray-400 dark:hover:shadow-gray-800  dark:border-gray-600 border-gray-200 border dark:bg-[#1E1E1E] bg-white rounded shadow-lg">
+            <span className="text-orange-500 hidden lg:block my-2">Prohledat články</span>
+            <div className="flex-row  lg:flex-col lg:w-[300px] flex justify-center items-center ">
+                <div className="mb-2 flex mx-5 lg:mx-0 justify-center items-center ">
                     <SearchField searchField={searchField} handleChange={handleChange}/>
                 </div>
-                <div className="mb-4">
+                <div className="mb-4 flex mx-5 lg:mx-0 my-1 justify-center items-center self-center">
                     <ResetBtn handleReset={HandleReset} />
                 </div>
             </div>
             <div className="flex-row mb-2">
             <span className="text-orange-500">Filtr článků dle témat</span>
-                <div className="mb-2">
-                    <CheckBox  label='Hory'  handleChange={handleCheckbox} />
+            <div className="flex flex-col">
+                <div className="flex  flex-row w-full flex-grow self-start items-start justify-start  ">
+                    <div className="mb-2 self-start items-start justify-start flex flex-grow">
+                        <CheckBox  label='Hory' checked={hory}  handleChange={()=>handleCheckbox('hory')} />
+                    </div>                
+                    <div className="mb-2 -ml-2 flex-grow self-start items-start justify-start flex">
+                        <CheckBox  label='Skály' checked={skaly}  handleChange={()=>handleCheckbox('skaly')} />
+                    </div>
                 </div>
-                <div className="mb-2">
-                    <CheckBox  label='Skály'  handleChange={handleCheckbox} />
-                </div>                
-                <div className="mb-2">
-                    <CheckBox  label='Oddíl'  handleChange={handleCheckbox} />
-                </div>                
-                <div className="mb-2">
-                    <CheckBox  label='Ostatní'  handleChange={handleCheckbox} />
+                <div className="flex flex-row flex-grow">
+                    <div className="mb-2 self-start items-start justify-start flex flex-grow">
+                        <CheckBox  label='Oddíl' checked={oddil}  handleChange={()=>handleCheckbox('oddil')} />
+                    </div>                
+                    <div className="mb-2 flex-grow self-start items-start justify-start flex">
+                        <CheckBox  label='Ostatní' checked={ostatni}  handleChange={()=>handleCheckbox('ostatni')} />
+                    </div>
                 </div>
-
             </div>
+        </div>
         </div>
         <div className="flex flex-grow flex-col">
         <div className="w-full  flex justify-center flex-col text-center">
