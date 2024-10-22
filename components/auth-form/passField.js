@@ -1,5 +1,3 @@
-'use client'
-
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import IconButton from '@mui/material/IconButton';
@@ -10,8 +8,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { createTheme, ThemeProvider} from '@mui/material';
-
+import { createTheme, ThemeProvider } from '@mui/material';
 
 export default function PassField({ handleChange, label, id, size, error }) {
   const { resolvedTheme } = useNextTheme();
@@ -54,12 +51,11 @@ export default function PassField({ handleChange, label, id, size, error }) {
   return (
     <ThemeProvider theme={resolvedTheme === 'light' ? lightTheme : darkTheme}>
       <FormControl sx={{ m: 1, width: '280px' }} variant="outlined">
-
         <InputLabel htmlFor={id}>{label}</InputLabel>
         <OutlinedInput
           id={id}
           error={error}
-          type={'password'}
+          type={showPassword ? 'text' : 'password'}
           size={size ? size : 'normal'}
           autoComplete="current-password"
           onChange={(e) => handleChange(e, id)}

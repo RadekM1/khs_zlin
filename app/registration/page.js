@@ -93,7 +93,7 @@ export default function Page() {
     
 
 
-    if (password === passwordCheck && passwordCheck) {
+    if (password === passwordCheck) {
       setPasswordEqual(true);
       setErrorPass(false);
     } else {
