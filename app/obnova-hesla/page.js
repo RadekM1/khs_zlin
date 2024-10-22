@@ -76,7 +76,7 @@ export default function Page() {
 
 
 
- 
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,6 +86,7 @@ export default function Page() {
       forgotenPassChangeToken: filteredToken,
       operation: 'forgotenPasswordChange',
     }
+
       
     try{
       setDisabled(true)
