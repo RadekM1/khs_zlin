@@ -5,6 +5,7 @@ import AvatarEditor from 'react-avatar-editor';
 import { useSession } from 'next-auth/react';
 import SpinnerSmallWhite from '../spinners/spinnerSmallWhite';
 
+
 export default function AvatarCrop() {
   const [image, setImage] = useState(null);
   const [previewImage, setPreviewImage] = useState('https://storage.googleapis.com/khs-zlin/avatars/User-avatar.svg.png');
@@ -19,21 +20,58 @@ export default function AvatarCrop() {
 
 
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
+    const maxFileSize = 2 * 1024 * 1024; 
+  
     if (file) {
+      if (file.size > maxFileSize) {
+        alert('Velikost souboru je větší než 2 MB. Prosím, nahrajte menší obrázek.');
+        return;
+      }
+  
+      // Nastav náhled obrázku pro uživatele ještě před optimalizací
       setImage(file);
       setPreviewImage(URL.createObjectURL(file));
+      setFeedback('Obrázek se optimalizuje...');
+  
+      
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      try {
+        
+        setLoading(true)
+        const response = await fetch('/api/avatar-resize', {
+          method: 'POST',
+          body: formData,
+        });
+  
+        if (response.ok) {
+          const blob = await response.blob(); 
+          const optimizedImageUrl = URL.createObjectURL(blob); 
+          setLoading(false)
+        
+          setPreviewImage(optimizedImageUrl); 
+          setFeedback('Obrázek byl úspěšně optimalizován.');
+        } else {
+          setFeedback('Chyba při optimalizaci obrázku');
+        }
+      } catch (error) {
+        console.error('Chyba při volání API pro optimalizaci obrázku:', error);
+        setFeedback('Chyba při optimalizaci obrázku.');
+      }
     }
   };
-
+  
   const handleUploadClick = () => {
     inputRef.current.click();
   };
 
-  // Funkce pro získání podepsané URL z API
+
   const getSignedUrl = async (fileName) => {
     try {
+      
       const response = await fetch(`/api/upload-avatar?file=${fileName}`);
       if (!response.ok) {
         throw new Error('Failed to get signed URL');
@@ -46,7 +84,7 @@ export default function AvatarCrop() {
     }
   };
 
-  // Funkce pro nahrání obrázku na Google Cloud Storage
+
   const handleImageUpload = async (blob, fileName) => {
     try {
       const signedUrl = await getSignedUrl(fileName);
@@ -68,7 +106,19 @@ export default function AvatarCrop() {
     }
   };
 
-  // Funkce pro uložení oříznutého obrázku a nahrání na Google Cloud Storage
+  function shiftCharsBy4(cleanUser) {
+    let shiftedString = '';
+    
+    for (let i = 0; i < cleanUser.length; i++) {
+   
+        let shiftedChar = String.fromCharCode(cleanUser.charCodeAt(i) + 4);
+        shiftedString += shiftedChar;
+    }
+    return encodeURIComponent(shiftedString);
+
+}
+
+ 
   const handleSave = async () => {
     setFeedback('');
 
@@ -79,6 +129,7 @@ export default function AvatarCrop() {
 
     setLoading(true);
     try {
+
       const imageBlob = await new Promise((resolve, reject) => {
         editorRef.current.getImage().toBlob((blob) => {
           if (blob) {
@@ -89,14 +140,40 @@ export default function AvatarCrop() {
         }, 'image/png');
       });
 
-      const trimmedEmail = session.user.email
-      const fileName = `${trimmedEmail}.png`;
+      
+      let trimmedEmail = session.user.email;
+      let avatarName = shiftCharsBy4(trimmedEmail);
+      const fileName = `${avatarName}.png`;
+      let avatarToSql = `https://storage.googleapis.com/khs-zlin/avatars/${fileName}`
+
+     
       const success = await handleImageUpload(imageBlob, fileName);
 
       if (success) {
         setFeedback('Obrázek byl úspěšně nahrán.');
-        await update(); // Aktualizace session pro načtení nového avataru
-        setPreviewImage(`https://storage.googleapis.com/khs-zlin/avatars/User-avatar.svg.png`);
+
+        await update(); 
+     
+       
+        const response = await fetch('/api/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ 
+            operation: 'updateAvatar',
+            user: session.user.email,
+            avatar: avatarToSql
+          })
+        });
+
+        if(response){
+          setFeedback('Uložení do databáze také v pořádku')
+        }
+
+        if (!response.ok) {
+          throw new Error('Failed to update avatar in database');
+        }
       } else {
         setFeedback('Nahrání obrázku selhalo.');
       }
@@ -107,6 +184,10 @@ export default function AvatarCrop() {
       setLoading(false);
     }
   };
+
+
+
+  
 
   return (
     <div className="flex flex-col items-center">

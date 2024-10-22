@@ -98,8 +98,12 @@ export default function Navbar() {
   useEffect(()=>{
     if(session){
       setClearance(session.user.clearance)
-      setAvatar(session.user.avatar)
+      if(session.user.avatar !== null){
+        (setAvatar(session.user.avatar || 'https://storage.googleapis.com/khs-zlin/avatars/User-avatar.svg.png'))
+      }
+      
     }else{
+      
       setClearance(undefined)
     }
   }, [session])
@@ -292,13 +296,12 @@ export default function Navbar() {
                     {({ open, close }) => (
                       <>
                         <PopoverButton className="ml-5 flex rounded-full focus:outline-none items-center gap-x-2 text-sm leading-6 dark:text-gray-300 text-gray-700">
-                          <Image 
-                            src={avatar ? avatar : `https://storage.googleapis.com/khs-zlin/avatars/User-avatar.svg.png` }
+                          <img
+                            src={avatar || 'https://storage.googleapis.com/khs-zlin/avatars/User-avatar.svg.png'}
                             alt="User Avatar" 
                             className="rounded-full img-contain" 
                             width={50} 
                             height={50} 
-                            priority 
                           />
                         </PopoverButton>
                         <PopoverPanel className="border-gray-200 top-14 right-0 border-[1px] dark:border-gray-500  shadow-gray-400/50 dark:shadow-gray-700/50 border- absolute drop-shadow-xl z-10 w-60 rounded dark:bg-gray-800 bg-slate-100 shadow-lg">

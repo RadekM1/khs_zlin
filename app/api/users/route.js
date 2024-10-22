@@ -61,6 +61,13 @@ export async function POST(request) {
                 return NextResponse.json(result, { status: result.status });
             }
 
+            case 'updateAvatar': {
+                const userService = new UserService(body)
+                const result = await userService.updateAvatar();
+            
+                return NextResponse.json(result, { status: result.status });
+            }
+
             case 'updateLocked': {
                 const userService = new UserService(body)
                 const result = await userService.updateLocked();

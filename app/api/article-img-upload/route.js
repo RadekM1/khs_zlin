@@ -5,24 +5,31 @@ export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
     const fileName = searchParams.get('file');
-    const contentType = 'image/jpg'; 
+    const contentType = 'image/jpeg'; 
 
 
     if (!fileName) {
       return NextResponse.json({ error: 'Missing parameters' }, { status: 400 });
     }
 
-    const fullFileName = `img-gallery/${fileName}`;
+    const timestamp = new Date().getTime();
+    const fullFileName = `img-gallery/${fileName}?t=${timestamp}`;
     console.log(fullFileName)
     const bucket = getBucket();
     const file = bucket.file(fullFileName);
 
-    // Generujeme podpisovaný URL
-    const [url] = await file.getSignedUrl({
+ 
+    const [url] = file.getSignedUrl({
       version: 'v4',
       action: 'write',
       expires: Date.now() + 10 * 60 * 1000, 
       contentType, 
+      responseHeaders: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Expires': '0',
+        'Surrogate-Control': 'no-store',
+        'Pragma': 'no-cache',
+      },
     });
 
     return NextResponse.json({ url });

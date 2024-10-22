@@ -16,7 +16,7 @@ export default function Breadcrumbs () {
 
     return (
 
-        <div className="mt-20 border-b[1px] justify-start w-full dark:text-gray-500 border-b-gray-300 dark:border-b-gray-600 flex flex-row flex-grow max-w-screen-xl px-4 sm:px-6 md:px-8 lg:px-4  mx-auto">
+        <div className="mt-20 border-b[1px] overflow-auto justify-start w-full dark:text-gray-500 border-b-gray-300 dark:border-b-gray-600 flex flex-row flex-grow max-w-screen-xl px-4 sm:px-6 md:px-8 lg:px-4  mx-auto">
             <div className="flex items-center">
             <Link href='/'> <IoHomeSharp className="hover:text-orange-600 dark:hover:text-orange-200 text-gray-500 mr-2" /> </Link>  
 

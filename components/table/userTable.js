@@ -128,7 +128,7 @@ export default function UserTable() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
-          operation: id,
+          operation: 'updateClearance',
           user: account,
           clearance: value,
           locked: value

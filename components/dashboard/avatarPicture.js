@@ -3,7 +3,7 @@ import {useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import React from 'react';
 import { FaEdit } from 'react-icons/fa'; // Import ikony tužky z react-icons
-import Image from 'next/image';
+
 
 export default function AvatarPicture({ handleCLick }) {
   const [imageSrc, setImageSrc] = useState(undefined)
@@ -19,10 +19,9 @@ export default function AvatarPicture({ handleCLick }) {
   return (
     <div className="relative group w-32 h-32">
       {/* Fotka */}
-      <Image
+      <img
         src={imageSrc ? imageSrc : 'https://storage.googleapis.com/khs-zlin/avatars/User-avatar.svg.png'}
         alt="Profile"
-        priority
         className="w-full h-full object-cover rounded-full"
         width={100}
         height={100}

@@ -187,7 +187,7 @@ export default function Profile () {
                     
                     <details className="p-4 group">
                     <summary className="relative text-start dark:text-white dark:hover:text-white cursor-pointer list-none pr-8 font-medium text-slate-700 transition-colors duration-300 focus-visible:outline-none [&::-webkit-details-marker]:hidden">
-                        Přidání článku krok za krokem
+                        <span className='text-start self-start justify-start flex' >Přidání článku krok za krokem</span>
                         <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="absolute right-0 w-4 h-4 transition duration-300 top-1 shrink-0 stroke-slate-700 group-open:rotate-45"
@@ -206,9 +206,9 @@ export default function Profile () {
                         />
                         </svg>
                     </summary>
-                    <p className="mt-4 text-start  dark:text-gray-300 text-slate-500"> </p>
+                    <p className="mt-4  text-start  dark:text-gray-300 text-slate-500"> </p>
                         Po kliknutí na tlačítko články v menu:
-                        <ul>
+                        <ul className='text-start'>
                             <li>
                                 - Vyberte kategorii příspěvku
                             </li>
@@ -349,7 +349,7 @@ export default function Profile () {
                         </svg>
                     </summary>
                     <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
-                        Půjčovma má stejně jako knihovna a kalendář dvě verze (admin interaktivní a veřejná k prohlížení). Lze přidávat, 
+                        Půjčovna má stejně jako knihovna a kalendář dvě verze (admin interaktivní a veřejná k prohlížení). Lze přidávat, 
                         upravovat, mazat nové položky. Veškeré citlivé údaje nejsou na veřejné stránce k dispozici. 
                     </p>
                     </details>
@@ -381,9 +381,10 @@ export default function Profile () {
                         />
                         </svg>
                     </summary>
-                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">              </p>
-                    Po kliknutí na tlačítko články v menu:
-                        <ul>
+                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500"></p>
+                    <span className='text-start self-start justify-start flex' >Po kliknutí na tlačítko články v menu:</span>
+                    
+                        <ul className='text-start'>
                             <li>
                                 - Admin: jednoduše povoleno vše
                             </li>
