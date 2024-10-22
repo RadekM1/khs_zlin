@@ -152,7 +152,7 @@ export default function AvatarCrop() {
       if (success) {
         setFeedback('Obrázek byl úspěšně nahrán.');
 
-        await update(); 
+        await update({ avatar: avatarToSql });
      
        
         const response = await fetch('/api/users', {

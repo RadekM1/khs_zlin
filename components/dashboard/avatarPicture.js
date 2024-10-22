@@ -20,7 +20,7 @@ export default function AvatarPicture({ handleCLick }) {
     <div className="relative group w-32 h-32">
       {/* Fotka */}
       <img
-        src={imageSrc ? imageSrc : 'https://storage.googleapis.com/khs-zlin/avatars/User-avatar.svg.png'}
+        src={imageSrc ? `${imageSrc}?v=${Date.now()}`  : 'https://storage.googleapis.com/khs-zlin/avatars/User-avatar.svg.png'}
         alt="Profile"
         className="w-full h-full object-cover rounded-full"
         width={100}

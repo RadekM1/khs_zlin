@@ -99,7 +99,7 @@ export default function Navbar() {
     if(session){
       setClearance(session.user.clearance)
       if(session.user.avatar !== null){
-        (setAvatar(session.user.avatar || 'https://storage.googleapis.com/khs-zlin/avatars/User-avatar.svg.png'))
+        (setAvatar(session.user.avatar))
       }
       
     }else{
@@ -297,7 +297,7 @@ export default function Navbar() {
                       <>
                         <PopoverButton className="ml-5 flex rounded-full focus:outline-none items-center gap-x-2 text-sm leading-6 dark:text-gray-300 text-gray-700">
                           <img
-                            src={avatar || 'https://storage.googleapis.com/khs-zlin/avatars/User-avatar.svg.png'}
+                            src={`${avatar}?v=${Date.now()}`} 
                             alt="User Avatar" 
                             className="rounded-full img-contain" 
                             width={50} 
