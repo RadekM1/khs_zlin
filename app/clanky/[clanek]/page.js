@@ -5,8 +5,9 @@ import Image from "next/image";
 import Heart from "@/components/blog/heart";
 import Gallery from "@/components/gallery/gallery";
 import { GiNewspaper } from "react-icons/gi";
-import CommentCard from "@/components/blog/commentCard";
-import CommentCardInput from "@/components/blog/commentCardInput";
+import SessionCover from "./sessionCover";
+
+
 
 export const revalidate = 3600; 
 
@@ -101,19 +102,12 @@ switch(rows[0].category){
           </div>
           <div>
           </div>
-
           <div className="w-full dark:bg-[#1E1E1E] bg-gray-50 pl-2 py-1 border-b-[1px] mb-4 pb-4 border-b-gray-300 dark:border-b-gray-700">
             <div className="text-start mr-10 border-b-[1px] mb-4 pb-4 border-b-gray-300 dark:border-b-gray-700 " dangerouslySetInnerHTML={{ __html: rows[0].clanek }} ></div>
             <Gallery await dataIn={rows[0].article_img_gallery} />
           </div>
-          
-          
-
           <div>
-            <CommentCard row={rows[0]} />
-          </div>
-          <div>
-            <CommentCardInput row={rows[0]} />
+            <SessionCover article={article} />
           </div>
           
         </div>

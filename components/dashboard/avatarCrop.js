@@ -168,11 +168,7 @@ export default function AvatarCrop() {
         });
 
         if(response){
-          setFeedback(`Uložení do databáze - OK.
-            Je možné, že změna se projeví z důvodu zvolené 
-            architektury webu až za několik minut.
-            Pokud se vám stále neukáže nový obrázek bude asi uložený 
-             v historii prohlížeče a bude potřeba ji trochu promazat (cache) `)
+          setFeedback(`Uložení do databáze - OK.`)
         }
 
         if (!response.ok) {

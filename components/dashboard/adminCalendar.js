@@ -376,7 +376,7 @@ const handleEdit = (id) =>{
             <button
               disabled={disabled}
               onClick={() => setCurrentMonth(currentMonth.subtract(1, 'month'))}
-              className="text-md bg-transparent border-none cursor-pointer"
+              className="text-xl bg-transparent border-none cursor-pointer"
             >
               ←
             </button>

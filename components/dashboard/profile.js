@@ -443,28 +443,28 @@ export default function Profile () {
                     </div>
                 </div>
                 <div className='flex dark:text-white  justify-start w-full'>
-                    <ul className="divide-y justify-start dark:text-white divide-slate-200">
+                    <ul className="divide-y justify-start  dark:text-white divide-slate-200">
 
 
 
                         <li className="flex items-start gap-4 px-4 py-3">
-                            <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
+                            <div className="flex flex-col gap-0 min-h-[2rem]  items-start justify-center w-full">
                                 <h4 className="text-base dark:text-white text-slate-700">Lajkovat články, vkládat komentáře</h4>
-                                <p className="w-full text-start text-sm truncate text-slate-500">Každý článek lze pod hlavním textem okomentovat, případně přidat srdíčko</p>
+                                <p className="w-full text-start text-sm truncate flex flex-wrap text-slate-500">Každý článek lze pod hlavním textem okomentovat, případně přidat srdíčko</p>
                             </div>
                         </li>
                         <li className="flex items-start  gap-4 px-4 py-3">
                             <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
                                 <h4 className="text-base dark:text-white text-slate-700">Profil a výměna obrázku</h4>
-                                <p className="w-full text-sm text-start truncate text-slate-500">Na stránce profil (první stránka po přihlášení) lze měnit fotografii, více info v nápovědě.</p>
+                                <p className="w-full text-sm text-start  text-slate-500">Na stránce profil (první stránka po přihlášení) lze měnit fotografii, více info v nápovědě.</p>
                             </div>
                         </li>
 
                         {(clearance === 'member' || clearance === 'editor' || clearance === 'admin' ) && 
-                        <li className="flex items-start gap-4 px-4 py-3">
+                        <li className="flex flex-wrap items-start gap-4 px-4 py-3">
                             <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
                                 <h4 className="text-base dark:text-white text-slate-700">Vkládat články</h4>
-                                <p className="w-full text-sm text-start truncate text-slate-500">Náhled na články všech uživatelů včetně úpravy, mazání</p>
+                                <p className="w-full text-sm text-start  flex overflow-auto flex-wrap text-slate-500">Náhled na články všech uživatelů včetně úpravy, mazání</p>
                             </div>
                         </li>
 
@@ -477,7 +477,7 @@ export default function Profile () {
                         <li className="flex items-start gap-4 px-4 py-3">
                             <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
                                 <h4 className="text-base dark:text-white text-slate-700">Publikovat novinky</h4>
-                                <p className="w-full text-sm text-start truncate text-slate-500">Náhled na novinky všech uživatelů včetně úpravy, mazání</p>
+                                <p className="w-full text-sm text-start  text-slate-500">Náhled na novinky všech uživatelů včetně úpravy, mazání</p>
                             </div>
                         </li>
                         <li className="flex items-start gap-4 px-4 py-3">
@@ -489,13 +489,13 @@ export default function Profile () {
                         <li className="flex items-start gap-4 px-4 py-3">
                             <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
                                 <h4 className="text-base dark:text-white text-slate-700">Správa knihovny</h4>
-                                <p className="w-full text-sm text-start truncate text-slate-500">Plná kontrola nad knihovnou</p>
+                                <p className="w-full text-sm text-start  text-slate-500">Plná kontrola nad knihovnou</p>
                             </div>
                         </li>
                         <li className="flex items-start gap-4 px-4 py-3">
                             <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
                                 <h4 className="text-base dark:text-white text-slate-700">Správa půjčovny</h4>
-                                <p className="w-full text-sm text-start truncate text-slate-500">Plná kontrola nad půjčovnou</p>
+                                <p className="w-full text-sm text-start  text-slate-500">Plná kontrola nad půjčovnou</p>
                             </div>
                         </li>
                         </>
@@ -506,7 +506,7 @@ export default function Profile () {
                         <li className="flex items-start gap-4 px-4 py-3">
                             <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
                                 <h4 className="text-base dark:text-white text-slate-700">Správa uživatelů</h4>
-                                <p className="w-full text-sm text-start truncate text-slate-500">Blokování, mazání, změna práv uživatelů</p>
+                                <p className="w-full text-sm text-start  text-slate-500">Blokování, mazání, změna práv uživatelů</p>
                             </div>
                         </li>
 

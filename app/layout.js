@@ -5,7 +5,7 @@ import Providers from "./providers";
 import Footer from '@/components/footer';
 import Breadcrumbs from "@/components/breadcrumbs";
 import { Suspense } from "react";
-import Spinner from "@/components/spinners/spinnerSmallOrange";
+import SpinnerSmallOrange from "@/components/spinners/spinnerSmallOrange";
 import NavbarProvider from "@/components/navbar/NavbarProvider";
 
 
@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
         <Providers attribute="class">
           
             <div  className="flex mx-auto flex-col bg-gray-100 dark:bg-[#121212] justify-center">
-            <Suspense fallback={ <Spinner />} >
+            <Suspense fallback={ <SpinnerSmallOrange />} >
               <NavbarProvider />
             </Suspense>
               <div className="flex w-full justify-center bg-gray-100  dark:bg-[#121212]" style={{zIndex:1}}>
@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
                     {children}
                   </div>
               </div>
-              <Suspense fallback={ <Spinner />} >
+              <Suspense fallback={ <SpinnerSmallOrange />} >
                 <Footer />
               </Suspense>
             </div>

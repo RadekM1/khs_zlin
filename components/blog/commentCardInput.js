@@ -1,17 +1,35 @@
+'use client'
+
+import Image from "next/image";
+import { IoMdSend } from "react-icons/io";
+import {useSession } from 'next-auth/react';
+import SpinnerSmallOrange from "../spinners/spinnerSmallOrange";
+import { useState, useEffect } from "react";
+ 
+
+export default function CommentCardInput ({setAreaValue, areaValue, disabled, setUser, handleClick, loading, setDisabled})  {
+  const { data: session } = useSession();
+  const [avatar, setAvatar] = useState('https://storage.googleapis.com/khs-zlin/avatars/User-avatar.svg.png')
 
 
- import Image from "next/image";
- import { IoMdSend } from "react-icons/io";
-
-
-export default function CommentCardInput ({row})  {
+  useEffect(()=>{
+    if(session){
+      setDisabled(false)
+      setUser(session.user.email)
+      if(session.user.avatar !== null){
+        (setAvatar(session.user.avatar))
+      }
+    }else{
+      setDisabled(true)
+    }
+    
+  }, [session])
 
 
 
 
 return (
 
-  
   
 <div className="flex my-4 flex-col ">
   <div className="flex flex-row md:m-2 flex-wrap    dark:bg-[#161616]  rounded-2xl  ">
@@ -22,8 +40,8 @@ return (
               <Image
                 width={30}
                 height={30}
-                alt={`úvodní obrázek z článku na téma: ${row.title}`}
-                src={row.avatar}
+                alt={`obrázek uživatele`}
+                src={avatar}
                 className="inline-block  h-10 w-10 self-center object-fill rounded-full ring-2 ring-white dark:ring-[#161616]"
               />
             </div>
@@ -31,15 +49,18 @@ return (
  
 
 
-          <div className="flex flex-nowrap min-w-[250px] relative flex-row">
-            <div className="">
+          <div className="flex flex-nowrap justify-start min-w-[250px] relative flex-row">
+            <div className="justify-start flex items-start self-start">
               <textarea
+                disabled={disabled}
                 id="id-01"
                 type="text"
+                value={areaValue}
+                onChange={(e)=>setAreaValue(e.target.value)}
                 name="id-01"
-                placeholder="Přidat komentář"
+                placeholder="Přidat komentář" 
                 rows="3"
-                className="peer relative w-[250px] rounded border border-slate-200 px-4 py-2 text-sm text-slate-500 placeholder-transparent outline-none transition-all autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-orange-500 focus:outline-none invalid:focus:border-pink-500 focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
+                className="peer relative lg:w-[450px] md:w-[350px] w-[250px] rounded border border-slate-200 px-4 py-2 text-sm text-slate-500 placeholder-transparent outline-none transition-all autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-orange-500 focus:outline-none invalid:focus:border-pink-500 focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
               ></textarea>
               <label
                 htmlFor="id-01"
@@ -49,12 +70,26 @@ return (
               </label>
             </div>
             <div className="self-end absolute right-0 end-0 m-2 text-end">
-              <IoMdSend className="w-6 h-6 text-gray-400 hover:text-orange-400" />
+              <button
+                onClick={()=>handleClick()}
+                disabled={disabled}
+              >
+                {
+                  !loading ?
+
+                  <IoMdSend
+                    disabled={disabled}
+                    className="w-6 h-6 text-gray-400 hover:text-orange-400 disabled:hover:text-gray-400" 
+                  />
+
+                  :
+
+                  <SpinnerSmallOrange />
+                  
+                }                
+              </button>
             </div>
-            
           </div>
-      
-         
           </div>
       </div>
       <div>
@@ -62,7 +97,7 @@ return (
       </div>
 
 
-    <div className="flex w-full   overflow-hidden ">
+    <div className="flex w-full  overflow-hidden ">
   
   </div>
 </div>

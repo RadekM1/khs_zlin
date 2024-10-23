@@ -521,7 +521,7 @@ export default function Navbar() {
 
                         className="block rounded-lg w-full text-start pl-6 pr-3 text-sm leading-7 ">
                           <Link href='/clanky' onClick={() => setMobileMenuOpen(false)} passHref>
-                            <div className={`flex p-2 flex-grow ${ pathName.includes('/clanky')  ? activeMobile : inActiveMobile } `}>
+                            <div className={`flex p-2 flex-grow ${ !currentFilter && pathName.includes('/clanky')  ? activeMobile : inActiveMobile } `}>
                               <div className='w-full ml-2 text-start' >
                                 Zobrazit vše
                               </div>
