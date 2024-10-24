@@ -12,7 +12,7 @@ export const revalidate = 0;
 
 
 export default async function NewsFeed() {
-  res.setHeader('Cache-Control', 'no-store');
+
 
   let rows = [];
   const sqlConnection = await pool.connect();

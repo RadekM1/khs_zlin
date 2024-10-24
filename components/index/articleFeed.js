@@ -6,7 +6,7 @@ import executeQuery from "@/lib/db";
 export const revalidate = 0;
 
 export default async function ArticleFeed () {
-  res.setHeader('Cache-Control', 'no-store');
+
 
   let rows = [];
   const sqlConnection = await pool.connect();
