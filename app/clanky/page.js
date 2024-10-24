@@ -13,18 +13,39 @@ export default async function page() {
   try {
     const result = await executeQuery({
       sqlConnection,
-      query:
-       `SELECT a.slug, a.title, a.created_time, a.description, a.thumbnail, a.category, u.account, a.nickname, u.avatar 
-       FROM articles a
-       JOIN users u
-       ON a.user_email = u.account
-       ORDER BY a.created_time DESC
-       `
+      query: `
+        SELECT 
+          a.slug, 
+          a.title, 
+          a.created_time, 
+          a.description, 
+          a.thumbnail, 
+          a.category, 
+          u.account, 
+          a.nickname, 
+          u.avatar,
+          COUNT(DISTINCT h.user_account_heart) AS hearts_count,  
+          COUNT(DISTINCT c.id) AS comments_count,             
+          ARRAY_AGG(DISTINCT h.user_account_heart) AS liked_by  
+        FROM articles a
+        JOIN users u
+          ON a.user_email = u.account
+        LEFT JOIN hearts h
+          ON a.slug = h.article_slug_heart   
+        LEFT JOIN comments c
+          ON a.slug = c.article_slug         
+        GROUP BY 
+          a.slug, a.title, a.created_time, a.description, a.thumbnail, a.category, u.account, a.nickname, u.avatar
+        ORDER BY a.created_time DESC
+      `
     });
-
+    
     rows = result.rows.map(row => ({
       ...row,
-      created_time: new Date(row.created_time).toLocaleDateString('cs-CZ') 
+      created_time: new Date(row.created_time).toLocaleDateString('cs-CZ'),
+      liked_by: row.liked_by || [],
+      hearts_count: row.hearts_count || 0,
+      comments_count: row.comments_count || 0
     }));
 
   } catch (error) {

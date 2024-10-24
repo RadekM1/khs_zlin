@@ -136,7 +136,7 @@ export default function AdminCalendarFrontend() {
       
       
       <div>
-        <div className="max-w-[400px] min-w-[250px] lg:mr-5 m-6 p-4 border border-gray-200 dark:border-gray-500 rounded-lg bg-gray-50 dark:bg-[#151515] shadow-lg">
+        <div className="max-w-[400px] min-w-[300px] lg:mr-5 m-6 p-4 border border-gray-200 dark:border-gray-500 rounded-lg bg-gray-50 dark:bg-[#151515] shadow-lg">
          
 
           <div className="grid grid-cols-7 gap-2 text-center">
@@ -150,13 +150,13 @@ export default function AdminCalendarFrontend() {
               <div
                 key={index}
      
-                className={`h-8 w-8  flex items-center justify-center cursor-pointer rounded-full text-xs ${
+                className={`h-8 w-8 m-1  flex items-center justify-center  rounded-full text-xs ${
                     day && isToday(day)
-                    ? 'bg-orange-600 dark:bg-orange-200 text-white cursor-pointer dark:text-black'
+                    ? 'bg-orange-600 dark:bg-orange-200 text-white dark:text-black'
                     : day && isSelected(day)
-                    ? 'ring-2 bg-orange-100 dark:bg-orange-100 cursor-pointer dark:ring-orange-200 ring-orange-600 text-gray-800 dark:text-gray-200'
+                    ? 'ring-2 bg-orange-100 dark:bg-orange-100  dark:ring-orange-200 ring-orange-600 text-gray-800 dark:text-gray-200'
                     : day && isHighlighted(day)
-                    ? 'ring-1 dark:ring-orange-200 ring-orange-600 cursor-pointer text-gray-800 dark:text-gray-200'
+                    ? 'ring-1 dark:ring-orange-200 ring-orange-600 text-gray-800 dark:text-gray-200'
                     : 'text-gray-700 dark:text-gray-300'
                 }`}
                 >

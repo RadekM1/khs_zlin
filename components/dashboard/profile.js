@@ -450,7 +450,7 @@ export default function Profile () {
                         <li className="flex items-start gap-4 px-4 py-3">
                             <div className="flex flex-col gap-0 min-h-[2rem]  items-start justify-center w-full">
                                 <h4 className="text-base dark:text-white text-slate-700">Lajkovat články, vkládat komentáře</h4>
-                                <p className="w-full text-start text-sm truncate flex flex-wrap text-slate-500">Každý článek lze pod hlavním textem okomentovat, případně přidat srdíčko</p>
+                                <p className="w-full text-start text-sm  flex flex-wrap text-slate-500">Každý článek lze pod hlavním textem okomentovat, případně přidat srdíčko</p>
                             </div>
                         </li>
                         <li className="flex items-start  gap-4 px-4 py-3">
@@ -483,7 +483,7 @@ export default function Profile () {
                         <li className="flex items-start gap-4 px-4 py-3">
                             <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full">
                                 <h4 className="text-base dark:text-white text-slate-700">Správa kalendáře</h4>
-                                <p className="w-full text-sm text-start truncate text-slate-500">Plná kontrola nad funkcemi kalendáře</p>
+                                <p className="w-full text-sm text-start  text-slate-500">Plná kontrola nad funkcemi kalendáře</p>
                             </div>
                         </li>
                         <li className="flex items-start gap-4 px-4 py-3">

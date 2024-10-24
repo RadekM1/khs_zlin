@@ -1,7 +1,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Heart from "./heart";
+import HeartSessionCover from "./heartSessionCover";
 import Share from "./share"
 import { FaRegComment } from "react-icons/fa";
 
@@ -21,9 +21,14 @@ export default function BlogCard ({data})  {
     default: break ;
   }
   
+let share = `/clanky/${data.slug}`
+let heartsSum = data.hearts_count
+let heartsList = data.liked_by
+let slug = data.slug
 
 
 return (
+
 
   
   
@@ -78,15 +83,18 @@ return (
             <FaRegComment className="mx-2 w-5 h-5 dark:text-gray-600 text-gray-400 self-center"/>
           </div>
           <div className="text-xs mr-2 flex dark:text-gray-200 self-center">
-            111x 
+            {data.comments_count}
           </div>
           <button className="mx-2 dark:text-gray-100 ">
-          <Heart 
-            likes = '111'/>
+          <HeartSessionCover 
+            likes = {heartsSum}
+            heartsList = {heartsList}
+            slug = {slug}
+            />
           </button>
         </div>
         <div className="text-sm mx-2  flex self-center">
-          <Share />
+          <Share share={share} />
         </div>
         <div className="self-center mx-2  ">
           <div className="bg-gray-200 dark:text-gray-300 dark:bg-gray-600 self-center px-3 py-1 rounded-full text-xs text-gray-600">

@@ -9,9 +9,53 @@ export default function CommentComponent ({article}) {
     const [loading, setLoading] = useState(false)
     const [user, setUser] = useState('')
     const [areaValue, setAreaValue] = useState('')
+    const [comments, setComments] = useState([]);
     const [disabled, setDisabled] = useState(true)
 
+
+
+    useEffect(() => {
+      if(article){
+        fetchComments();
+      }
+      
+    }, [article]);
+
+      const fetchComments = async () => {
+        try {
+          setLoading(true);
+          const response = await fetch("/api/comments", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              article: article,
+              operation: "getter",
+            }),
+          });
+          if (!response.ok) {
+            console.error("Error fetching comments:", response.statusText);
+            return;
+          }
+  
+          const  data  = await response.json();
+
+          let rows = data.result
+
+          setComments(rows || []);
+          
+        } catch (error) {
+          console.error("Error fetching comments:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+   
+
     const handleClick = async () =>{
+    
         if(!areaValue){
           alert('není zadán komentář');
           return;
@@ -31,12 +75,15 @@ export default function CommentComponent ({article}) {
         setDisabled(true)
       
         try{
+          
       
+          
           const response = await fetch('/api/comments', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
+            
             body: JSON.stringify({
               areaValue: areaValue,
               user_account: user,
@@ -51,6 +98,7 @@ export default function CommentComponent ({article}) {
           }
 
           setAreaValue('')
+          fetchComments()
       
         } catch (error) {
           console.log(error)
@@ -62,10 +110,28 @@ export default function CommentComponent ({article}) {
 
     return (
         <>
-            <div>
-              <CommentCard row={article} />
-            </div>
-            <CommentCardInput setAreaValue={setAreaValue} disabled={disabled} loading={loading} setDisabled={setDisabled} setUser={setUser} areaValue={areaValue} handleClick={handleClick} />
+
+      
+        
+                <div className="flex justify-start flex-col">
+          {comments && (
+            comments.map((comment) => (
+              
+              <CommentCard key={comment.id} comment={comment} />
+              
+            ))
+          ) }
+        </div>
+            
+            <CommentCardInput 
+              setAreaValue={setAreaValue} 
+              disabled={disabled} 
+              loading={loading} 
+              setDisabled={setDisabled} 
+              setUser={setUser} 
+              areaValue={areaValue} 
+              handleClick={handleClick} 
+            />
         </>
     )
 }

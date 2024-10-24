@@ -14,6 +14,7 @@ export default function CommentCardInput ({setAreaValue, areaValue, disabled, se
 
   useEffect(()=>{
     if(session){
+      let NickName
       setDisabled(false)
       setUser(session.user.email)
       if(session.user.avatar !== null){
@@ -32,7 +33,7 @@ return (
 
   
 <div className="flex my-4 flex-col ">
-  <div className="flex flex-row md:m-2 flex-wrap    dark:bg-[#161616]  rounded-2xl  ">
+  <div className="flex flex-row md:m-2 justify-start self-start flex-wrap    dark:bg-[#161616]  rounded-2xl  ">
 
     <div className="flex flex-row transition-opacity md:flex-row  md:space-x-2 space-y-3 md:space-y-0  p-1 mx-auto  "> 
       <div className="px-1 w-[50px] self-start py-1   pl-2">

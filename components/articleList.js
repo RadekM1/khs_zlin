@@ -177,17 +177,27 @@ export default function ArticleList ({importedRows}) {
                     ))}
                 </div>
                 <div className="flex-col flex">
-                    <div className="flex w-full gap-3 md:justify-between mt-4 flex-col-reverse md:flex-row">
+                    <div className="flex w-full dark:text-white  gap-3 md:justify-between mt-4 flex-col-reverse md:flex-row">
                         <Pagination 
                             count={Math.ceil(filteredRows.length / rowsPerPage)} 
                             page={currentPage}
+                            color="gray"
                             id="prepinani-pagination"
                             width='120'
                             onChange={(event, value) => handleChangePaginat(event, value, setCurrentPage)} 
+                            sx={{
+                                '& .MuiPaginationItem-root': {
+                                  color: 'gray', 
+                                },
+                                '& .MuiPaginationItem-root.Mui-selected': {
+                                  backgroundColor: 'gray', 
+                                  color: 'white',
+                                },
+                              }}
                         />
                     </div>
                     <div className="flex justify-end">
-                        <span className="text-gray-600 items-center text-sm mt-4 m-2 md:mr-6"> {filteredRows.length} položek</span>
+                        <span className="text-gray-600 items-center dark:text-white text-sm mt-4 m-2 md:mr-6"> počet článků ve filtru: {filteredRows.length} </span>
                     </div>
                 </div>
             </div>
