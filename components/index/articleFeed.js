@@ -2,7 +2,7 @@ import BlogCard from "../blog/blogCard"
 import pool from "@/lib/pool";
 import executeQuery from "@/lib/db";
 
-
+export const revalidate = 0;
 
 export default async function ArticleFeed () {
 

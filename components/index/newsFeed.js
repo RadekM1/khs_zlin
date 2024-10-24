@@ -6,7 +6,7 @@ import executeQuery from "@/lib/db";
 
 
 
-
+export const revalidate = 0;
 
 
 
