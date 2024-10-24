@@ -34,6 +34,7 @@ export async function POST(request) {
           revalidatePath('/clanky');
           revalidatePath(`/clanky/${article_slug_heart}`);
           revalidateTag('articles');
+          revalidatePath(`/`);
           
           return NextResponse.json({ message: "Srdíčko bylo přidáno" }, { status: 201 });
         } else {

@@ -33,6 +33,7 @@ export async function POST(request) {
       
           revalidatePath('/clanky');
           revalidatePath(`/clanky/${article_slug}`);
+          revalidatePath(`/`);
           revalidateTag('articles');
 
           return NextResponse.json(result.rows[0], { status: 201 });

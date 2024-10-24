@@ -3,16 +3,18 @@ import Logo from '../components/index/logo';
 import ArticleFeed from '@/components/index/articleFeed';
 import ImgBtnsArticles from '@/components/index/imgBtnsArticles';
 import ImgBtnsNav from '@/components/index/imgBtnsNav';
-import Calendar from '@/components/index/calendar';
-import CalendarFeed from '@/components/index/calendarFeed';
 import { FcCalendar } from "react-icons/fc";
 import dayjs from 'dayjs';
 import LogoCloudPartners from '@/components/index/logoCloudPartners';
 import LogoCloudSponsors from '@/components/index/logoCloudSponsors';
 import AdminCalendarFrontend from '@/components/frontend/adminCalendarFrontend';
 
+export const revalidate = 10;
 
-export default function LandingPart() {
+
+export const fetchCache = 'force-no-store';
+
+export default async function LandingPart() {
 
   
   const Months = [
