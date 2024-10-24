@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import pool from "@/lib/pool";
 import executeQuery from "@/lib/db";
 import { revalidatePath } from 'next/cache';
-
+import { revalidateTag } from "next/cache";
 
 export async function POST(request) {
   let sqlConnection;
@@ -29,9 +29,12 @@ export async function POST(request) {
 
       
 
-        if (result.rows.length > 0) {
-          revalidatePath('/clanky')
-          revalidatePath(`/clanky/${article_slug}`)
+        if (result.rowCount > 0) { 
+      
+          revalidatePath('/clanky');
+          revalidatePath(`/clanky/${article_slug}`);
+          revalidateTag('articles');
+
           return NextResponse.json(result.rows[0], { status: 201 });
         } else {
           return NextResponse.json(

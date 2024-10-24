@@ -4,7 +4,7 @@ import executeQuery from "@/lib/db";
 import ArticleList from "@/components/articleList";
 import { GiNewspaper } from "react-icons/gi";
 
-export const revalidate = 3600;  
+export const revalidate = 60;  
 
 export default async function page() {
 
@@ -37,7 +37,7 @@ export default async function page() {
         GROUP BY 
           a.slug, a.title, a.created_time, a.description, a.thumbnail, a.category, u.account, a.nickname, u.avatar
         ORDER BY a.created_time DESC
-      `
+      `, next: {tags: ['articles']}
     });
     
     rows = result.rows.map(row => ({

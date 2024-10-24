@@ -37,7 +37,7 @@ export default function Profile () {
         <div className="justify-center container mx-auto overflow-hidden lg:justify-normal flex-col-reverse flex lg:flex-row w-full mt-5">
           
             <div className="justify-start w-full lg:w-2/3 dark:bg-[#161616] overflow-hidden mt-2 bg-white lg:m-5 dark:text-gray-200 dark:border-gray-800 border-gray-200 border-[1px] p-3 shadow-md  rounded-2xl flex flex-col">
-            <section className="w-full divide-y divide-slate-200 rounded">
+            <section className="w-full divide-y dark:divide-slate-600 divide-slate-200 rounded">
                 <div className='flex-row flex'>
                     <div className=' text-slate-700 font-bold mr-4 text-xl text-start mb-2'>
                         <IoMdHelpCircleOutline className='text-orange-400 w-8 h-8'/>
@@ -68,7 +68,7 @@ export default function Profile () {
                         />
                         </svg>
                     </summary>
-                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white text-slate-500">
+                    <p className="mt-4 text-start dark:text-slate-400 dark:hover:text-white text-slate-500">
                         Zde naleznete základní údaje o tom jak funguje administrační část, rozkliknutím
                         sekcí níže se zobrazí podrobnosti k uvedeným tématům. 
                     </p>
@@ -94,7 +94,7 @@ export default function Profile () {
                         />
                         </svg>
                     </summary>
-                    <p className="mt-4 text-start  dark:text-gray-300 dark:hover:text-white  text-slate-500">
+                    <p className="mt-4 text-start  dark:text-slate-400 dark:hover:text-white  text-slate-500">
                         Povolené stránky naleznete pod vaší profilovkou v pravém horním rohu. Případně ještě pod logem v pravo od ikony domečku klikněte na tlačítko
                         dashboard a zobrazí se základní navigace stránek.
                     </p>
@@ -120,7 +120,7 @@ export default function Profile () {
                         />
                         </svg>
                     </summary>
-                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
+                    <p className="mt-4 text-start dark:text-slate-400 dark:hover:text-white  text-slate-500">
                         Změna hesla není v adminu zatím naprogramovaná, nicméně lze změnit bez problému heslo před přihlášením kliknutím
                         na zapomenuté heslo.
                     </p>
@@ -146,7 +146,7 @@ export default function Profile () {
                         />
                         </svg>
                     </summary>
-                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
+                    <p className="mt-4 text-start dark:text-slate-400 dark:hover:text-white  text-slate-500">
                         Úvodní profilová stránka slouží převážně pro poskytnutí informací o úrovni oprávnění, jaké lze provádět operace, 
                         změnu úvodní fotografie. Nahrání nové fotografie by mělo proběhnout rychle, změna fotografie se dle zvolené architektury 
                         webu může projevit se zpožděním až několika minut. 
@@ -173,7 +173,7 @@ export default function Profile () {
                         />
                         </svg>
                     </summary>
-                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
+                    <p className="mt-4 text-start dark:text-slate-400 dark:hover:text-white  text-slate-500">
                         Ke každému článku lze vložit komentáře a lajk buď pod hlavní textem článku, případně 
                         srdíčko ještě na kartě článku buď v sekci články nebo u nejnovějších článků na hlavní straně. 
                     </p>
@@ -206,9 +206,10 @@ export default function Profile () {
                         />
                         </svg>
                     </summary>
-                    <p className="mt-4  text-start  dark:text-gray-300 text-slate-500"> </p>
+                    <p className="mt-4  text-start  dark:text-slate-400 text-slate-500"> 
                         Po kliknutí na tlačítko články v menu:
-                        <ul className='text-start'>
+                        </p>
+                        <ul className='text-start dark:text-slate-400'>
                             <li>
                                 - Vyberte kategorii příspěvku
                             </li>
@@ -264,7 +265,7 @@ export default function Profile () {
                         />
                         </svg>
                     </summary>
-                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
+                    <p className="mt-4 text-start dark:text-slate-400 dark:hover:text-white  text-slate-500">
                         Nahrání novinky funguje ve stejném duchu jako článek s tou vyjímkou že obsahuje jiný (komplexnější) textový
                         editor a nelze nahrávat fotogalerii (z důvodu povahy novinky jenž má omezenou platnost a následně se maže).
                         Nicméně jedná se o zdarma verzi s omezením (1000x načtení měsíčně zdarma) tak moc neklikejte refresh :).
@@ -292,7 +293,7 @@ export default function Profile () {
                         />
                         </svg>
                     </summary>
-                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
+                    <p className="mt-4 text-start dark:text-slate-400 dark:hover:text-white  text-slate-500">
                         To co nahrajete na kalendář se automaticky projeví na hlavní stránce. Na rozdíl od hlavní stránky
                         je kalendář v adminu interaktivní (na hlavní stránce je zamčený).
                         Lze vkládat, mazat, editovat nové události. 
@@ -321,7 +322,7 @@ export default function Profile () {
                         />
                         </svg>
                     </summary>
-                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
+                    <p className="mt-4 text-start dark:text-slate-400 dark:hover:text-white  text-slate-500">
                         Knihovna je taky plně interaktivní, lze do prvního řádku vkládat nové 
                         příspěvky, případně po kliknutí na tužku v první řádku položku editovat.
                         Opět na veřejné části stránky je umožněno pouze prohlížení, nezobrazují se citlivá data (kdo má vypůjčeno, atd)
@@ -348,7 +349,7 @@ export default function Profile () {
                         />
                         </svg>
                     </summary>
-                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500">
+                    <p className="mt-4 text-start dark:text-slate-400 dark:hover:text-white  text-slate-500">
                         Půjčovna má stejně jako knihovna a kalendář dvě verze (admin interaktivní a veřejná k prohlížení). Lze přidávat, 
                         upravovat, mazat nové položky. Veškeré citlivé údaje nejsou na veřejné stránce k dispozici. 
                     </p>
@@ -381,10 +382,10 @@ export default function Profile () {
                         />
                         </svg>
                     </summary>
-                    <p className="mt-4 text-start dark:text-gray-300 dark:hover:text-white  text-slate-500"></p>
+                    <p className="mt-4 text-start  dark:text-slate-400  text-slate-500"></p>
                     <span className='text-start self-start justify-start flex' >Po kliknutí na tlačítko články v menu:</span>
                     
-                        <ul className='text-start'>
+                        <ul className='text-start dark:text-slate-400'>
                             <li>
                                 - Admin: jednoduše povoleno vše
                             </li>
@@ -443,7 +444,7 @@ export default function Profile () {
                     </div>
                 </div>
                 <div className='flex dark:text-white  justify-start w-full'>
-                    <ul className="divide-y justify-start  dark:text-white divide-slate-200">
+                    <ul className="divide-y justify-start  dark:text-white dark:divide-slate-600 divide-slate-200">
 
 
 

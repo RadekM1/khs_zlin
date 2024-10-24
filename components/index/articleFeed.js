@@ -37,7 +37,7 @@ export default async function ArticleFeed () {
           a.slug, a.title, a.created_time, a.description, a.thumbnail, a.category, u.account, a.nickname, u.avatar
         ORDER BY a.created_time DESC
         LIMIT 3;
-      `
+      `, next: { tags: ['articles'] }
     });
   
     rows = result.rows.map(row => ({

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import pool from "@/lib/pool";
 import executeQuery from "@/lib/db";
 import { revalidatePath } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 
 export async function POST(request) {
   let sqlConnection;
@@ -28,13 +29,16 @@ export async function POST(request) {
 
 
 
-        if (result.rows.length > 0) {
-          revalidatePath('/clanky')
-          revalidatePath(`/clanky/${article_slug_heart}`)
-          return NextResponse.json(result.rows[0], { status: 201 });
+        if (result.rowCount > 0) { 
+      
+          revalidatePath('/clanky');
+          revalidatePath(`/clanky/${article_slug_heart}`);
+          revalidateTag('articles');
+          
+          return NextResponse.json({ message: "Srdíčko bylo přidáno" }, { status: 201 });
         } else {
           return NextResponse.json(
-            { message: "Komentář vložen, ale nelze vrátit data" },
+            { message: "Nelze vrátit data po vložení srdíčka" },
             { status: 201 }
           );
         }
