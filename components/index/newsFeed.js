@@ -1,4 +1,4 @@
-import React from "react"
+import React, { cache } from "react"
 import { MdRssFeed } from "react-icons/md";
 import BtnArticleShow from "../blog/BtnArticleShow";
 import pool from "@/lib/pool";
@@ -22,7 +22,8 @@ export default async function NewsFeed() {
       `SELECT id, title, created_time, description FROM news_feed
       ORDER BY created_time DESC
       LIMIT 10
-      `
+      `,
+      next: { cache: 'no-store' }
     });
 
     rows = result.rows.map(row => ({
