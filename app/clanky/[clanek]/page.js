@@ -5,6 +5,7 @@ import HeartSessionCover from "@/components/blog/heartSessionCover";
 import Gallery from "@/components/gallery/gallery";
 import { GiNewspaper } from "react-icons/gi";
 import SessionCover from "./sessionCover";
+import Share from "@/components/blog/share";
 
 export const revalidate = 3600; 
 
@@ -18,6 +19,8 @@ export default async function page ({params}) {
     const sqlConnection = await pool.connect();
     let rows = [];
     let heartsResult = null; 
+
+    
     
 
     try {
@@ -78,6 +81,8 @@ export default async function page ({params}) {
    let srdickaSeznam = heartsInput.length > 0 && heartsInput[0].heartslist ? heartsInput[0].heartslist : [];
    let lajky = heartsInput.length > 0 ? heartsInput[0].likes : 0;
 
+   let urlToShare = `/clanky/${rows[0].slug}`
+
 
     return (
         <div className="flex flex-col mx-1 md:mx-3 min-h-screen items-center text-center lg:mx-10 ">
@@ -107,20 +112,25 @@ export default async function page ({params}) {
                   </div>
                 </div>
               </div>
-              <div className="text-gray-500 text-xs md:text-sm "> 
+              <div className="text-gray-500 text-xs my-1 md:text-sm "> 
                 Datum: {rows[0].created_time}
               </div>
-              <div className="text-gray-500 text-xs md:text-sm ">
+              <div className="text-gray-500 text-xs my-1 md:text-sm ">
                 kategorie: {category}
               </div>
-              
-              <div className="my-1">
-              <HeartSessionCover 
-                likes = {lajky} 
-                heartsList = {srdickaSeznam}
-                slug = {article}
-            />
+              <div className="flex flex-row">
+                <div className="my-1">
+                <HeartSessionCover 
+                  likes = {lajky} 
+                  heartsList = {srdickaSeznam}
+                  slug = {article}
+              />
+                </div>
+                <div>
+                  <Share share={urlToShare} title={rows[0].title} />
+                </div>
               </div>
+              
 
               
               

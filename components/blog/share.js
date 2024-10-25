@@ -10,7 +10,7 @@ export default function Share({ share, title }) {
     if (navigator.share) {
       navigator.share({
         title: '',
-        text: {title},
+        text: title,
         url: share, 
       })
         .then(() => console.log('Úspěšně sdíleno'))
@@ -28,6 +28,8 @@ export default function Share({ share, title }) {
       console.log('Sdílení ani kopírování není podporováno.');
     }
   };
+
+  
 
   return (
     <div>
