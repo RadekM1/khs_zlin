@@ -94,7 +94,7 @@ return (
           </button>
         </div>
         <div className="text-sm mx-2  flex self-center">
-          <Share share={share} />
+          <Share share={share} title={data.title}/>
         </div>
         <div className="self-center mx-2  ">
           <div className="bg-gray-200 dark:text-gray-300 dark:bg-gray-600 self-center px-3 py-1 rounded-full text-xs text-gray-600">

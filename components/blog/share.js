@@ -3,14 +3,14 @@ import { useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import ShareIcon from '@mui/icons-material/Share';
 
-export default function Share({ share }) {
+export default function Share({ share, title }) {
   const [copied, setCopied] = useState(false);
 
   const handleClick = () => {
     if (navigator.share) {
       navigator.share({
-        title: 'Podělte se o tento odkaz',
-        text: 'Sdílejte tento skvělý obsah!',
+        title: '',
+        text: {title},
         url: share, 
       })
         .then(() => console.log('Úspěšně sdíleno'))
