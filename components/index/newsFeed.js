@@ -3,7 +3,7 @@ import { MdRssFeed } from "react-icons/md";
 import BtnArticleShow from "../blog/BtnArticleShow";
 import pool from "@/lib/pool";
 import executeQuery from "@/lib/db";
-
+import Share from "../blog/share";
 
 
 export const revalidate = 0;
@@ -80,8 +80,14 @@ export default async function NewsFeed() {
                 <p className=" text-slate-500 dark:text-gray-300 ml-2 mt text-xs md:text-sm text-start">
                   {item.description}
                 </p>
-                <div className="flex justify-end">
-                  <BtnArticleShow url={item.id}/>
+                <div className="flex flex-row justify-end">
+                  <div>
+                    <Share share={`/novinky/${item.id}`} title={item.title}  />
+                  </div>
+                  <div>
+                    <BtnArticleShow url={item.id}/>
+                  </div>
+                  
                 </div>
                 
               </div>

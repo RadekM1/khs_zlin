@@ -6,6 +6,8 @@ import ShareIcon from '@mui/icons-material/Share';
 export default function Share({ share, title }) {
   const [copied, setCopied] = useState(false);
 
+
+
   const handleClick = () => {
     if (navigator.share) {
       navigator.share({
@@ -34,7 +36,7 @@ export default function Share({ share, title }) {
   return (
     <div>
       <IconButton onClick={handleClick} color='action'>
-        <ShareIcon className='dark:text-gray-300' />
+        <ShareIcon className='dark:text-gray-300 w-6 h-6' />
       </IconButton>
       {copied && <span>Odkaz zkopírován do schránky</span>} 
     </div>

@@ -66,7 +66,7 @@ export default async function page() {
             <GiNewspaper className="text-gray-600 w-8 h-8 mr-3 dark:text-gray-200" />
           </div>
           <div>
-              <span className="text-2xl text-gray-600 dark:text-gray-200   ">Články</span>
+              <span className="text-2xl text-gray-600 dark:text-gray-200">Články</span>
           </div>
         </div>
 

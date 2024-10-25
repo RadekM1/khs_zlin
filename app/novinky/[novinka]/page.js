@@ -1,6 +1,7 @@
 import { MdRssFeed } from "react-icons/md";
 import pool from "@/lib/pool";
 import executeQuery from "@/lib/db";
+import Share from "@/components/blog/share";
 
 export const revalidate = 3600; 
 
@@ -53,12 +54,18 @@ if(rows.length === 0) {
 
             </div>
         
-        <div className="flex flex-col justify-center">
-            <div className="flex justify-center">
+        <div className="flex flex-col  justify-center">
+            <div className="flex flex-col border-b-[1px] mb-4 border-gray-200 dark:border-gray-800 mx-10 justify-center">
+              <div>
                 <span>vytvořeno: {rows[0].created_time}</span>
+              </div>
+              <div>
+                <Share share={`/novinky/${slugNovinka}`} title={rows[0].title} />
+              </div>
+                
             </div>
             <div className="flex text-start mx-2 md:mx-4 lg:mx-16 text-gray-800 ">
-            <div dangerouslySetInnerHTML={{ __html: rows[0].clanek }} />
+            <div className="break-words break-all" dangerouslySetInnerHTML={{ __html: rows[0].clanek }} />
             </div>
 
 

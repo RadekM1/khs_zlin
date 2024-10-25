@@ -81,13 +81,13 @@ export default async function page ({params}) {
    let srdickaSeznam = heartsInput.length > 0 && heartsInput[0].heartslist ? heartsInput[0].heartslist : [];
    let lajky = heartsInput.length > 0 ? heartsInput[0].likes : 0;
 
-   let urlToShare = `/clanky/${rows[0].slug}`
+   let urlToShare = `/clanky/${article}`
 
 
     return (
-        <div className="flex flex-col mx-1 md:mx-3 min-h-screen items-center text-center lg:mx-10 ">
-          <div className="flex flex-row mb-4 justify-start items-cebter border-b-[1px] border-b-gray-300 dark:border-b-gray-700 ">
-            <div className="items-center">
+      <div className="flex flex-col mx-1 md:mx-3 min-h-screen items-center text-center lg:mx-10 overflow-x-hidden"> 
+      <div className="flex flex-row mb-4 justify-start items-center border-b-[1px] border-b-gray-300 dark:border-b-gray-700 ">
+        <div className="items-center">
               <GiNewspaper className="text-gray-500 w-8 h-8 mr-3 dark:text-gray-200" />
             </div>
             <div className="text-2xl text-gray-500 dark:text-gray-200">
@@ -137,8 +137,10 @@ export default async function page ({params}) {
             
             </div>
           </div>
-          <div className="w-full dark:bg-[#1E1E1E] bg-gray-50 pl-2 py-1 border-b-[1px] mb-4 pb-4 border-b-gray-300 dark:border-b-gray-700">
-            <div className="text-start mr-10 border-b-[1px] mb-4 pb-4 border-b-gray-300 dark:border-b-gray-700 " dangerouslySetInnerHTML={{ __html: rows[0].clanek }}></div>
+          <div className="w-full dark:bg-[#1E1E1E] bg-gray-50 pl-2 py-1 mx-2 overflow-hidden flex-wrap border-b-[1px] mb-4 pb-4 border-b-gray-300 dark:border-b-gray-700">
+          <div className="text-start mr-10 border-b-[1px] mb-4 pb-4 overflow-hidden border-b-gray-300 dark:border-b-gray-700 break-words break-all whitespace-pre-line prose w-full max-w-full" 
+            dangerouslySetInnerHTML={{ __html: rows[0].clanek }}>
+          </div>
             <Gallery await dataIn={rows[0].article_img_gallery} />
           </div>
           <div>

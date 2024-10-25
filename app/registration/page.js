@@ -209,14 +209,14 @@ export default function Page() {
                   <PassField id='password' label='Heslo' error={errorPass} handleChange={handleChange} />
                 </div>
                 <div className="absolute top-6 -right-5">
-                  {passwordEqual && <IoShieldCheckmarkOutline className="text-green-400" />}
+                  {password && passwordEqual && <IoShieldCheckmarkOutline className="text-green-400" />}
                 </div>
               </div>
             </div>
             <div className="flex flex-col relative">
               <PassField id='passwordCheck' error={errorPass} label='Ověřit heslo' handleChange={handleChange} />
               <div className="absolute top-6 -right-5">
-                {passwordEqual && <IoShieldCheckmarkOutline className="text-green-400" />}
+                {password && passwordEqual && <IoShieldCheckmarkOutline className="text-green-400" />}
               </div>
               <div className={`${passwordEqual === false ? '' : 'hidden'} flex-wrap  mb-2  text-xs text-red-400`}>
                   - hesla jsou krátká, nebo rozdílná
