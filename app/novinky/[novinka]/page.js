@@ -65,7 +65,7 @@ if(rows.length === 0) {
                 
             </div>
             <div className="flex text-start mx-2 md:mx-4 lg:mx-16 text-gray-800 ">
-            <div className="break-words break-all" dangerouslySetInnerHTML={{ __html: rows[0].clanek }} />
+            <div className="break-words dark:text-white break-all" dangerouslySetInnerHTML={{ __html: rows[0].clanek }} />
             </div>
 
 
